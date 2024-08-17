@@ -4,11 +4,12 @@ import model.entity.Address
 import model.entity.JobApplicant
 import model.entity.Skill
 
-class JobApplicantsService {
+class JobApplicantsService implements IEntityService {
     static final int MAX_APPLICANTS = 5
 
     JobApplicant[] jobApplicants = new JobApplicant[5]
 
+    @Override
     void populateJobApplicants() {
         JobApplicant[] jobApplicants = new JobApplicant[5]
 
@@ -33,6 +34,7 @@ class JobApplicantsService {
         this.jobApplicants = jobApplicants
     }
 
+    @Override
     void printJobApplicants() {
         for (JobApplicant j in this.jobApplicants) {
             println j
