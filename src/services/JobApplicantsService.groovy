@@ -10,7 +10,7 @@ class JobApplicantsService implements IEntityService {
     JobApplicant[] jobApplicants = new JobApplicant[5]
 
     @Override
-    void populateJobApplicants() {
+    void populate() {
         JobApplicant[] jobApplicants = new JobApplicant[5]
 
         for (int i = 1; i <= MAX_APPLICANTS; i++) {
@@ -35,7 +35,7 @@ class JobApplicantsService implements IEntityService {
     }
 
     @Override
-    void printJobApplicants() {
+    void print() {
         for (JobApplicant j in this.jobApplicants) {
             println j
         }
