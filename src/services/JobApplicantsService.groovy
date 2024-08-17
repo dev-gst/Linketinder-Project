@@ -7,11 +7,11 @@ import model.entity.Skill
 class JobApplicantsService implements IEntityService {
     static final int MAX_APPLICANTS = 5
 
-    JobApplicant[] jobApplicants = new JobApplicant[5]
+    JobApplicant[] jobApplicants = new JobApplicant[MAX_APPLICANTS]
 
     @Override
     void populate() {
-        JobApplicant[] jobApplicants = new JobApplicant[5]
+        JobApplicant[] jobApplicants = new JobApplicant[MAX_APPLICANTS]
 
         for (int i = 1; i <= MAX_APPLICANTS; i++) {
             JobApplicant jobApplicant = new JobApplicant()
