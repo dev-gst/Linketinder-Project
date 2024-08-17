@@ -11,8 +11,6 @@ class CompanyService implements IEntityService {
 
     @Override
     void populate() {
-        Company[] companies = new Company[MAX_APPLICANTS]
-
         for (int i = 1; i <= MAX_APPLICANTS; i++) {
             Company company = new Company()
             company.ID = i.toBigInteger()
@@ -27,10 +25,8 @@ class CompanyService implements IEntityService {
             i <= 3 ? company.addSkill(Skill.JAVA, Skill.SPRING_BOOT, Skill.GROOVY) :
                     company.addSkill(Skill.ANGULAR, Skill.JAVASCRIPT)
 
-            companies[i - 1] = company
+            this.companies[i - 1] = company
         }
-
-        this.companies = companies
     }
 
     @Override

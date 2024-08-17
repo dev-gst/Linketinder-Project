@@ -11,8 +11,6 @@ class JobApplicantsService implements IEntityService {
 
     @Override
     void populate() {
-        JobApplicant[] jobApplicants = new JobApplicant[MAX_APPLICANTS]
-
         for (int i = 1; i <= MAX_APPLICANTS; i++) {
             JobApplicant jobApplicant = new JobApplicant()
             jobApplicant.ID = i.toBigInteger()
@@ -28,10 +26,8 @@ class JobApplicantsService implements IEntityService {
             i <= 3 ? jobApplicant.addSkill(Skill.JAVA, Skill.SPRING_BOOT, Skill.GROOVY) :
                     jobApplicant.addSkill(Skill.ANGULAR, Skill.JAVASCRIPT)
 
-            jobApplicants[i - 1] = jobApplicant
+            this.jobApplicants[i - 1] = jobApplicant
         }
-
-        this.jobApplicants = jobApplicants
     }
 
     @Override
