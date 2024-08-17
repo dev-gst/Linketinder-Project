@@ -64,6 +64,19 @@ class JobApplicant extends Person {
         }
     }
 
+    private String getStringFormatedSkills() {
+        String line = ""
+        for (Skill skill in skills) {
+            if (skill)
+                line += skill.toString() + ", "
+        }
+
+        int lastComma = line.lastIndexOf(", ")
+        line = line.substring(0, lastComma)
+
+        return line
+    }
+
     @Override
     String toString() {
         return "Name: $name" +
@@ -71,6 +84,6 @@ class JobApplicant extends Person {
             "\nEmail: $email" +
             "\nIdade: $age" +
             "\nAddress: $address" +
-            "\nCompetências: $skills\n\n"
+            "\nCompetências: ${getStringFormatedSkills()}\n"
     }
 }
