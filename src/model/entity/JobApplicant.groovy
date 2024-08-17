@@ -47,7 +47,30 @@ class JobApplicant extends Person {
         super.address = address
     }
 
-    void addSkill(Skill skill) {
-        this.skills << skill
+    void addSkill(Skill... skills) {
+        int marker = 0
+        for (Skill skill in skills) {
+            for (int i = marker; i < this.skills.length; i++) {
+                if (this.skills[this.skills.length - 1]) {
+                    throw new IllegalStateException("Container is full (can only contain 5 elements for now)")
+                }
+
+                if (!this.skills[i]) {
+                    this.skills[i] = skill
+                    marker = i
+                    break
+                }
+            }
+        }
+    }
+
+    @Override
+    String toString() {
+        return "Name: $name" +
+            "\nDescription: $description" +
+            "\nEmail: $email" +
+            "\nIdade: $age" +
+            "\nAddress: $address" +
+            "\nCompetências: $skills\n\n"
     }
 }
