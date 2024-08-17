@@ -6,6 +6,8 @@ class Address {
     String zipCode
 
     String toString() {
-        return "Estado: $state, País: $country, CEP: $zipCode"
+        return "País: $country, " +
+                "\nEstado: $state, " +
+                "\nCEP: $zipCode"
     }
 }
