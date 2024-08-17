@@ -24,8 +24,8 @@ class JobApplicantsService implements IEntityService {
             jobApplicant.description = i <= 3 ? "Good on programing" : "Good on math"
             jobApplicant.email = "${i}@example.com"
             jobApplicant.address = i <= 3 ?
-                    new Address(country: "Brazil", state: "DF", CEP: "123456789" + i) :
-                    new Address(country: "Brazil", state: "GO", CEP: "987654321" + i)
+                    new Address(country: "Brazil", state: "DF", zipCode: "123456789" + i) :
+                    new Address(country: "Brazil", state: "GO", zipCode: "987654321" + i)
             jobApplicant.age = 18 + i
             jobApplicant.CPF = "00000000000" + i
 

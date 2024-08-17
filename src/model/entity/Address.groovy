@@ -3,9 +3,9 @@ package model.entity
 class Address {
     String country
     String state
-    String CEP
+    String zipCode
 
     String toString() {
-        return "Estado: $state, País: $country, CEP: $CEP"
+        return "Estado: $state, País: $country, CEP: $zipCode"
     }
 }

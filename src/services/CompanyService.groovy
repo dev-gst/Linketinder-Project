@@ -24,8 +24,8 @@ class CompanyService implements IEntityService {
             company.description = i <= 3 ? "Good company" : "Bad company"
             company.email = "${i}@example.com"
             company.address = i <= 3 ?
-                    new Address(country: "Brazil", state: "DF", CEP: "123456789" + i) :
-                    new Address(country: "Brazil", state: "GO", CEP: "987654321" + i)
+                    new Address(country: "Brazil", state: "DF", zipCode: "123456789" + i) :
+                    new Address(country: "Brazil", state: "GO", zipCode: "987654321" + i)
             company.CNPJ = "00000000000" + i
 
             i < 3 ? company.addSkill(Skill.JAVA, Skill.SPRING_BOOT, Skill.GROOVY) :
