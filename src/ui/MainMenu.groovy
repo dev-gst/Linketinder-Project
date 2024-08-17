@@ -1,14 +1,13 @@
 package ui
-
 import services.CompanyService
 import services.IEntityService
 import services.JobApplicantsService
 
 class MainMenu {
-    static final int MenuEntries = 3
+    static final int MenuEntries = 5
 
-    final IEntityService jobApplicantsService;
-    final IEntityService companyService;
+    final IEntityService jobApplicantsService
+    final IEntityService companyService
 
     MainMenu() {
         this.jobApplicantsService = new JobApplicantsService()
@@ -22,7 +21,7 @@ class MainMenu {
         while (true) {
             printMenu()
 
-            int usrInput = getUsrInput()
+            int usrInput = getUsrChoice()
             if (MenuEntries == usrInput) {
                 return
             }
@@ -38,10 +37,16 @@ class MainMenu {
                 break
             case 2:
                 this.companyService.print()
+                break
+            case 3:
+                this.jobApplicantsService.add(JobApplicantBuilderMenu.create())
+                break
+            case 4:
+                this.companyService.add(CompanyBuilderMenu.create())
         }
     }
 
-    private static int getUsrInput() {
+    private static int getUsrChoice() {
         while (true) {
             Scanner scanner = new Scanner(System.in)
             try {
@@ -51,7 +56,7 @@ class MainMenu {
                 } else {
                     println "Please insert a valid number"
                 }
-            } catch (NoSuchElementException | IllegalStateException e) {
+            } catch (NoSuchElementException | IllegalStateException ignored) {
                 println "Please insert a valid number"
             }
         }
@@ -61,7 +66,9 @@ class MainMenu {
         println "***********************"
         println "1 - Show candidates"
         println "2 - Show companies"
-        println "3 - Exit"
+        println "3 - Add Job Applicant"
+        println "4 - Add Company"
+        println "5 - Exit"
         println "***********************"
     }
 }
