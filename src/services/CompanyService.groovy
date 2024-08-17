@@ -5,15 +5,21 @@ import model.entity.Company
 import model.entity.Skill
 
 class CompanyService implements IEntityService {
-    static final int MAX_APPLICANTS = 5
+    static final int MIN_APPLICANTS = 5
 
-    Company[] companies = new Company[MAX_APPLICANTS]
+    int currentId
+    List<Company> companies
+
+    CompanyService() {
+        this.currentId = 1
+        this.companies = new LinkedList<>()
+    }
 
     @Override
     void populate() {
-        for (int i = 1; i <= MAX_APPLICANTS; i++) {
+        for (int i = 0; i < MIN_APPLICANTS; i++) {
             Company company = new Company()
-            company.ID = i.toBigInteger()
+            company.ID = currentId
             company.name = "Company Name" + i
             company.description = i <= 3 ? "Good company" : "Bad company"
             company.email = "${i}@example.com"
@@ -22,10 +28,12 @@ class CompanyService implements IEntityService {
                     new Address(country: "Brazil", state: "GO", CEP: "987654321" + i)
             company.CNPJ = "00000000000" + i
 
-            i <= 3 ? company.addSkill(Skill.JAVA, Skill.SPRING_BOOT, Skill.GROOVY) :
+            i < 3 ? company.addSkill(Skill.JAVA, Skill.SPRING_BOOT, Skill.GROOVY) :
                     company.addSkill(Skill.ANGULAR, Skill.JAVASCRIPT)
 
-            this.companies[i - 1] = company
+            currentId++
+
+            this.companies.add(company)
         }
     }
 
@@ -33,6 +41,15 @@ class CompanyService implements IEntityService {
     void print() {
         for (Company c in this.companies) {
             println c
+        }
+    }
+
+    @Override
+    <T> void add(T company) {
+        if (company instanceof Company) {
+            company.ID = currentId
+            this.companies.add(company)
+            currentId++
         }
     }
 }

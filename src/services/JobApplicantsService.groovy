@@ -5,13 +5,19 @@ import model.entity.JobApplicant
 import model.entity.Skill
 
 class JobApplicantsService implements IEntityService {
-    static final int MAX_APPLICANTS = 5
+    static final int MIN_APPLICANTS = 5
 
-    JobApplicant[] jobApplicants = new JobApplicant[MAX_APPLICANTS]
+    int currentID
+    List<JobApplicant> jobApplicants
+
+    JobApplicantsService() {
+        this.jobApplicants = new LinkedList<>()
+        currentID = 1
+    }
 
     @Override
     void populate() {
-        for (int i = 1; i <= MAX_APPLICANTS; i++) {
+        for (int i = 0; i < MIN_APPLICANTS; i++) {
             JobApplicant jobApplicant = new JobApplicant()
             jobApplicant.ID = i.toBigInteger()
             jobApplicant.name = "Nome" + i
@@ -26,7 +32,9 @@ class JobApplicantsService implements IEntityService {
             i <= 3 ? jobApplicant.addSkill(Skill.JAVA, Skill.SPRING_BOOT, Skill.GROOVY) :
                     jobApplicant.addSkill(Skill.ANGULAR, Skill.JAVASCRIPT)
 
-            this.jobApplicants[i - 1] = jobApplicant
+            currentID++
+
+            this.jobApplicants.add(jobApplicant)
         }
     }
 
@@ -34,6 +42,15 @@ class JobApplicantsService implements IEntityService {
     void print() {
         for (JobApplicant j in this.jobApplicants) {
             println j
+        }
+    }
+
+    @Override
+    <T> void add(T jobApplicant) {
+        if (jobApplicant instanceof JobApplicant) {
+            jobApplicant.ID = currentID
+            this.jobApplicants.add(jobApplicant)
+            currentID++
         }
     }
 }
