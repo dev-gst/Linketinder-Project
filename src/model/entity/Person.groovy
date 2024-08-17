@@ -21,7 +21,13 @@ abstract class Person {
     String getStringFormatedSkills() {
         String line = ""
         for (Skill skill in this.skills) {
-            line += skill.toString() + ", "
+            String stringSkill = skill.toString()
+            if (stringSkill.contains("_")) {
+                stringSkill = stringSkill.replace("_", " ")
+            }
+
+            line += stringSkill
+            line += ", "
         }
 
         int lastComma = line.lastIndexOf(", ")
