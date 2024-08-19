@@ -35,4 +35,33 @@ abstract class Person {
 
         return line
     }
+
+    @Override
+    boolean equals(o) {
+        if (this.is(o)) return true
+        if (o == null || getClass() != o.class) return false
+
+        Person person = (Person) o
+
+        if (ID != person.ID) return false
+        if (address != person.address) return false
+        if (description != person.description) return false
+        if (email != person.email) return false
+        if (name != person.name) return false
+        if (skills != person.skills) return false
+
+        return true
+    }
+
+    @Override
+    int hashCode() {
+        int result
+        result = (ID != null ? ID.hashCode() : 0)
+        result = 31 * result + (name != null ? name.hashCode() : 0)
+        result = 31 * result + (description != null ? description.hashCode() : 0)
+        result = 31 * result + (email != null ? email.hashCode() : 0)
+        result = 31 * result + (address != null ? address.hashCode() : 0)
+        result = 31 * result + (skills != null ? skills.hashCode() : 0)
+        return result
+    }
 }
