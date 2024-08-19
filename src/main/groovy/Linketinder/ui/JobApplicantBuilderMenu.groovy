@@ -1,9 +1,9 @@
-package ui
+package Linketinder.ui
 
-import model.entity.Address
-import model.entity.JobApplicant
-import model.entity.Skill
-import ui.util.Helpers
+import Linketinder.model.entity.Address
+import Linketinder.model.entity.JobApplicant
+import Linketinder.model.entity.Skill
+import Linketinder.ui.util.Helpers
 
 class JobApplicantBuilderMenu {
 

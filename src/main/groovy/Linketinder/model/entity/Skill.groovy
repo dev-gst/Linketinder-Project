@@ -1,4 +1,4 @@
-package model.entity
+package Linketinder.model.entity
 
 // temp skill set
 enum Skill {

@@ -1,7 +1,7 @@
-package ui
-import services.CompanyService
-import services.IEntityService
-import services.JobApplicantsService
+package Linketinder.ui
+import Linketinder.services.CompanyService
+import Linketinder.services.IEntityService
+import Linketinder.services.JobApplicantsService
 
 class MainMenu {
     static final int MenuEntries = 5

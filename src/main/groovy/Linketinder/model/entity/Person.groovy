@@ -1,4 +1,4 @@
-package model.entity
+package Linketinder.model.entity
 
 abstract class Person {
     BigInteger ID

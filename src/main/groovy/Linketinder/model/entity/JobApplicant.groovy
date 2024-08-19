@@ -1,4 +1,4 @@
-package model.entity
+package Linketinder.model.entity
 
 class JobApplicant extends Person {
     int age

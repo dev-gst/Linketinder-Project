@@ -1,6 +1,6 @@
-package ui.util
+package Linketinder.ui.util
 
-import model.entity.Skill
+import Linketinder.model.entity.Skill
 
 class Helpers {
     static String getFieldFromUsr() {

@@ -1,8 +1,8 @@
-package services
+package Linketinder.services
 
-import model.entity.Address
-import model.entity.Company
-import model.entity.Skill
+import Linketinder.model.entity.Address
+import Linketinder.model.entity.Company
+import Linketinder.model.entity.Skill
 
 class CompanyService implements IEntityService {
     static final int MIN_APPLICANTS = 5
