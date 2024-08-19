@@ -28,8 +28,8 @@ class Company extends Person {
         return "Name: $name" +
                 "\nDescription: $description" +
                 "\nEmail: $email" +
-                "\nCNPJ: $CNPJ()" +
+                "\nCNPJ: $CNPJ" +
                 "\nAddress: $address" +
-                "\nCompetências: ${super.getStringFormatedSkills()}\n"
+                "\nSkills Required: ${super.getStringFormatedSkills()}\n"
     }
 }
