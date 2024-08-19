@@ -19,7 +19,7 @@ class JobApplicantsService implements IEntityService {
     void populate() {
         for (int i = 0; i < MIN_APPLICANTS; i++) {
             JobApplicant jobApplicant = new JobApplicant()
-            jobApplicant.ID = i.toBigInteger()
+            jobApplicant.ID = currentID.toBigInteger()
             jobApplicant.name = "Nome" + i
             jobApplicant.description = i <= 3 ? "Good on programing" : "Good on math"
             jobApplicant.email = "${i}@example.com"

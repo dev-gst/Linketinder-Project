@@ -19,7 +19,7 @@ class CompanyService implements IEntityService {
     void populate() {
         for (int i = 0; i < MIN_APPLICANTS; i++) {
             Company company = new Company()
-            company.ID = currentId
+            company.ID = currentId.toBigInteger()
             company.name = "Company Name" + i
             company.description = i <= 3 ? "Good company" : "Bad company"
             company.email = "${i}@example.com"
