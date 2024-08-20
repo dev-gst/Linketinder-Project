@@ -1,15 +1,15 @@
-package ui
+package Linketinder.ui
 
-import model.entity.Address
-import model.entity.JobApplicant
-import model.entity.Skill
-import ui.util.Helpers
+import Linketinder.models.entities.Address
+import Linketinder.models.entities.Candidate
+import Linketinder.models.enums.SkillEnum
+import Linketinder.ui.util.Helpers
 
-class JobApplicantBuilderMenu {
+class CandidateBuilderMenu {
 
-    static JobApplicant create() {
+    static Candidate create() {
 
-        JobApplicant jobApplicant = new JobApplicant()
+        Candidate candidate = new Candidate()
         Address address = new Address()
 
         print "Enter applicant's name "
@@ -37,21 +37,21 @@ class JobApplicantBuilderMenu {
         String zipCode = Helpers.getFieldFromUsr()
 
         print "Enter applicant's skills (separated by comma) "
-        Skill[] skills = Helpers.getSkillsFromUsr()
+        SkillEnum[] skills = Helpers.getSkillsFromUsr()
 
-        jobApplicant.name = name
-        jobApplicant.age = age
-        jobApplicant.CPF = cpf
-        jobApplicant.description = description
-        jobApplicant.email = email
-        jobApplicant.addSkill skills
+        candidate.name = name
+        candidate.age = age
+        candidate.CPF = cpf
+        candidate.description = description
+        candidate.email = email
+        candidate.addSkill skills
 
         address.country = country
         address.state = state
         address.zipCode = zipCode
 
-        jobApplicant.address = address
+        candidate.address = address
 
-        return jobApplicant
+        return candidate
     }
 }

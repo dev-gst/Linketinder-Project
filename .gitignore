@@ -1,9 +1,36 @@
+### Package Files ###
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+### Java ###
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+### Gradle ###
+.gradle
+build/
+gradle-app.setting
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+.gradletasknamecache
+
 ### IntelliJ IDEA ###
 .idea/
+*.iws
+*.iml
+*.ipr
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-*.iml
 
 ### Eclipse ###
 .apt_generated
@@ -29,6 +56,3 @@ bin/
 
 ### Mac OS ###
 .DS_Store
-
-### Groovy ###
-lib/

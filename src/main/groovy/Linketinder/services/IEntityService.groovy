@@ -1,4 +1,4 @@
-package services
+package Linketinder.services
 
 interface IEntityService {
     void populate()
