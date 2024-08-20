@@ -9,10 +9,19 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    groovy = '4.0.22'
+    junitVersion = '5.11.0-M2'
+    junitSuiteAPI = '1.11.0-M2'
+    mockitoCore = '5.12.0'
+}
+
 dependencies {
-    implementation 'org.apache.groovy:groovy:4.0.14'
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation "org.apache.groovy:groovy:$groovy"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+    testImplementation "org.junit.platform:junit-platform-suite-api:$junitSuiteAPI"
+    testImplementation "org.mockito:mockito-core:$mockitoCore"
 }
 
 test {
