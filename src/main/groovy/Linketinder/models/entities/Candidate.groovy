@@ -1,6 +1,6 @@
-package model.entity
+package Linketinder.models.entities
 
-class JobApplicant extends Person {
+class Candidate extends Person {
     int age
     String CPF
 
@@ -10,7 +10,7 @@ class JobApplicant extends Person {
         if (o == null || getClass() != o.class) return false
         if (!super.equals(o)) return false
 
-        JobApplicant that = (JobApplicant) o
+        Candidate that = (Candidate) o
 
         if (age != that.age) return false
         if (CPF != that.CPF) return false
