@@ -1,7 +1,7 @@
-package Linketinder.model.entity
+package Linketinder.models.enums
 
 // temp skill set
-enum Skill {
+enum SkillEnum {
     JAVA,
     SPRING_BOOT,
     JAVASCRIPT,

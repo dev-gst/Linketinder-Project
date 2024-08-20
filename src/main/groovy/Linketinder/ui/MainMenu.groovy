@@ -1,17 +1,17 @@
 package Linketinder.ui
 import Linketinder.services.CompanyService
 import Linketinder.services.IEntityService
-import Linketinder.services.JobApplicantsService
+import Linketinder.services.CandidateService
 
 class MainMenu {
     static final int MenuEntries = 5
 
-    final IEntityService jobApplicantsService
+    final IEntityService candidateService
     final IEntityService companyService
 
     MainMenu() {
-        this.jobApplicantsService = new JobApplicantsService()
-        this.jobApplicantsService.populate()
+        this.candidateService = new CandidateService()
+        this.candidateService.populate()
 
         this.companyService = new CompanyService()
         this.companyService.populate()
@@ -33,13 +33,13 @@ class MainMenu {
     private void printUsrChoice(int choice) {
         switch (choice) {
             case 1:
-                this.jobApplicantsService.print()
+                this.candidateService.print()
                 break
             case 2:
                 this.companyService.print()
                 break
             case 3:
-                this.jobApplicantsService.add(JobApplicantBuilderMenu.create())
+                this.candidateService.add(CandidateBuilderMenu.create())
                 break
             case 4:
                 this.companyService.add(CompanyBuilderMenu.create())

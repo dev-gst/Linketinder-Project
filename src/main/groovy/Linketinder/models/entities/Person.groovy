@@ -1,4 +1,6 @@
-package Linketinder.model.entity
+package Linketinder.models.entities
+
+import Linketinder.models.enums.SkillEnum
 
 abstract class Person {
     BigInteger ID
@@ -6,21 +8,21 @@ abstract class Person {
     String description
     String email
     Address address
-    Set<Skill> skills
+    Set<SkillEnum> skills
 
     Person() {
         this.skills = new LinkedHashSet()
     }
 
-    void addSkill(Skill... skills) {
-        for (Skill skill in skills) {
+    void addSkill(SkillEnum... skills) {
+        for (SkillEnum skill in skills) {
             this.skills.add(skill)
         }
     }
 
     String getStringFormatedSkills() {
         String line = ""
-        for (Skill skill in this.skills) {
+        for (SkillEnum skill in this.skills) {
             String stringSkill = skill.toString()
             if (stringSkill.contains("_")) {
                 stringSkill = stringSkill.replace("_", " ")

@@ -1,8 +1,8 @@
 package Linketinder.ui
 
-import Linketinder.model.entity.Address
-import Linketinder.model.entity.Company
-import Linketinder.model.entity.Skill
+import Linketinder.models.entities.Address
+import Linketinder.models.entities.Company
+import Linketinder.models.enums.SkillEnum
 import Linketinder.ui.util.Helpers
 
 class CompanyBuilderMenu {
@@ -34,7 +34,7 @@ class CompanyBuilderMenu {
         String zipCode = Helpers.getFieldFromUsr()
 
         print "Enter required skills (separated by comma) "
-        Skill[] skills = Helpers.getSkillsFromUsr()
+        SkillEnum[] skills = Helpers.getSkillsFromUsr()
 
         company.name = name
         company.CNPJ = cnpj

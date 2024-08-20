@@ -1,6 +1,6 @@
 package Linketinder.ui.util
 
-import Linketinder.model.entity.Skill
+import Linketinder.models.enums.SkillEnum
 
 class Helpers {
     static String getFieldFromUsr() {
@@ -36,8 +36,8 @@ class Helpers {
         }
     }
 
-    static Skill[] getSkillsFromUsr() {
-        List<Skill> skillList = new LinkedList<>()
+    static SkillEnum[] getSkillsFromUsr() {
+        List<SkillEnum> skillList = new LinkedList<>()
 
         while (true) {
             String commonString = getFieldFromUsr()
@@ -52,19 +52,19 @@ class Helpers {
             rawSkills.each { String skill ->
                  switch (skill.toUpperCase().trim()) {
                     case "JAVA":
-                        skillList.add(Skill.JAVA)
+                        skillList.add(SkillEnum.JAVA)
                         break
                     case "SPRING BOOT":
-                        skillList.add(Skill.SPRING_BOOT)
+                        skillList.add(SkillEnum.SPRING_BOOT)
                         break
                     case "GROOVY":
-                        skillList.add(Skill.GROOVY)
+                        skillList.add(SkillEnum.GROOVY)
                         break
                     case "JAVASCRIPT":
-                        skillList.add(Skill.JAVASCRIPT)
+                        skillList.add(SkillEnum.JAVASCRIPT)
                         break
                     case "ANGULAR":
-                        skillList.add(Skill.ANGULAR)
+                        skillList.add(SkillEnum.ANGULAR)
                         break
                 }
             }
@@ -76,6 +76,6 @@ class Helpers {
             }
         }
 
-        return skillList.toArray() as Skill[]
+        return skillList.toArray() as SkillEnum[]
     }
 }

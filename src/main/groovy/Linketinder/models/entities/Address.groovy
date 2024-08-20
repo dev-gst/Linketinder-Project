@@ -1,4 +1,4 @@
-package Linketinder.model.entity
+package Linketinder.models.entities
 
 class Address {
     String country
