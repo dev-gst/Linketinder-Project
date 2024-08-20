@@ -30,8 +30,8 @@ class Address {
 
     @Override
     String toString() {
-        return "País: $country, " +
-                "\nEstado: $state, " +
-                "\nCEP: $zipCode"
+        return "Country: $country, " +
+                "\nState: $state, " +
+                "\nZIP CODE: $zipCode"
     }
 }

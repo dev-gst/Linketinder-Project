@@ -31,8 +31,8 @@ class JobApplicant extends Person {
         return "Name: $name" +
             "\nDescription: $description" +
             "\nEmail: $email" +
-            "\nIdade: $age" +
+            "\nAge: $age" +
             "\nAddress: $address" +
-            "\nCompetências: ${super.getStringFormatedSkills()}\n"
+            "\nSkills: ${super.getStringFormatedSkills()}\n"
     }
 }
