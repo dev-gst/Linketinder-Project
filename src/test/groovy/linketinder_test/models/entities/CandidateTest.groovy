@@ -105,5 +105,4 @@ class CandidateTest {
 
         assertEquals(expectedResult, result)
     }
-
 }
