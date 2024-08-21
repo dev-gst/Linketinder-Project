@@ -39,13 +39,6 @@ class CandidateService implements IEntityService {
     }
 
     @Override
-    void print() {
-        for (Candidate j in this.candidates) {
-            println j
-        }
-    }
-
-    @Override
     <T> void add(T candidate) {
         if (candidate instanceof Candidate) {
             candidate.ID = currentID

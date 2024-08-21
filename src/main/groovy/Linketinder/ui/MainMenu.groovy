@@ -6,8 +6,8 @@ import Linketinder.services.CandidateService
 class MainMenu {
     static final int MenuEntries = 5
 
-    final IEntityService candidateService
-    final IEntityService companyService
+    final CandidateService candidateService
+    final CompanyService companyService
 
     MainMenu() {
         this.candidateService = new CandidateService()
@@ -33,10 +33,10 @@ class MainMenu {
     private void printUsrChoice(int choice) {
         switch (choice) {
             case 1:
-                this.candidateService.print()
+                printEntities(this.candidateService.candidates)
                 break
             case 2:
-                this.companyService.print()
+                printEntities(this.companyService.companies)
                 break
             case 3:
                 this.candidateService.add(CandidateBuilderMenu.create())
@@ -70,5 +70,11 @@ class MainMenu {
         println "4 - Add Company"
         println "5 - Exit"
         println "***********************"
+    }
+
+    private static <E> void printEntities(List<E> elementList) {
+        elementList.forEach {
+            element -> println element
+        }
     }
 }
