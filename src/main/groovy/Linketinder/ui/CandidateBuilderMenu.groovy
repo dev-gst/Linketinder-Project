@@ -8,36 +8,36 @@ import Linketinder.ui.util.Helpers
 class CandidateBuilderMenu {
 
     static Candidate create() {
-
+        Scanner scanner = new Scanner(System.in)
         Candidate candidate = new Candidate()
         Address address = new Address()
 
         print "Enter applicant's name "
-        String name = Helpers.getFieldFromUsr()
+        String name = Helpers.getFieldFromUsr(scanner)
 
         print "Enter applicant's age "
-        int age = Helpers.getAgeFromUsr()
+        int age = Helpers.getAgeFromUsr(scanner)
 
         print "Enter applicant's CPF "
-        String cpf = Helpers.getFieldFromUsr()
+        String cpf = Helpers.getFieldFromUsr(scanner)
 
         print "Enter applicant's description "
-        String description = Helpers.getFieldFromUsr()
+        String description = Helpers.getFieldFromUsr(scanner)
 
         print "Enter applicant's email "
-        String email = Helpers.getFieldFromUsr()
+        String email = Helpers.getFieldFromUsr(scanner)
 
         print "Enter applicant's Country "
-        String country = Helpers.getFieldFromUsr()
+        String country = Helpers.getFieldFromUsr(scanner)
 
         print "Enter applicant's State "
-        String state = Helpers.getFieldFromUsr()
+        String state = Helpers.getFieldFromUsr(scanner)
 
         print "Enter applicant's Zip Code "
-        String zipCode = Helpers.getFieldFromUsr()
+        String zipCode = Helpers.getFieldFromUsr(scanner)
 
         print "Enter applicant's skills (separated by comma) "
-        SkillEnum[] skills = Helpers.getSkillsFromUsr()
+        SkillEnum[] skills = Helpers.getSkillsFromUsr(scanner)
 
         candidate.name = name
         candidate.age = age
