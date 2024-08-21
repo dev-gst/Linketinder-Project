@@ -38,13 +38,6 @@ class CompanyService implements IEntityService {
     }
 
     @Override
-    void print() {
-        for (Company c in this.companies) {
-            println c
-        }
-    }
-
-    @Override
     <T> void add(T company) {
         if (company instanceof Company) {
             company.ID = currentId

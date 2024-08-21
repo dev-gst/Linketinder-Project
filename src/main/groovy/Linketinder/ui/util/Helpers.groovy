@@ -3,9 +3,7 @@ package Linketinder.ui.util
 import Linketinder.models.enums.SkillEnum
 
 class Helpers {
-    static String getFieldFromUsr() {
-        Scanner scanner = new Scanner(System.in)
-
+    static String getFieldFromUsr(Scanner scanner) {
         while (true) {
             try {
                 String field = scanner.nextLine()
@@ -20,27 +18,25 @@ class Helpers {
         }
     }
 
-    static int getAgeFromUsr() {
+    static int getAgeFromUsr(Scanner scanner) {
         int age
         while (true) {
-            String field = getFieldFromUsr()
+            String field = getFieldFromUsr(scanner)
             try {
                 age = Integer.valueOf(field)
-                if (age >= 16 && age <= 140) {
+                if (age >= 16 && age <= 125) {
                     return age
                 }
-            } catch (NumberFormatException ignored) {
-            }
+            } catch (NumberFormatException ignored) {}
 
-            println "Invalid input, try again!"
+            println "Invalid age, try again!"
         }
     }
 
-    static SkillEnum[] getSkillsFromUsr() {
+    static SkillEnum[] getSkillsFromUsr(Scanner scanner) {
         List<SkillEnum> skillList = new LinkedList<>()
-
         while (true) {
-            String commonString = getFieldFromUsr()
+            String commonString = getFieldFromUsr(scanner)
             String[] rawSkills = new String[1]
 
             if (commonString.contains(",")) {

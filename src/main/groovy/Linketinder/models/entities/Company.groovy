@@ -30,6 +30,6 @@ class Company extends Person {
                 "\nEmail: $email" +
                 "\nCNPJ: $CNPJ" +
                 "\nAddress: $address" +
-                "\nSkills Required: ${super.getStringFormatedSkills()}\n"
+                "\nSkills Required: ${super.getFormatedSkills()}\n"
     }
 }

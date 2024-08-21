@@ -8,33 +8,33 @@ import Linketinder.ui.util.Helpers
 class CompanyBuilderMenu {
 
     static Company create() {
-
+        Scanner scanner = new Scanner(System.in)
         Company company = new Company()
         Address address = new Address()
 
         print "Enter company's name "
-        String name = Helpers.getFieldFromUsr()
+        String name = Helpers.getFieldFromUsr(scanner)
 
         print "Enter company's CNPJ "
-        String cnpj = Helpers.getFieldFromUsr()
+        String cnpj = Helpers.getFieldFromUsr(scanner)
 
         print "Enter company's description "
-        String description = Helpers.getFieldFromUsr()
+        String description = Helpers.getFieldFromUsr(scanner)
 
         print "Enter company's email "
-        String email = Helpers.getFieldFromUsr()
+        String email = Helpers.getFieldFromUsr(scanner)
 
         print "Enter company's Country "
-        String country = Helpers.getFieldFromUsr()
+        String country = Helpers.getFieldFromUsr(scanner)
 
         print "Enter company's State "
-        String state = Helpers.getFieldFromUsr()
+        String state = Helpers.getFieldFromUsr(scanner)
 
         print "Enter company's Zip Code "
-        String zipCode = Helpers.getFieldFromUsr()
+        String zipCode = Helpers.getFieldFromUsr(scanner)
 
         print "Enter required skills (separated by comma) "
-        SkillEnum[] skills = Helpers.getSkillsFromUsr()
+        SkillEnum[] skills = Helpers.getSkillsFromUsr(scanner)
 
         company.name = name
         company.CNPJ = cnpj
