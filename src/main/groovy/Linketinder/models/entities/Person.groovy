@@ -15,12 +15,14 @@ abstract class Person {
     }
 
     void addSkill(SkillEnum... skills) {
+        if (skills.length == 0) return
+
         for (SkillEnum skill in skills) {
             this.skills.add(skill)
         }
     }
 
-    String getStringFormatedSkills() {
+    String getFormatedSkills() {
         String line = ""
         for (SkillEnum skill in this.skills) {
             String stringSkill = skill.toString()

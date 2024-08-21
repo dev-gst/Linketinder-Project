@@ -33,6 +33,6 @@ class Candidate extends Person {
             "\nEmail: $email" +
             "\nAge: $age" +
             "\nAddress: $address" +
-            "\nSkills: ${super.getStringFormatedSkills()}\n"
+            "\nSkills: ${super.getFormatedSkills()}\n"
     }
 }
