@@ -1,17 +1,17 @@
-package ui
-import services.CompanyService
-import services.IEntityService
-import services.JobApplicantsService
+package Linketinder.ui
+import Linketinder.services.CompanyService
+import Linketinder.services.IEntityService
+import Linketinder.services.CandidateService
 
 class MainMenu {
     static final int MenuEntries = 5
 
-    final IEntityService jobApplicantsService
-    final IEntityService companyService
+    final CandidateService candidateService
+    final CompanyService companyService
 
     MainMenu() {
-        this.jobApplicantsService = new JobApplicantsService()
-        this.jobApplicantsService.populate()
+        this.candidateService = new CandidateService()
+        this.candidateService.populate()
 
         this.companyService = new CompanyService()
         this.companyService.populate()
@@ -33,13 +33,13 @@ class MainMenu {
     private void printUsrChoice(int choice) {
         switch (choice) {
             case 1:
-                this.jobApplicantsService.print()
+                printEntities(this.candidateService.candidates)
                 break
             case 2:
-                this.companyService.print()
+                printEntities(this.companyService.companies)
                 break
             case 3:
-                this.jobApplicantsService.add(JobApplicantBuilderMenu.create())
+                this.candidateService.add(CandidateBuilderMenu.create())
                 break
             case 4:
                 this.companyService.add(CompanyBuilderMenu.create())
@@ -70,5 +70,11 @@ class MainMenu {
         println "4 - Add Company"
         println "5 - Exit"
         println "***********************"
+    }
+
+    private static <E> void printEntities(List<E> elementList) {
+        elementList.forEach {
+            element -> println element
+        }
     }
 }

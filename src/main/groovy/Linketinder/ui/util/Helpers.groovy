@@ -1,11 +1,9 @@
-package ui.util
+package Linketinder.ui.util
 
-import model.entity.Skill
+import Linketinder.models.enums.SkillEnum
 
 class Helpers {
-    static String getFieldFromUsr() {
-        Scanner scanner = new Scanner(System.in)
-
+    static String getFieldFromUsr(Scanner scanner) {
         while (true) {
             try {
                 String field = scanner.nextLine()
@@ -20,27 +18,25 @@ class Helpers {
         }
     }
 
-    static int getAgeFromUsr() {
+    static int getAgeFromUsr(Scanner scanner) {
         int age
         while (true) {
-            String field = getFieldFromUsr()
+            String field = getFieldFromUsr(scanner)
             try {
                 age = Integer.valueOf(field)
-                if (age >= 16 && age <= 140) {
+                if (age >= 16 && age <= 125) {
                     return age
                 }
-            } catch (NumberFormatException ignored) {
-            }
+            } catch (NumberFormatException ignored) {}
 
-            println "Invalid input, try again!"
+            println "Invalid age, try again!"
         }
     }
 
-    static Skill[] getSkillsFromUsr() {
-        List<Skill> skillList = new LinkedList<>()
-
+    static SkillEnum[] getSkillsFromUsr(Scanner scanner) {
+        List<SkillEnum> skillList = new LinkedList<>()
         while (true) {
-            String commonString = getFieldFromUsr()
+            String commonString = getFieldFromUsr(scanner)
             String[] rawSkills = new String[1]
 
             if (commonString.contains(",")) {
@@ -52,19 +48,19 @@ class Helpers {
             rawSkills.each { String skill ->
                  switch (skill.toUpperCase().trim()) {
                     case "JAVA":
-                        skillList.add(Skill.JAVA)
+                        skillList.add(SkillEnum.JAVA)
                         break
                     case "SPRING BOOT":
-                        skillList.add(Skill.SPRING_BOOT)
+                        skillList.add(SkillEnum.SPRING_BOOT)
                         break
                     case "GROOVY":
-                        skillList.add(Skill.GROOVY)
+                        skillList.add(SkillEnum.GROOVY)
                         break
                     case "JAVASCRIPT":
-                        skillList.add(Skill.JAVASCRIPT)
+                        skillList.add(SkillEnum.JAVASCRIPT)
                         break
                     case "ANGULAR":
-                        skillList.add(Skill.ANGULAR)
+                        skillList.add(SkillEnum.ANGULAR)
                         break
                 }
             }
@@ -76,6 +72,6 @@ class Helpers {
             }
         }
 
-        return skillList.toArray() as Skill[]
+        return skillList.toArray() as SkillEnum[]
     }
 }

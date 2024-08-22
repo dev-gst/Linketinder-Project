@@ -1,4 +1,4 @@
-import ui.MainMenu
+import Linketinder.ui.MainMenu
 
 class Main {
     static void main(String[] args) {

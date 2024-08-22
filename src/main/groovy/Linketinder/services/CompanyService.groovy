@@ -1,11 +1,11 @@
-package services
+package Linketinder.services
 
-import model.entity.Address
-import model.entity.Company
-import model.entity.Skill
+import Linketinder.models.entities.Address
+import Linketinder.models.entities.Company
+import Linketinder.models.enums.SkillEnum
 
 class CompanyService implements IEntityService {
-    static final int MIN_APPLICANTS = 5
+    static final int MIN_COMPANIES = 5
 
     int currentId
     List<Company> companies
@@ -17,9 +17,9 @@ class CompanyService implements IEntityService {
 
     @Override
     void populate() {
-        for (int i = 0; i < MIN_APPLICANTS; i++) {
+        for (int i = 0; i < MIN_COMPANIES; i++) {
             Company company = new Company()
-            company.ID = currentId
+            company.ID = currentId.toBigInteger()
             company.name = "Company Name" + i
             company.description = i <= 3 ? "Good company" : "Bad company"
             company.email = "${i}@example.com"
@@ -28,19 +28,12 @@ class CompanyService implements IEntityService {
                     new Address(country: "Brazil", state: "GO", zipCode: "987654321" + i)
             company.CNPJ = "00000000000" + i
 
-            i < 3 ? company.addSkill(Skill.JAVA, Skill.SPRING_BOOT, Skill.GROOVY) :
-                    company.addSkill(Skill.ANGULAR, Skill.JAVASCRIPT)
+            i < 3 ? company.addSkill(SkillEnum.JAVA, SkillEnum.SPRING_BOOT, SkillEnum.GROOVY) :
+                    company.addSkill(SkillEnum.ANGULAR, SkillEnum.JAVASCRIPT)
 
             currentId++
 
             this.companies.add(company)
-        }
-    }
-
-    @Override
-    void print() {
-        for (Company c in this.companies) {
-            println c
         }
     }
 
