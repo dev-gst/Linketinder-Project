@@ -7,11 +7,8 @@ by Gustavo de Araújo Garcia
 ### Requirements:
 1. Java 21
 2. Groovy 4.0.22
+3. Gradle 8.10
 
 ### How to execute the file
-#### 01 - From src type in Bash:
-```groovyc -d ./bin Main.groovy```
-#### 02 - Type:
-```cd ./bin```
-#### 03 - Type:
-```java -cp ".:/path/to/groovy/4.0.22/lib/*" Main```
+#### 01 - From the project folder type in Bash:
+```gradle run```
