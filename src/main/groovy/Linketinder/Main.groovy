@@ -1,3 +1,5 @@
+package Linketinder
+
 import Linketinder.ui.MainMenu
 
 class Main {
