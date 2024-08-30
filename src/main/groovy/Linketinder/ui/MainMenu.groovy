@@ -1,6 +1,5 @@
 package Linketinder.ui
 import Linketinder.services.CompanyService
-import Linketinder.services.IEntityService
 import Linketinder.services.CandidateService
 
 class MainMenu {

@@ -24,6 +24,21 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$mockitoCore"
 }
 
+sourceSets {
+    main {
+        groovy {}
+    }
+    test {
+        groovy {}
+    }
+}
+
+tasks.register('run', JavaExec) {
+    mainClass.set('Linketinder.Main')
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+}
+
 test {
     useJUnitPlatform()
 }
