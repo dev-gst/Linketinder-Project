@@ -59,3 +59,4 @@ bin/
 
 ### Node ###
 node_modules/
+dist/
