@@ -4,6 +4,13 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
   entry: './src/ts/index.ts',
   mode: 'development',
+
+  output: {
+    filename: 'main.js',
+    path: path.resolve(__dirname, 'dist'),
+    clean: true,
+  },
+
   module: {
     rules: [
       {
@@ -23,12 +30,17 @@ module.exports = {
     }),
   ],
 
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+      watch: true,
+    },
+    compress: true,
+    port: 9000,
+    hot: true,
   },
 
-  output: {
-    filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
   },
 };
