@@ -1,6 +1,6 @@
 export class Person {
 
-    private _id?: BigInt;
+    private _id?: bigint;
     private _name?: string;
     private _email?: string;
     private _address?: string;
@@ -8,11 +8,11 @@ export class Person {
 
     constructor() { }
     
-    public get id(): BigInt | undefined {
+    public get id(): bigint | undefined {
         return this._id;
     }
 
-    public set id(id : BigInt | undefined) {
+    public set id(id : bigint | undefined) {
         this._id = id;
     }
 
