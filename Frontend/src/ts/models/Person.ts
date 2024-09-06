@@ -2,6 +2,7 @@ export class Person {
 
     private _id?: bigint;
     private _name?: string;
+    private _description?: string;
     private _email?: string;
     private _address?: string;
     private _skills?: string[];
@@ -22,6 +23,14 @@ export class Person {
 
     public set name(name:string | undefined) {
         this._name = name;
+    }
+
+    public get description(): string | undefined {
+        return this._description;
+    }
+
+    public set description(description: string | undefined) {
+        this._description = description;
     }
 
     public get email(): string | undefined {

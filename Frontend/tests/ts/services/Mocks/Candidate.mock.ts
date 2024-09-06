@@ -4,6 +4,7 @@ export function mockCandidate(n: number): Candidate {
     return {
         id: BigInt(n),
         name: `John Doe ${n}`,
+        description: `good person`,
         email: `johndoe${n}@example.com`,
         address: `Good street, ${n}`,
         skills: ['JavaScript', 'TypeScript', 'React'],
