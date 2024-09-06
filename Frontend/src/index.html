@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,46 @@
     <link rel="stylesheet" href="./css/styles.css">
 
 </head>
+
 <body>
-    
+    <section>
+        <h1>Candidate</h1>
+        
+        <form id="candidate-sign-up-form">
+            <h2>Sign Up</h2>
+            <div class="form-content">
+                <div class="form-labels">
+                    <label for="candidate-name">Name: </label>
+                    <input class="sign-up-entry" id="candidate-name" placeholder="John Doe">
+                </div>
+                <div class="form-labels">
+                    <label for="candidate-email">Email: </label>
+                    <input class="sign-up-entry" id="candidate-email" placeholder="johndoe@example.com">
+                </div>
+                <div class="form-labels">
+                    <label for="candidate-age">Age: </label>
+                    <input class="sign-up-entry" id="candidate-age" placeholder="23">
+                </div>
+                <div class="form-labels">
+                    <label for="candidate-cpf">CPF: </label>
+                    <input class="sign-up-entry" id="candidate-cpf" placeholder="123456789">
+                </div>
+                <div class="form-labels">
+                    <label for="candidate-description">Bio: </label>
+                    <textarea class="sign-up-entry" id="candidate-description" placeholder="Bio"></textarea>
+                </div>
+                <div class="form-labels">
+                    <label for="candidate-address">Address: </label>
+                    <input class="sign-up-entry" id="candidate-address" placeholder="Fifth Avenue, 36, California">
+                </div>
+                <div class="form-labels">
+                    <label for="candidate-skills">Skills: </label>
+                    <input class="sign-up-entry" id="candidate-skills" placeholder="Skills: Python, Java etc.">
+                </div>
+            </div>
+            <button type="submit" class="sign-up-button" id="candidate-sign-up-button">Sign Up</button>
+        </form>
+    </section>
 </body>
+
 </html>

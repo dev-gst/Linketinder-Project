@@ -1,3 +1,51 @@
-* {
-    background-color: blue;
+:root {
+    --primary-color: #6995ee;
+    --secondary-color: #ccdaf7;
+}
+
+#candidate-sign-up-form {
+    background-color: var(--secondary-color);
+    border: solid 2px var(--primary-color);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    gap: 10px;
+}
+
+#candidate-sign-up-form h2 {
+    margin: 0 0 10px 0;
+}
+
+.form-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-labels {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.form-labels label {
+    display: inline-block;
+    width: 70px;
+}
+
+.sign-up-button {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border: none;
+    margin: 10px auto;
+    width: 100px;
+    height: 50px;
+    font-weight: bold;
+}
+
+.sign-up-button:hover {
+    border: solid 2px var(--primary-color);
+    background-color: #ffffff;
+    color: var(--primary-color);
 }
