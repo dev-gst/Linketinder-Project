@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <section>
+    <section id="test">
         <h1>Candidate</h1>
         
         <form id="candidate-sign-up-form">
@@ -20,34 +20,38 @@
             <div class="form-content">
                 <div class="form-labels">
                     <label for="candidate-name">Name: </label>
-                    <input class="sign-up-entry" id="candidate-name" placeholder="John Doe">
+                    <input class="sign-up-entry" id="candidate-name" type="text" placeholder="John Doe">
                 </div>
                 <div class="form-labels">
                     <label for="candidate-email">Email: </label>
-                    <input class="sign-up-entry" id="candidate-email" placeholder="johndoe@example.com">
+                    <input class="sign-up-entry" id="candidate-email" type="email" placeholder="johndoe@example.com">
                 </div>
                 <div class="form-labels">
                     <label for="candidate-age">Age: </label>
-                    <input class="sign-up-entry" id="candidate-age" placeholder="23">
+                    <input class="sign-up-entry" id="candidate-age" type="number" placeholder="23">
                 </div>
                 <div class="form-labels">
                     <label for="candidate-cpf">CPF: </label>
-                    <input class="sign-up-entry" id="candidate-cpf" placeholder="123456789">
+                    <input class="sign-up-entry" id="candidate-cpf" type="text" placeholder="123456789">
                 </div>
                 <div class="form-labels">
                     <label for="candidate-description">Bio: </label>
-                    <textarea class="sign-up-entry" id="candidate-description" placeholder="Bio"></textarea>
+                    <textarea class="sign-up-entry" id="candidate-description" type="text" placeholder="Bio"></textarea>
                 </div>
                 <div class="form-labels">
                     <label for="candidate-address">Address: </label>
-                    <input class="sign-up-entry" id="candidate-address" placeholder="Fifth Avenue, 36, California">
+                    <input class="sign-up-entry" id="candidate-address" type="text" placeholder="Fifth Avenue, 36, California">
+                </div>
+                <div class="form-labels">
+                    <label for="candidate-education">Education: </label>
+                    <input class="sign-up-entry" id="candidate-education" type="text" placeholder="Computer Engineer">
                 </div>
                 <div class="form-labels">
                     <label for="candidate-skills">Skills: </label>
-                    <input class="sign-up-entry" id="candidate-skills" placeholder="Skills: Python, Java etc.">
+                    <input class="sign-up-entry" id="candidate-skills" type="text" placeholder="Python, Java, JavaScript...">
                 </div>
             </div>
-            <button type="submit" class="sign-up-button" id="candidate-sign-up-button">Sign Up</button>
+            <button class="sign-up-button" id="candidate-sign-up-button" type="submit">Sign Up</button>
         </form>
     </section>
 </body>
