@@ -42,9 +42,7 @@ export class CandidateHandler {
             age,
             CPF
         )
-
-        console.log(candidate)
-
+        
         this.candidateService.save(candidate);
     }
 
