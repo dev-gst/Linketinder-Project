@@ -2,7 +2,7 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: './src/ts/index.ts',
+  entry: './src/index.ts',
   mode: 'development',
 
   output: {
@@ -24,8 +24,16 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'src/*.html', to: '[name][ext]' },
-        { from: 'src/css/*.css', to: 'css/[name][ext]' },
+        {
+          from: '**/*.html',
+          context: path.resolve(__dirname, 'src/views'),
+          to: path.resolve(__dirname, 'dist/[path][name][ext]'),
+        },
+        {
+          from: '**/*.css',
+          context: path.resolve(__dirname, 'src/views'),
+          to: path.resolve(__dirname, 'dist/[path][name][ext]'),
+        },
       ],
     }),
   ],

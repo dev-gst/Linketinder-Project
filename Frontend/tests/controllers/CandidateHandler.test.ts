@@ -1,6 +1,6 @@
-import { CandidateHandler } from "../../../src/ts/controllers/CandidateHandler"
-import { Candidate } from "../../../src/ts/models/Candidate";
-import { CandidateService } from "../../../src/ts/services/CandidateService";
+import { CandidateHandler } from "../../src/controllers/CandidateHandler"
+import { Candidate } from "../../src/models/Candidate";
+import { CandidateService } from "../../src/services/CandidateService";
 
 describe('Test CandidateHandler', () => {
     let candidateList: Candidate[];
@@ -76,5 +76,4 @@ describe('Test CandidateHandler', () => {
         expect(mockedCandidateService.save).toHaveBeenCalledTimes(1);
         expect(mockedCandidateService.save).toHaveBeenCalledWith(mockedCandidate);
     });
-
 });

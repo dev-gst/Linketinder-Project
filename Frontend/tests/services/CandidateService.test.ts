@@ -1,13 +1,13 @@
-import { Candidate } from '../../../src/ts/models/Candidate';
-import { CandidateService } from '../../../src/ts/services/CandidateService';
+import { Candidate } from '../../src/models/Candidate';
+import { CandidateService } from '../../src/services/CandidateService';
 
 describe('Test CandidateService', () => {
-    let mockedCandidateList: jest.Mocked<Candidate[]>;
+    let candidateList: Candidate[];
     let mockedCandidate: jest.Mocked<Candidate>
     let candidateService: CandidateService;
 
     beforeEach(() => {
-        mockedCandidateList = [] as jest.Mocked<Candidate[]>;
+        candidateList = [];
         mockedCandidate = {
             id: BigInt(1),
             name: 'John Doe',
@@ -20,7 +20,7 @@ describe('Test CandidateService', () => {
             CPF: `1234567891`,
         }
 
-        candidateService = new CandidateService(mockedCandidateList);
+        candidateService = new CandidateService(candidateList);
     });
 
     test('Creates a new Candidate', () => {
@@ -67,4 +67,22 @@ describe('Test CandidateService', () => {
         spy.mockReset();
         spy.mockRestore();
     });
+
+    test('Get by email returns null when the candidate is not present', () => {
+        expect(candidateService.getByEmail(mockedCandidate.email)).toBeNull();
+    });
+
+    test('Get by email returns candidate when the candidate is present', () => {
+        candidateList.push(mockedCandidate);
+        expect(candidateService.getByEmail(mockedCandidate.email)).toBe(mockedCandidate);
+    });
+
+    test('Get by CPF returns null when the candidate is not present', () => {
+        expect(candidateService.getByCPF(mockedCandidate.CPF)).toBeNull();
+    });
+
+    test('Get by CPF returns candidate when the candidate is present', () => {
+        candidateList.push(mockedCandidate);
+        expect(candidateService.getByCPF(mockedCandidate.CPF)).toBe(mockedCandidate);
+    });   
 });

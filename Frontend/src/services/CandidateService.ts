@@ -32,4 +32,21 @@ export class CandidateService {
     public save(candidate: Candidate) {
         this.candidateList.push(candidate);
     }
+
+    public getByEmail(email?: string): Candidate | null {
+        if (!email) return null;
+        
+        const candidate: Candidate | undefined = this.candidateList.find(p => p.email === email);
+        
+        return candidate ? candidate : null;
+    }
+
+    public getByCPF(CPF?: string): Candidate | null {
+        if (!CPF) return null;
+        
+        const candidate: Candidate | undefined = this.candidateList.find(p => p.CPF === CPF);
+        
+        return candidate ? candidate : null;
+    }
+
 }
