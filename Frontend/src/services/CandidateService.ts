@@ -1,13 +1,14 @@
 import { Candidate } from "../models/Candidate";
+import { CandidateRepository } from "../repositories/CandidateRepository";
 
 export class CandidateService {
     
+    private candidateRepository: CandidateRepository;
     private currentID: bigint;
-    private candidateList: Candidate[];
 
-    constructor(candidateList: Candidate[]) {
+    constructor(candidateRepository: CandidateRepository) {
         this.currentID = BigInt(1);
-        this.candidateList = candidateList;
+        this.candidateRepository = candidateRepository;
     }
 
     public create(name?: string, email?: string, description?: string, address?: string, skills?: string[],
@@ -30,23 +31,16 @@ export class CandidateService {
     }
 
     public save(candidate: Candidate) {
-        this.candidateList.push(candidate);
+        this.candidateRepository.save(candidate);
+        this.candidateRepository.persist();
     }
 
     public getByEmail(email?: string): Candidate | null {
-        if (!email) return null;
-        
-        const candidate: Candidate | undefined = this.candidateList.find(p => p.email === email);
-        
-        return candidate ? candidate : null;
+        return this.candidateRepository.getByEmail(email);
     }
 
     public getByCPF(CPF?: string): Candidate | null {
-        if (!CPF) return null;
-        
-        const candidate: Candidate | undefined = this.candidateList.find(p => p.CPF === CPF);
-        
-        return candidate ? candidate : null;
+       return this.candidateRepository.getByCPF(CPF);
     }
 
 }

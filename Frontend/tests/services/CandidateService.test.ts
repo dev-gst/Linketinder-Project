@@ -1,13 +1,20 @@
 import { Candidate } from '../../src/models/Candidate';
+import { CandidateRepository } from '../../src/repositories/CandidateRepository';
 import { CandidateService } from '../../src/services/CandidateService';
 
 describe('Test CandidateService', () => {
     let candidateList: Candidate[];
+    let mockedCandidateRepository: jest.Mocked<CandidateRepository>
     let mockedCandidate: jest.Mocked<Candidate>
     let candidateService: CandidateService;
 
     beforeEach(() => {
         candidateList = [];
+        mockedCandidateRepository = new CandidateRepository(candidateList) as jest.Mocked<CandidateRepository>
+
+        mockedCandidateRepository.getByEmail = jest.fn();
+        mockedCandidateRepository.getByCPF = jest.fn();
+        
         mockedCandidate = {
             id: BigInt(1),
             name: 'John Doe',
@@ -20,7 +27,7 @@ describe('Test CandidateService', () => {
             CPF: `1234567891`,
         }
 
-        candidateService = new CandidateService(candidateList);
+        candidateService = new CandidateService(mockedCandidateRepository);
     });
 
     test('Creates a new Candidate', () => {
@@ -47,12 +54,13 @@ describe('Test CandidateService', () => {
     });
 
     test('Saves a Candidate to the "Database"', () => {
-        const spy = jest.spyOn(candidateService['candidateList'], 'push');
+        const spy1 = jest.spyOn(candidateService['candidateRepository'], 'save');
+        const spy2 = jest.spyOn(candidateService['candidateRepository'], 'persist');
 
         candidateService.save(mockedCandidate);
 
-        expect(spy).toHaveBeenCalledTimes(1)
-        expect(spy).toHaveBeenCalledWith(expect.objectContaining({
+        expect(spy1).toHaveBeenCalledTimes(1)
+        expect(spy1).toHaveBeenCalledWith(expect.objectContaining({
             id: mockedCandidate.id,
             name: mockedCandidate.name,
             description: mockedCandidate.description,
@@ -64,25 +72,30 @@ describe('Test CandidateService', () => {
             CPF: mockedCandidate.CPF,
         }));
 
-        spy.mockReset();
-        spy.mockRestore();
+        expect(spy2).toHaveBeenCalledTimes(1);
+        expect(spy2).toHaveBeenCalledWith();
+
+        spy1.mockReset();
+        spy2.mockReset();
     });
 
     test('Get by email returns null when the candidate is not present', () => {
+        mockedCandidateRepository.getByEmail.mockReturnValue(null);
         expect(candidateService.getByEmail(mockedCandidate.email)).toBeNull();
     });
 
     test('Get by email returns candidate when the candidate is present', () => {
-        candidateList.push(mockedCandidate);
+        mockedCandidateRepository.getByEmail.mockReturnValue(mockedCandidate);
         expect(candidateService.getByEmail(mockedCandidate.email)).toBe(mockedCandidate);
     });
 
     test('Get by CPF returns null when the candidate is not present', () => {
-        expect(candidateService.getByCPF(mockedCandidate.CPF)).toBeNull();
+        mockedCandidateRepository.getByCPF.mockReturnValue(null);
+        expect(candidateService.getByCPF(mockedCandidate.email)).toBeNull();
     });
 
     test('Get by CPF returns candidate when the candidate is present', () => {
-        candidateList.push(mockedCandidate);
+        mockedCandidateRepository.getByCPF.mockReturnValue(mockedCandidate);
         expect(candidateService.getByCPF(mockedCandidate.CPF)).toBe(mockedCandidate);
     });   
 });

@@ -1,10 +1,13 @@
-import { CandidateHandler } from "../../src/controllers/CandidateHandler"
+import { CandidateHandler } from "../../src/controllers/CandidateHandler";
 import { Candidate } from "../../src/models/Candidate";
+import { CandidateRepository } from "../../src/repositories/CandidateRepository";
 import { CandidateService } from "../../src/services/CandidateService";
+
 
 describe('Test CandidateHandler', () => {
     let candidateList: Candidate[];
     let mockedCandidateService: jest.Mocked<CandidateService>;
+    let mockedCandidateRepository: jest.Mocked<CandidateRepository>;
     let candidateHandler: CandidateHandler;
     let mockedCandidate: Candidate;
 
@@ -23,9 +26,8 @@ describe('Test CandidateHandler', () => {
             </form>`
 
         candidateList = [];
-        mockedCandidateService = new CandidateService(
-            candidateList
-        ) as jest.Mocked<CandidateService>;
+        mockedCandidateRepository = new CandidateRepository(candidateList) as jest.Mocked<CandidateRepository>;
+        mockedCandidateService = new CandidateService(mockedCandidateRepository) as jest.Mocked<CandidateService>;
 
         mockedCandidateService.create = jest.fn();
         mockedCandidateService.save = jest.fn();
