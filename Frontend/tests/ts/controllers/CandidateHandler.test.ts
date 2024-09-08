@@ -27,8 +27,8 @@ describe('Test CandidateHandler', () => {
             candidateList
         ) as jest.Mocked<CandidateService>;
 
-        mockedCandidateService.createCandidate = jest.fn();
-        mockedCandidateService.saveCandidate = jest.fn();
+        mockedCandidateService.create = jest.fn();
+        mockedCandidateService.save = jest.fn();
 
         candidateHandler = new CandidateHandler(mockedCandidateService);
         candidateHandler.startListeners();
@@ -47,7 +47,7 @@ describe('Test CandidateHandler', () => {
     })
 
     test('Receive data, creates and saves a candidate', () => {
-        mockedCandidateService.createCandidate.mockReturnValue(mockedCandidate);
+        mockedCandidateService.create.mockReturnValue(mockedCandidate);
 
         const form: HTMLFormElement | null = document.querySelector('#candidate-sign-up-form');
         if (!form) {
@@ -61,8 +61,8 @@ describe('Test CandidateHandler', () => {
 
         form.dispatchEvent(submitEvent);
 
-        expect(mockedCandidateService.createCandidate).toHaveBeenCalledTimes(1);
-        expect(mockedCandidateService.createCandidate).toHaveBeenCalledWith(
+        expect(mockedCandidateService.create).toHaveBeenCalledTimes(1);
+        expect(mockedCandidateService.create).toHaveBeenCalledWith(
             mockedCandidate.name,
             mockedCandidate.email,
             mockedCandidate.description,
@@ -73,9 +73,8 @@ describe('Test CandidateHandler', () => {
             mockedCandidate.CPF,
         );
 
-        expect(mockedCandidateService.saveCandidate).toHaveBeenCalledTimes(1);
-        expect(mockedCandidateService.saveCandidate).toHaveBeenCalledWith(mockedCandidate);
-
+        expect(mockedCandidateService.save).toHaveBeenCalledTimes(1);
+        expect(mockedCandidateService.save).toHaveBeenCalledWith(mockedCandidate);
     });
 
 });

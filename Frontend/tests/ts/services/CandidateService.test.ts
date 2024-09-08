@@ -24,7 +24,7 @@ describe('Test CandidateService', () => {
     });
 
     test('Creates a new Candidate', () => {
-        const candidate: Candidate = candidateService.createCandidate(
+        const candidate: Candidate = candidateService.create (
             mockedCandidate.name,
             mockedCandidate.email,
             mockedCandidate.description,
@@ -49,7 +49,7 @@ describe('Test CandidateService', () => {
     test('Saves a Candidate to the "Database"', () => {
         const spy = jest.spyOn(candidateService['candidateList'], 'push');
 
-        candidateService.saveCandidate(mockedCandidate);
+        candidateService.save(mockedCandidate);
 
         expect(spy).toHaveBeenCalledTimes(1)
         expect(spy).toHaveBeenCalledWith(expect.objectContaining({

@@ -10,7 +10,7 @@ export class CandidateService {
         this.candidateList = candidateList;
     }
 
-    createCandidate(name?: string, email?: string, description?: string, address?: string, skills?: string[],
+    public create(name?: string, email?: string, description?: string, address?: string, skills?: string[],
         education?: string, age?: number, CPF?: string): Candidate {
 
         const candidate: Candidate = new Candidate();
@@ -29,7 +29,7 @@ export class CandidateService {
         return candidate;
     }
 
-    saveCandidate(candidate: Candidate) {
+    public save(candidate: Candidate) {
         this.candidateList.push(candidate);
     }
 }

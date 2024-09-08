@@ -32,7 +32,7 @@ export class CandidateHandler {
         let education: string = (candidateSignUpForm.querySelector('#candidate-education') as HTMLInputElement).value;
         let CPF: string = (candidateSignUpForm.querySelector('#candidate-cpf') as HTMLInputElement).value;
 
-        const candidate: Candidate = this.candidateService.createCandidate(
+        const candidate: Candidate = this.candidateService.create(
             name,
             email,
             description,
@@ -45,7 +45,7 @@ export class CandidateHandler {
 
         console.log(candidate)
 
-        this.candidateService.saveCandidate(candidate);
+        this.candidateService.save(candidate);
     }
 
     private validateAge(ageString: string): number | null {
