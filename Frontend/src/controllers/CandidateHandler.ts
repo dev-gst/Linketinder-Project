@@ -86,10 +86,12 @@ export class CandidateHandler {
         const candidate: Candidate | null = this.candidateService.getByEmail(email);
         if (!candidate) {
             // TODO: improve error handling
-            console.error("candidate not found")
+            console.error("handler: candidate not found")
             return;
         }
 
         this.candidateView.showProfile(candidate);
+
+        window.location.assign('./profile.html');
     }
 }
