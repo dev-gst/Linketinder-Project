@@ -3,17 +3,29 @@
     --secondary-color: #ccdaf7;
 }
 
-#candidate-sign-up-form {
+.content {
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 80px;
+}
+
+#candidate-sign-up-form,
+#candidate-login-form {
     background-color: var(--secondary-color);
     border: solid 2px var(--primary-color);
     padding: 20px;
+    margin: 0 0 10px 0;
     display: flex;
     flex-direction: column;
     width: 300px;
     gap: 10px;
 }
 
-#candidate-sign-up-form h2 {
+#candidate-sign-up-form h2,
+#candidate-login-form h2 {
     margin: 0 0 10px 0;
 }
 
@@ -35,7 +47,8 @@
     width: 70px;
 }
 
-.sign-up-button {
+.sign-up-button,
+.login-button {
     background-color: var(--primary-color);
     color: #ffffff;
     border: none;
@@ -45,7 +58,8 @@
     font-weight: bold;
 }
 
-.sign-up-button:hover {
+.sign-up-button:hover,
+.login-button:hover {
     border: solid 2px var(--primary-color);
     background-color: #ffffff;
     color: var(--primary-color);

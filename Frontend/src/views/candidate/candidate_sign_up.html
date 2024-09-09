@@ -12,9 +12,8 @@
 </head>
 
 <body>
-    <section id="test">
-        <h1>Candidate</h1>
-        
+    <h1>Candidate</h1>
+    <section class="content">
         <form id="candidate-sign-up-form">
             <h2>Sign Up</h2>
             <div class="form-content">
@@ -40,7 +39,8 @@
                 </div>
                 <div class="form-labels">
                     <label for="candidate-address">Address: </label>
-                    <input class="sign-up-entry" id="candidate-address" type="text" placeholder="Fifth Avenue, 36, California">
+                    <input class="sign-up-entry" id="candidate-address" type="text"
+                        placeholder="Fifth Avenue, 36, California">
                 </div>
                 <div class="form-labels">
                     <label for="candidate-education">Education: </label>
@@ -48,10 +48,19 @@
                 </div>
                 <div class="form-labels">
                     <label for="candidate-skills">Skills: </label>
-                    <input class="sign-up-entry" id="candidate-skills" type="text" placeholder="Python, Java, JavaScript...">
+                    <input class="sign-up-entry" id="candidate-skills" type="text"
+                        placeholder="Python, Java, JavaScript...">
                 </div>
             </div>
             <button class="sign-up-button" id="candidate-sign-up-button" type="submit">Sign Up</button>
+        </form>
+        <form id="candidate-login-form">
+            <h2>Log In</h2>
+            <div class="form-labels">
+                <label for="candidate-email-login">Email</label>
+                <input id="candidate-email-login" placehoder="johndoe@example.com">
+            </div>
+            <button class="login-button" id="candidate-login-button" type="submit">Log In</button>
         </form>
     </section>
 </body>
