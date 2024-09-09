@@ -6,8 +6,22 @@ export class Candidate extends Person {
     private _education?: string;
     private _CPF?: string;
 
-    constructor() {
-        super()
+    constructor(
+        id?: bigint,
+        name?: string,
+        description?: string,
+        email?: string,
+        address?: string,
+        skills?: string[],
+        age?: number,
+        education?: string,
+        CPF?: string,
+
+    ) {
+        super(id, name, description, email, address, skills);
+        this._age = age;
+        this._education = education;
+        this._CPF = CPF;
     }
 
     public get age(): number | undefined{

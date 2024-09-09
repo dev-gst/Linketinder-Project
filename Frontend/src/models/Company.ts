@@ -4,8 +4,18 @@ export class Company extends Person {
     
     private _CNPJ?: string;
 
-    constructor() {
-        super()
+    constructor(
+        id?: bigint,
+        name?: string,
+        description?: string,
+        email?: string,
+        address?: string,
+        skills?: string[],
+        CNPJ?: string,
+
+    ) {
+        super(id, name, description, email, address, skills);
+        this._CNPJ = CNPJ;
     }
 
     public get CNPJ(): string | undefined{

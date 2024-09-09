@@ -7,7 +7,21 @@ export class Person {
     private _address?: string;
     private _skills?: string[];
 
-    constructor() { }
+    constructor(
+        id?: bigint,
+        name?: string,
+        description?: string,
+        email?: string,
+        address?: string,
+        skills?: string[]
+    ) {
+        this._id = id;
+        this._name = name;
+        this._description = description;
+        this._email = email;
+        this._address = address;
+        this.skills = skills;
+    }
     
     public get id(): bigint | undefined {
         return this._id;
