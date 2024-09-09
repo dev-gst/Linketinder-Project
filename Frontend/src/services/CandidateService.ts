@@ -2,7 +2,7 @@ import { Candidate } from "../models/Candidate";
 import { CandidateRepository } from "../repositories/CandidateRepository";
 
 export class CandidateService {
-    
+
     private candidateRepository: CandidateRepository;
     private currentID: bigint;
 
@@ -31,6 +31,12 @@ export class CandidateService {
     }
 
     public save(candidate: Candidate) {
+        if (this.getByEmail(candidate.email) ||
+            this.getByCPF(candidate.CPF)) {
+            console.error("Candidate already exists");
+            return;
+        }
+
         this.candidateRepository.save(candidate);
         this.candidateRepository.persist();
     }
@@ -40,7 +46,6 @@ export class CandidateService {
     }
 
     public getByCPF(CPF?: string): Candidate | null {
-       return this.candidateRepository.getByCPF(CPF);
+        return this.candidateRepository.getByCPF(CPF);
     }
-
 }
