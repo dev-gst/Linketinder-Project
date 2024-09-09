@@ -12,20 +12,8 @@ describe('Test CandidateHandler', () => {
     let mockedCandidateView: jest.Mocked<CandidateView>;
     let candidateHandler: CandidateHandler;
     let mockedCandidate: jest.Mocked<Candidate>;
-    let originalLocation = window.location;
 
     beforeEach(() => {
-        originalLocation = window.location;
-
-        Object.defineProperty(window, "location", {
-            ...window.location,
-            writable: true,
-            value: {
-                ...window.location,
-                assign: jest.fn(), 
-            },
-        });
-
         candidateList = [];
         mockedCandidateRepository = new CandidateRepository(candidateList) as jest.Mocked<CandidateRepository>;
         mockedCandidateService = new CandidateService(mockedCandidateRepository) as jest.Mocked<CandidateService>;
@@ -51,13 +39,6 @@ describe('Test CandidateHandler', () => {
             age: 30,
             CPF: `1234567891`,
         } as jest.Mocked<Candidate>;
-    });
-
-    afterEach(() => {
-        Object.defineProperty(window, "location", {
-            writable: true,
-            value: originalLocation,
-        });
     });
 
     test('Receive data, creates and saves a candidate', () => {
@@ -132,31 +113,5 @@ describe('Test CandidateHandler', () => {
     
         expect(mockedCandidateView.showProfile).toHaveBeenCalledTimes(1);
         expect(mockedCandidateView.showProfile).toHaveBeenCalledWith(mockedCandidate);
-    });
-
-    test('getCandidateByEmail redirects the user to their profile', () => {
-        document.body.innerHTML += `
-        <form id="candidate-login-form">
-            <input id="candidate-email-login" value="johndoe@example.com">
-            <button class="login-button" id="candidate-login-button" type="submit">Log In</button>
-        </form>`
-
-        const form: HTMLFormElement | null = document.querySelector('#candidate-login-form');
-        if (!form) {
-            throw new Error('Form not found')
-        }
-
-        const submitEvent: Event = new Event('submit', {
-            bubbles: true,
-            cancelable: true,
-        });
-
-        candidateHandler.startListeners();
-        mockedCandidateService.getByEmail.mockReturnValue(mockedCandidate);
-        
-        form.dispatchEvent(submitEvent);
-        
-        expect(window.location.assign).toHaveBeenCalledTimes(1);
-        expect(window.location.assign).toHaveBeenCalledWith("./profile.html");
     });
 });

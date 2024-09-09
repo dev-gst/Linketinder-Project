@@ -90,8 +90,6 @@ export class CandidateHandler {
             return;
         }
 
-        window.location.assign('./profile.html');
-        
         this.candidateView.showProfile(candidate);
     }
 }
