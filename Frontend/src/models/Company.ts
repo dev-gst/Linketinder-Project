@@ -10,11 +10,10 @@ export class Company extends Person {
         description?: string,
         email?: string,
         address?: string,
-        skills?: string[],
         CNPJ?: string,
 
     ) {
-        super(id, name, description, email, address, skills);
+        super(id, name, description, email, address);
         this._CNPJ = CNPJ;
     }
 

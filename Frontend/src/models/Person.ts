@@ -5,7 +5,6 @@ export class Person {
     private _description?: string;
     private _email?: string;
     private _address?: string;
-    private _skills?: string[];
 
     constructor(
         id?: bigint,
@@ -13,14 +12,12 @@ export class Person {
         description?: string,
         email?: string,
         address?: string,
-        skills?: string[]
     ) {
         this._id = id;
         this._name = name;
         this._description = description;
         this._email = email;
         this._address = address;
-        this.skills = skills;
     }
     
     public get id(): bigint | undefined {
@@ -61,13 +58,5 @@ export class Person {
 
     public set address(address: string | undefined) {
         this._address = address;
-    }
-
-    public get skills(): string[] | undefined {
-        return this._skills;
-    }
-
-    public set skills(skills: string[] | undefined) {
-        this._skills = skills;
     }
 }

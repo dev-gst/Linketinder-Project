@@ -5,6 +5,7 @@ export class Candidate extends Person {
     private _age?: number;
     private _education?: string;
     private _CPF?: string;
+    private _skills?: string[];
 
     constructor(
         id?: bigint,
@@ -18,10 +19,11 @@ export class Candidate extends Person {
         CPF?: string,
 
     ) {
-        super(id, name, description, email, address, skills);
+        super(id, name, description, email, address);
         this._age = age;
         this._education = education;
         this._CPF = CPF;
+        this._skills = skills;
     }
 
     public get age(): number | undefined{
@@ -46,6 +48,14 @@ export class Candidate extends Person {
 
     public set CPF(CPF: string | undefined) {
         this._CPF = CPF;
+    }
+
+    public get skills(): string[] | undefined {
+        return this._skills;
+    }
+
+    public set skills(skills: string[] | undefined) {
+        this._skills = skills;
     }
 }
 
