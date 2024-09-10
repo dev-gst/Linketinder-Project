@@ -1,6 +1,16 @@
 :root {
     --primary-color: #6995ee;
     --secondary-color: #ccdaf7;
+    --title-color:#0e1044;
+    --background-color: rgb(255, 255, 255);
+}
+
+body {
+    background-color: var(--background-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--title-color);
 }
 
 .content {
@@ -40,6 +50,7 @@
     flex-direction: row;
     align-content: space-between;
     gap: 16px;
+    flex-wrap: wrap;
 }
 
 .form-labels label {
@@ -63,4 +74,27 @@
     border: solid 2px var(--primary-color);
     background-color: #ffffff;
     color: var(--primary-color);
+}
+
+.profile {
+    border: solid 2px var(--secondary-color);
+    border-radius: 8px;
+    background-color: var(--primary-color);
+    max-width: 500px;
+    padding: 20px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-entry {
+    display: flex;
+    flex-direction: row;
+}
+
+.profile-entry div {
+    font-weight: 600;
+    color: white;
+    min-height: 30px;
+    flex: 1 1 50px;
 }
