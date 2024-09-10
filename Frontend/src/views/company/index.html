@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script defer src="../main.js"></script>
+    <link rel="stylesheet" href="../common/css/styles.css">
+
+</head>
+
+<body>
+    <h1>Company</h1>
+    <section class="content">
+        <form id="company-sign-up-form">
+            <h2>Sign Up</h2>
+            <div class="form-content">
+                <div class="form-labels">
+                    <label for="company-name">Name: </label>
+                    <input class="sign-up-entry" id="company-name" type="text" placeholder="Company XYZ">
+                </div>
+                <div class="form-labels">
+                    <label for="company-email">Email: </label>
+                    <input class="sign-up-entry" id="company-email" type="email" placehoder="company@example.com">
+                </div>
+                <div class="form-labels">
+                    <label for="company-CNPJ">CPF: </label>
+                    <input class="sign-up-entry" id="company-CNPJ" type="text" placeholder="123456789">
+                </div>
+                <div class="form-labels">
+                    <label for="company-description">Bio: </label>
+                    <textarea class="sign-up-entry" id="company-description" type="text" placeholder="Description"></textarea>
+                </div>
+                <div class="form-labels">
+                    <label for="company-address">Address: </label>
+                    <input class="sign-up-entry" id="company-address" type="text">
+                </div>
+            </div>
+            <button class="sign-up-button" id="company-sign-up-button" type="submit">Sign Up</button>
+        </form>
+        <form id="company-login-form">
+            <h2>Log In</h2>
+            <div class="form-labels">
+                <label for="company-email-login">Email</label>
+                <input id="company-email-login" placehoder="company@example.com">
+            </div>
+            <button class="login-button" id="company-login-button" type="submit">Log In</button>
+        </form>
+    </section>
+</body>
+
+</html>
