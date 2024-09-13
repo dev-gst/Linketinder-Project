@@ -22,8 +22,7 @@ h1, h2, h3, h4, h5, h6 {
     gap: 80px;
 }
 
-#candidate-sign-up-form,
-#candidate-login-form {
+form {
     background-color: var(--secondary-color);
     border: solid 2px var(--primary-color);
     padding: 20px;
@@ -58,8 +57,7 @@ h1, h2, h3, h4, h5, h6 {
     width: 70px;
 }
 
-.sign-up-button,
-.login-button {
+button {
     background-color: var(--primary-color);
     color: #ffffff;
     border: none;
@@ -69,8 +67,7 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
 }
 
-.sign-up-button:hover,
-.login-button:hover {
+button:hover {
     border: solid 2px var(--primary-color);
     background-color: #ffffff;
     color: var(--primary-color);
