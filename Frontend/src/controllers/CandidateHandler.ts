@@ -31,7 +31,7 @@ export class CandidateHandler {
 
         const name: string = (candidateSignUpForm.querySelector('#candidate-name') as HTMLInputElement).value;
         const email: string = (candidateSignUpForm.querySelector('#candidate-email') as HTMLInputElement).value;
-        const description: string = (candidateSignUpForm.querySelector('#candidate-description') as HTMLInputElement).value;
+        const description: string = (candidateSignUpForm.querySelector('#candidate-description') as HTMLTextAreaElement).value;
         const address: string = (candidateSignUpForm.querySelector('#candidate-address') as HTMLInputElement).value;
         const skills: string[] = this.parseSkills((candidateSignUpForm.querySelector('#candidate-skills') as HTMLInputElement).value);
         const age: number = validAge;
