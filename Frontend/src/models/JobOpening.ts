@@ -1,11 +1,13 @@
 export class JobOpening {
+    
     private _id: bigint;
     private _title: string;
     private _description: string;
     private _skillsRequired: string[];
     private _educationRequired: string;
     private _location: string;
-    private _salary: number;
+    private _companyID: bigint;
+    private _salary: number | undefined;
 
     constructor(
         id: bigint,
@@ -14,7 +16,8 @@ export class JobOpening {
         skillsRequired: string[],
         educationRequired: string,
         location: string,
-        salary: number
+        companyID: bigint,
+        salary?: number,
     ) {
         this._id = id;
         this._title = title;
@@ -22,6 +25,7 @@ export class JobOpening {
         this._skillsRequired = skillsRequired;
         this._educationRequired = educationRequired;
         this._location = location;
+        this._companyID = companyID;
         this._salary = salary;
     }
 
@@ -73,11 +77,20 @@ export class JobOpening {
         this._location = location;
     }
 
-    get salary(): number {
+    get companyID(): bigint {
+        return this._companyID;
+    }
+
+    set companyID(companyID: bigint) {
+        this._companyID = companyID;
+    }
+
+
+    get salary(): number | undefined {
         return this._salary;
     }
 
-    set salary(salary: number) {
+    set salary(salary: number | undefined) {
         this._salary = salary;
     }
 }
