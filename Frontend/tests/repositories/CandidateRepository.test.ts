@@ -65,7 +65,12 @@ describe('Test CandidateRepository', () => {
         candidateRepository.persist();
         const items: string | null = localStorage.getItem(candidateRepository.candidateStorage);
 
-        expect(items).toBe(`[{"_id":"1","_name":"John Doe","_description":"good person","_email":"johndoe@example.com","_address":"Good street, 1","_age":30,"_education":"Computer Engineering","_CPF":"1234567891","_skills":["JavaScript","TypeScript","React"]}]`);
+        expect(items).toBe(
+            `[{"_id":"1","_name":"John Doe","_description":"good person",` + 
+            `"_email":"johndoe@example.com","_address":"Good street, 1","_age":30,` + 
+            `"_education":"Computer Engineering","_CPF":"1234567891",` +
+            `"_skills":["JavaScript","TypeScript","React"]}]`
+        );
     });
 
     test('save works with correct values', () => {
@@ -113,7 +118,7 @@ describe('Test CandidateRepository', () => {
         expect(candidateRepository.getByEmail(mockedCandidate3.email)).toBeNull();
     });
 
-    test('Get candidate by email returns the correct candidate', () => {
+    test('Get candidate by email returns the correct value', () => {
         candidateList.push(mockedCandidate1);
         candidateList.push(mockedCandidate2);
 
@@ -127,7 +132,7 @@ describe('Test CandidateRepository', () => {
         expect(candidateRepository.getByCPF(mockedCandidate3.CPF)).toBeNull();
     });
 
-    test('Get candidate by CPF returns the correct candidate', () => {
+    test('Get candidate by CPF returns the correct value', () => {
         candidateList.push(mockedCandidate1);
         candidateList.push(mockedCandidate2);
 

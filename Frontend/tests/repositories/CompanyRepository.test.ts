@@ -56,7 +56,11 @@ describe('Test CompanyRepository', () => {
         companyRepository.persist();
         const items: string | null = localStorage.getItem(companyRepository.companyStorage);
 
-        expect(items).toBe(`[{"_id":"1","_name":"Company A","_description":"good company","_email":"companya@example.com","_address":"Good street, 1","_CNPJ":"1234567891"}]`);
+        expect(items).toBe(
+            `[{"_id":"1","_name":"Company A","_description":"good company",` +
+            `"_email":"companya@example.com","_address":"Good street, 1",` + 
+            `"_CNPJ":"1234567891"}]`
+        );
     });
 
     test('save works with correct values', () => {
@@ -104,7 +108,7 @@ describe('Test CompanyRepository', () => {
         expect(companyRepository.getByEmail(mockedCompany3.email)).toBeNull();
     });
 
-    test('Get company by email returns the correct company', () => {
+    test('Get company by email returns the correct value', () => {
         companyList.push(mockedCompany1);
         companyList.push(mockedCompany2);
 
@@ -118,7 +122,7 @@ describe('Test CompanyRepository', () => {
         expect(companyRepository.getByCNPJ(mockedCompany3.CNPJ)).toBeNull();
     });
 
-    test('Get company by CPF returns the correct company', () => {
+    test('Get company by CPF returns the correct value', () => {
         companyList.push(mockedCompany1);
         companyList.push(mockedCompany2);
 
