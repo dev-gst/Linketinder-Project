@@ -1,5 +1,4 @@
 import { Company } from "../models/Company";
-import { JobOpening } from "../models/JobOpening";
 import { CompanyRepository } from "../repositories/CompanyRepository";
 
 export class CompanyService {
@@ -13,7 +12,7 @@ export class CompanyService {
     }
 
     public create(name?: string, email?: string, description?: string,
-        address?: string, CNPJ?: string, jobOpenings?: JobOpening[]): Company {
+        address?: string, CNPJ?: string): Company {
         const company: Company = new Company();
         company.id = this.currentID;
         company.name = name;
