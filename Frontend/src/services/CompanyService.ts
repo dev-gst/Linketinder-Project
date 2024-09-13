@@ -21,7 +21,7 @@ export class CompanyService {
         company.description = description;
         company.address = address;
         company.CNPJ = CNPJ;
-        company.jobOpenings = jobOpenings;
+        
         this.currentID++;
 
         return company;

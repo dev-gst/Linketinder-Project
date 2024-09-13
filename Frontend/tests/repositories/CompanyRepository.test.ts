@@ -1,5 +1,4 @@
 import { Company } from "../../src/models/Company";
-import { JobOpening } from "../../src/models/JobOpening";
 import { CompanyRepository } from "../../src/repositories/CompanyRepository";
 
 describe('Test CompanyRepository', () => {
@@ -10,37 +9,6 @@ describe('Test CompanyRepository', () => {
     let mockedCompany3: jest.Mocked<Company>;
 
     beforeAll(() => {
-
-        let jobOpening1: JobOpening = new JobOpening(
-            BigInt(1),
-            "Painter",
-            "Best painter job",
-            ['Painting'],
-            "High School",
-            "On site: Good street, 1",
-            1000.00,
-        );
-
-        let jobOpening2: JobOpening = new JobOpening(
-            BigInt(2),
-            "Computer Scientist",
-            "Best computer science job",
-            ['Software Engineering'],
-            "High School",
-            "Remote",
-            1000.00,
-        );
-
-        let jobOpening3: JobOpening = new JobOpening(
-            BigInt(3),
-            "Constructor",
-            "Best constructor job",
-            ['Construction'],
-            "High School",
-            "On site: Good street, 3",
-            1000.00,
-        );
-
         mockedCompany1 = new Company as jest.Mocked<Company>;
         mockedCompany1.id = BigInt(1);
         mockedCompany1.name = 'Company A';
@@ -48,7 +16,6 @@ describe('Test CompanyRepository', () => {
         mockedCompany1.email = 'companya@example.com';
         mockedCompany1.address = 'Good street, 1';
         mockedCompany1.CNPJ = '1234567891';
-        mockedCompany1.jobOpenings = [jobOpening1];
 
         mockedCompany2 = new Company as jest.Mocked<Company>;
         mockedCompany2.id = BigInt(2);
@@ -57,7 +24,6 @@ describe('Test CompanyRepository', () => {
         mockedCompany2.email = 'companyb@example.com';
         mockedCompany2.address = 'Good street, 2';
         mockedCompany2.CNPJ = '121234123434567891';
-        mockedCompany2.jobOpenings = [jobOpening2];
 
         mockedCompany3 = new Company as jest.Mocked<Company>;
         mockedCompany3.id = BigInt(3);
@@ -66,7 +32,6 @@ describe('Test CompanyRepository', () => {
         mockedCompany3.email = 'companyc@example.com';
         mockedCompany3.address = 'Good street, 3';
         mockedCompany3.CNPJ = '943506921';
-        mockedCompany3.jobOpenings = [jobOpening3];
     })
 
     beforeEach(() => {
@@ -91,7 +56,7 @@ describe('Test CompanyRepository', () => {
         companyRepository.persist();
         const items: string | null = localStorage.getItem(companyRepository.companyStorage);
 
-        expect(items).toBe(`[{"_id":"1","_name":"Company A","_description":"good company","_email":"companya@example.com","_address":"Good street, 1","_CNPJ":"1234567891","_jobOpenings":[{"_id":"1","_title":"Painter","_description":"Best painter job","_skillsRequired":["Painting"],"_educationRequired":"High School","_location":"On site: Good street, 1","_salary":1000}]}]`);
+        expect(items).toBe(`[{"_id":"1","_name":"Company A","_description":"good company","_email":"companya@example.com","_address":"Good street, 1","_CNPJ":"1234567891"}]`);
     });
 
     test('save works with correct values', () => {

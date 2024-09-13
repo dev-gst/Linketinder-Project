@@ -48,7 +48,6 @@ export class CompanyRepository {
                 company.email = data._email;
                 company.address = data._address;
                 company.CNPJ = data._CNPJ;
-                company.jobOpenings = data._jobOpenings;
 
                 this.companyList.push(company);
             }

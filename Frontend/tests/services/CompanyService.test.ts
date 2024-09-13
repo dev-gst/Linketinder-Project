@@ -15,16 +15,6 @@ describe('Test CompanyService', () => {
 
         mockedCompanyRepository.getByEmail = jest.fn();
         mockedCompanyRepository.getByCNPJ = jest.fn();
-
-        let jobOpening1: JobOpening = new JobOpening(
-            BigInt(1),
-            "Painter",
-            "Best painter job",
-            ['Painting'],
-            "High School",
-            "On site: Good street, 1",
-            1000.00,
-        );
         
         mockedCompany = {
             id: BigInt(1),
@@ -33,7 +23,6 @@ describe('Test CompanyService', () => {
             description: `good person`,
             address: `Good street, 1`,
             CNPJ: `1234567891`,
-            jobOpenings: [jobOpening1],
         }
 
         companyService = new CompanyService(mockedCompanyRepository);
@@ -46,7 +35,6 @@ describe('Test CompanyService', () => {
             mockedCompany.description,
             mockedCompany.address,
             mockedCompany.CNPJ,
-            mockedCompany.jobOpenings,
         );
 
         expect(company.id).toEqual(mockedCompany.id);
@@ -55,7 +43,6 @@ describe('Test CompanyService', () => {
         expect(company.email).toEqual(mockedCompany.email);
         expect(company.address).toEqual(mockedCompany.address);
         expect(company.CNPJ).toEqual(mockedCompany.CNPJ);
-        expect(company.jobOpenings).toEqual(mockedCompany.jobOpenings);
     });
 
     test('Saves a Company to the "Database"', () => {
@@ -72,7 +59,6 @@ describe('Test CompanyService', () => {
             email: mockedCompany.email,
             address: mockedCompany.address,
             CNPJ: mockedCompany.CNPJ,
-            jobOpenings: mockedCompany.jobOpenings,
         }));
 
         expect(spy2).toHaveBeenCalledTimes(1);
