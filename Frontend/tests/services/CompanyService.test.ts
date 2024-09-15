@@ -1,5 +1,4 @@
 import { Company } from '../../src/models/Company';
-import { JobOpening } from '../../src/models/JobOpening';
 import { CompanyRepository } from '../../src/repositories/CompanyRepository';
 import { CompanyService } from '../../src/services/CompanyService';
 

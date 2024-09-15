@@ -1,7 +1,10 @@
 import { CompanyHandler } from "../../src/controllers/CompanyHandler";
 import { Company } from "../../src/models/Company";
+import { JobOpening } from "../../src/models/JobOpening";
 import { CompanyRepository } from "../../src/repositories/CompanyRepository";
+import { JobOpeningRepository } from "../../src/repositories/JobOpeningRepository";
 import { CompanyService } from "../../src/services/CompanyService";
+import { JobOpeningService } from "../../src/services/JobOpeningService";
 import { CompanyView } from "../../src/views/company/CompanyView";
 
 
@@ -10,14 +13,24 @@ describe('Test CompanyHandler', () => {
     let mockedCompanyService: jest.Mocked<CompanyService>;
     let mockedCompanyRepository: jest.Mocked<CompanyRepository>;
     let mockedCompanyView: jest.Mocked<CompanyView>;
-    let companyHandler: CompanyHandler;
     let mockedCompany: jest.Mocked<Company>;
+
+    let jobOpeningList: JobOpening[];
+    let mockedJobOpeningRepository: jest.Mocked<JobOpeningRepository>;
+    let mockedJobOpeningService: jest.Mocked<JobOpeningService>;
+
+    let companyHandler: CompanyHandler;
+    
 
     beforeEach(() => {
         companyList = [];
         mockedCompanyRepository = new CompanyRepository(companyList) as jest.Mocked<CompanyRepository>;
         mockedCompanyService = new CompanyService(mockedCompanyRepository) as jest.Mocked<CompanyService>;
         mockedCompanyView = new CompanyView() as jest.Mocked<CompanyView>;
+
+        jobOpeningList = [];
+        mockedJobOpeningRepository = new JobOpeningRepository(jobOpeningList) as jest.Mocked<JobOpeningRepository>;
+        mockedJobOpeningService = new JobOpeningService(mockedJobOpeningRepository) as jest.Mocked<JobOpeningService>;
 
         mockedCompanyService.create = jest.fn();
         mockedCompanyService.save = jest.fn();
@@ -26,7 +39,7 @@ describe('Test CompanyHandler', () => {
 
         mockedCompanyView.showProfile = jest.fn();
 
-        companyHandler = new CompanyHandler(mockedCompanyService, mockedCompanyView);
+        companyHandler = new CompanyHandler(mockedCompanyService, mockedJobOpeningService, mockedCompanyView);
 
         mockedCompany = new Company as jest.Mocked<Company>;
         mockedCompany.id = BigInt(1);
@@ -77,7 +90,7 @@ describe('Test CompanyHandler', () => {
         expect(mockedCompanyService.save).toHaveBeenCalledWith(mockedCompany);
     });
 
-    test('Get company by email gets the company from db and calls show profile', () => {
+    test('Get company profile gets the company from db and calls show profile', () => {
         document.body.innerHTML += `
         <form id="company-login-form">
             <input id="company-email-login" value="company@example.com">
@@ -103,6 +116,6 @@ describe('Test CompanyHandler', () => {
         expect(mockedCompanyService.getByEmail).toHaveBeenCalledWith('company@example.com');
     
         expect(mockedCompanyView.showProfile).toHaveBeenCalledTimes(1);
-        expect(mockedCompanyView.showProfile).toHaveBeenCalledWith(mockedCompany);
+        expect(mockedCompanyView.showProfile).toHaveBeenCalledWith(mockedCompany, []);
     });
 });

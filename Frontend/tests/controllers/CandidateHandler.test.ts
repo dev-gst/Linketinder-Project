@@ -1,7 +1,10 @@
 import { CandidateHandler } from "../../src/controllers/CandidateHandler";
 import { Candidate } from "../../src/models/Candidate";
+import { JobOpening } from "../../src/models/JobOpening";
 import { CandidateRepository } from "../../src/repositories/CandidateRepository";
+import { JobOpeningRepository } from "../../src/repositories/JobOpeningRepository";
 import { CandidateService } from "../../src/services/CandidateService";
+import { JobOpeningService } from "../../src/services/JobOpeningService";
 import { CandidateView } from "../../src/views/candidate/CandidateView";
 
 
@@ -10,14 +13,23 @@ describe('Test CandidateHandler', () => {
     let mockedCandidateService: jest.Mocked<CandidateService>;
     let mockedCandidateRepository: jest.Mocked<CandidateRepository>;
     let mockedCandidateView: jest.Mocked<CandidateView>;
-    let candidateHandler: CandidateHandler;
+    
+    let jobOpeningList: JobOpening[];
+    let mockedJobOpeningRepository: jest.Mocked<JobOpeningRepository>;
+    let mockedJobOpeningService: jest.Mocked<JobOpeningService>;
+
     let mockedCandidate: jest.Mocked<Candidate>;
+    let candidateHandler: CandidateHandler;
 
     beforeEach(() => {
         candidateList = [];
         mockedCandidateRepository = new CandidateRepository(candidateList) as jest.Mocked<CandidateRepository>;
         mockedCandidateService = new CandidateService(mockedCandidateRepository) as jest.Mocked<CandidateService>;
         mockedCandidateView = new CandidateView() as jest.Mocked<CandidateView>;
+
+        jobOpeningList = [];
+        mockedJobOpeningRepository = new JobOpeningRepository(jobOpeningList) as jest.Mocked<JobOpeningRepository>;
+        mockedJobOpeningService = new JobOpeningService(mockedJobOpeningRepository) as jest.Mocked<JobOpeningService>;
 
         mockedCandidateService.create = jest.fn();
         mockedCandidateService.save = jest.fn();
@@ -26,7 +38,7 @@ describe('Test CandidateHandler', () => {
 
         mockedCandidateView.showProfile = jest.fn();
 
-        candidateHandler = new CandidateHandler(mockedCandidateService, mockedCandidateView);
+        candidateHandler = new CandidateHandler(mockedCandidateService, mockedJobOpeningService, mockedCandidateView);
 
         mockedCandidate = {
             id: BigInt(1),
