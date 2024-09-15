@@ -52,4 +52,8 @@ export class CandidateService {
     public getByCPF(CPF?: string): Candidate | null {
         return this._candidateRepository.getByCPF(CPF);
     }
+
+    public getALL(): Candidate[] {
+        return [... this._candidateRepository.candidateList];
+    }
 }

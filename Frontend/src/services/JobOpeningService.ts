@@ -55,4 +55,8 @@ export class JobOpeningService {
 
         return this._jobOpeningRepository.getByCompanyID(companyID);
     }
+
+    public getAll(): JobOpening[] {
+        return [... this._jobOpeningRepository.jobOpeningList];
+    }
 }

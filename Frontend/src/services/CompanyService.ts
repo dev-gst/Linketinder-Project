@@ -52,4 +52,8 @@ export class CompanyService {
     public getByID(id: bigint): Company | null {
         return this._companyRepository.getByID(id);
     }
+
+    public getALL(): Company[] {
+        return [... this._companyRepository.companyList];
+    }
 }
