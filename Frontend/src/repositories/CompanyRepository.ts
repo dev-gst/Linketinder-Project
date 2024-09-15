@@ -69,4 +69,10 @@ export class CompanyRepository {
 
         return company ? company : null;
     }
+
+    public getByID(id: bigint): Company | null {
+        const company: Company | undefined = this._companyList.find(p => p.id === id);
+
+        return company ? company : null;
+    }
 }

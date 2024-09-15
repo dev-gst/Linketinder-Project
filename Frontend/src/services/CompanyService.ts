@@ -44,4 +44,8 @@ export class CompanyService {
     public getByCNPJ(CNPJ?: string): Company | null {
         return this.companyRepository.getByCNPJ(CNPJ);
     }
+
+    public getByID(id: bigint): Company | null {
+        return this.companyRepository.getByID(id);
+    }
 }
