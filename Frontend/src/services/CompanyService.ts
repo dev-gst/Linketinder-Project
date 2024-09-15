@@ -3,25 +3,29 @@ import { CompanyRepository } from "../repositories/CompanyRepository";
 
 export class CompanyService {
 
-    private companyRepository: CompanyRepository;
-    private currentID: bigint;
+    private _companyRepository: CompanyRepository;
+    private _currentID: bigint;
 
     constructor(companyRepository: CompanyRepository) {
-        this.currentID = BigInt(1);
-        this.companyRepository = companyRepository;
+        this._companyRepository = companyRepository;
+        this._currentID = this._companyRepository.lastCompanyID;
+    }
+
+    get companyRepository(): CompanyRepository {
+        return this._companyRepository;
     }
 
     public create(name?: string, email?: string, description?: string,
         address?: string, CNPJ?: string): Company {
         const company: Company = new Company();
-        company.id = this.currentID;
+        company.id = this._currentID;
         company.name = name;
         company.email = email;
         company.description = description;
         company.address = address;
         company.CNPJ = CNPJ;
         
-        this.currentID++;
+        this._currentID++;
 
         return company;
     }
@@ -33,19 +37,19 @@ export class CompanyService {
             return;
         }
 
-        this.companyRepository.save(company);
-        this.companyRepository.persist();
+        this._companyRepository.save(company);
+        this._companyRepository.persist();
     }
 
     public getByEmail(email?: string): Company | null {
-        return this.companyRepository.getByEmail(email);
+        return this._companyRepository.getByEmail(email);
     }
 
     public getByCNPJ(CNPJ?: string): Company | null {
-        return this.companyRepository.getByCNPJ(CNPJ);
+        return this._companyRepository.getByCNPJ(CNPJ);
     }
 
     public getByID(id: bigint): Company | null {
-        return this.companyRepository.getByID(id);
+        return this._companyRepository.getByID(id);
     }
 }

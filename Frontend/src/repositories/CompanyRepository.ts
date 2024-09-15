@@ -4,10 +4,12 @@ export class CompanyRepository {
 
     private _companyStorage: string;
     private _companyList: Company[];
+    private _lastCompanyID: bigint;
 
     constructor(companyList: Company[]) {
         this._companyList = companyList;
         this._companyStorage = 'companyStorage';
+        this._lastCompanyID = BigInt(1);
 
         this.load();
     }
@@ -18,6 +20,10 @@ export class CompanyRepository {
 
     public get companyStorage(): string {
         return this._companyStorage;
+    }
+
+    public get lastCompanyID(): bigint {
+        return this._lastCompanyID;
     }
 
     public persist(): void {
@@ -50,6 +56,10 @@ export class CompanyRepository {
                 company.CNPJ = data._CNPJ;
 
                 this.companyList.push(company);
+            }
+
+            if (parsedCompanyList.length > 0) {
+                this._lastCompanyID = parsedCompanyList[parsedCompanyList.length - 1]._id;
             }
         }
     }

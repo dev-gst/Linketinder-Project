@@ -4,10 +4,12 @@ export class CandidateRepository {
 
     private _candidateStorage: string;
     private _candidateList: Candidate[];
+    private _lastCandidateID: bigint;
 
     constructor(candidateList: Candidate[]) {
         this._candidateList = candidateList;
         this._candidateStorage = 'candidateStorage';
+        this._lastCandidateID = BigInt(1);
 
         this.load();
     }
@@ -18,6 +20,10 @@ export class CandidateRepository {
 
     public get candidateStorage(): string {
         return this._candidateStorage;
+    }
+
+    public get lastCandidateID(): bigint {
+        return this._lastCandidateID;
     }
 
     public persist(): void {
@@ -53,6 +59,10 @@ export class CandidateRepository {
                 candidate.CPF = data._CPF;
 
                 this.candidateList.push(candidate);
+            }
+
+            if (parsedCandidateList.length > 0) {
+                this._lastCandidateID = parsedCandidateList[parsedCandidateList.length - 1]._id;
             }
         }
     }

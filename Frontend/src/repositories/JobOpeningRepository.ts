@@ -4,10 +4,12 @@ export class JobOpeningRepository {
 
     private _jobOpeningStorage: string;
     private _jobOpeningList: JobOpening[];
+    private _lastJobOpeningID: bigint;
 
     constructor(jobOpeningList: JobOpening[]) {
         this._jobOpeningList = jobOpeningList;
         this._jobOpeningStorage = 'jobOpeningStorage';
+        this._lastJobOpeningID = BigInt(1);
 
         this.load();
     }
@@ -18,6 +20,10 @@ export class JobOpeningRepository {
 
     public get jobOpeningStorage(): string {
         return this._jobOpeningStorage;
+    }
+
+    public get lastJobOpeningID(): bigint {
+        return this._lastJobOpeningID;
     }
 
     public persist(): void {
@@ -53,6 +59,10 @@ export class JobOpeningRepository {
                 );
 
                 this.jobOpeningList.push(jobOpening);
+            }
+
+            if (parsedJobOpeningList.length > 0) {
+                this._lastJobOpeningID = parsedJobOpeningList[parsedJobOpeningList.length - 1]._id;
             }
         }
     }

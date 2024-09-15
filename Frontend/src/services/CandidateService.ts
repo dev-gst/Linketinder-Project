@@ -3,19 +3,23 @@ import { CandidateRepository } from "../repositories/CandidateRepository";
 
 export class CandidateService {
 
-    private candidateRepository: CandidateRepository;
-    private currentID: bigint;
+    private _candidateRepository: CandidateRepository;
+    private _currentID: bigint;
 
     constructor(candidateRepository: CandidateRepository) {
-        this.currentID = BigInt(1);
-        this.candidateRepository = candidateRepository;
+        this._candidateRepository = candidateRepository;
+        this._currentID = this._candidateRepository.lastCandidateID;
+    }
+
+    get candidateRepository(): CandidateRepository {
+        return this._candidateRepository;
     }
 
     public create(name?: string, email?: string, description?: string, address?: string, skills?: string[],
         education?: string, age?: number, CPF?: string): Candidate {
 
         const candidate: Candidate = new Candidate();
-        candidate.id = this.currentID;
+        candidate.id = this._currentID;
         candidate.name = name;
         candidate.email = email;
         candidate.description = description;
@@ -25,7 +29,7 @@ export class CandidateService {
         candidate.age = age;
         candidate.CPF = CPF;
 
-        this.currentID++;
+        this._currentID++;
 
         return candidate;
     }
@@ -37,15 +41,15 @@ export class CandidateService {
             return;
         }
 
-        this.candidateRepository.save(candidate);
-        this.candidateRepository.persist();
+        this._candidateRepository.save(candidate);
+        this._candidateRepository.persist();
     }
 
     public getByEmail(email?: string): Candidate | null {
-        return this.candidateRepository.getByEmail(email);
+        return this._candidateRepository.getByEmail(email);
     }
 
     public getByCPF(CPF?: string): Candidate | null {
-        return this.candidateRepository.getByCPF(CPF);
+        return this._candidateRepository.getByCPF(CPF);
     }
 }
