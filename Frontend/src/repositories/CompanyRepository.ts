@@ -9,7 +9,7 @@ export class CompanyRepository {
     constructor(companyList: Company[]) {
         this._companyList = companyList;
         this._companyStorage = 'companyStorage';
-        this._lastCompanyID = BigInt(1);
+        this._lastCompanyID = BigInt(0);
 
         this.load();
     }

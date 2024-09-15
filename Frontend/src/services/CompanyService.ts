@@ -8,7 +8,7 @@ export class CompanyService {
 
     constructor(companyRepository: CompanyRepository) {
         this._companyRepository = companyRepository;
-        this._currentID = this._companyRepository.lastCompanyID;
+        this._currentID = this._companyRepository.lastCompanyID + BigInt(1);
     }
 
     get companyRepository(): CompanyRepository {

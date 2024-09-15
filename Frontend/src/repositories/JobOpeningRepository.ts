@@ -9,7 +9,7 @@ export class JobOpeningRepository {
     constructor(jobOpeningList: JobOpening[]) {
         this._jobOpeningList = jobOpeningList;
         this._jobOpeningStorage = 'jobOpeningStorage';
-        this._lastJobOpeningID = BigInt(1);
+        this._lastJobOpeningID = BigInt(0);
 
         this.load();
     }
