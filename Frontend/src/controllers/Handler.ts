@@ -141,8 +141,9 @@ export class Handler {
 
         this.loggedInCompanyID = company.id;
         const jobOpeningList: JobOpening[] = this.jobOpeningService.getByCompanyID(company.id);
+        const candidates: Candidate[] = this.candidateService.getALL();
 
-        this.companyView.showProfile(company, jobOpeningList);
+        this.companyView.showProfile(company, candidates, jobOpeningList);
 
         this.startListeners()
     }
@@ -178,9 +179,10 @@ export class Handler {
 
         const jobOpeningList: JobOpening[] = this.jobOpeningService.getByCompanyID(companyID);
         const company: Company | null = this.companyService.getByID(companyID);
+        const candidates: Candidate[] = this.candidateService.getALL();
 
         if (company) {
-            this.companyView.showProfile(company, jobOpeningList)
+            this.companyView.showProfile(company, candidates, jobOpeningList)
         }
 
         this.startListeners()
@@ -207,13 +209,18 @@ export class Handler {
                                         .trim()
                                         .split(",")
                                         .map(skill => {
-                                            let firstLetter = skill.trim().charAt(0).toUpperCase();
-                                            skill = firstLetter + skill.substring(1).toLowerCase();
+                                            const trimmedSkill: string = skill.trim();
+                                            if (!trimmedSkill) return '';
 
-                                            return skill;
-                                        }) 
+                                            const firstLetter = trimmedSkill.charAt(0).toUpperCase();
+                                            const restOfSkill = trimmedSkill.slice(1).toLowerCase()
+                                            
+                                            if (trimmedSkill.length === 1) return firstLetter;
+
+                                            return firstLetter + restOfSkill;
+                                        })
+                                        .filter(skill => skill !== '' && skill !== ',')
         
-
         return skillList;
     }
 
