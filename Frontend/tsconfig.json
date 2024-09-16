@@ -4,16 +4,17 @@
 
     /* Enabled */
     "outDir": "./dist/",
-    "target": "ES2023",
-    "module": "ES2022",
+    "target": "es6",
+    "module": "es6",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "skipLibCheck": true
+    //"noUnusedLocals": true,
+    //"noUnusedParameters": true,
+    "skipLibCheck": true,
+    "moduleResolution": "Node10",
 
     /* Projects */
     // "incremental": true,                              /* Save .tsbuildinfo files to allow for incremental compilation of projects. */
