@@ -1,7 +1,6 @@
-import { JobOpening } from "./JobOpening";
 import {Person} from "./Person"
 
-export class Company extends Person {
+export class Company extends Person {            
     
     private _CNPJ?: string;
 
