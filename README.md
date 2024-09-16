@@ -9,6 +9,10 @@ by Gustavo de Araújo Garcia
 2. Groovy 4.0.22
 3. Gradle 8.10
 
-### How to execute the file
+### How to execute the Backend
 #### 01 - From the project folder type in Bash:
 ```gradle run```
+
+### How to execute the Frontend
+#### 02 - From the Frontend folder type in Bash:
+```npm run serve```
