@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Sign Up</title>
+
+    <script defer src="../main.js"></script>
+    <link rel="stylesheet" href="../common/css/styles.css">
+
+</head>
+
+<body>
+    <h1>Candidate</h1>
+    <section class="content">
+        <form id="candidate-sign-up-form">
+            <h2>Sign Up</h2>
+            <div class="form-content">
+                <div class="form-labels">
+                    <label for="candidate-name">Name: </label>
+                    <input class="sign-up-entry" id="candidate-name" type="text" placeholder="John Doe">
+                </div>
+                <div class="form-labels">
+                    <label for="candidate-email">Email: </label>
+                    <input class="sign-up-entry" id="candidate-email" type="email" placeholder="johndoe@example.com">
+                </div>
+                <div class="form-labels">
+                    <label for="candidate-age">Age: </label>
+                    <input class="sign-up-entry" id="candidate-age" type="number" placeholder="23">
+                </div>
+                <div class="form-labels">
+                    <label for="candidate-cpf">CPF: </label>
+                    <input class="sign-up-entry" id="candidate-cpf" type="text" placeholder="123456789">
+                </div>
+                <div class="form-labels">
+                    <label for="candidate-description">Bio: </label>
+                    <textarea class="sign-up-entry" id="candidate-description" type="text" placeholder="Bio"></textarea>
+                </div>
+                <div class="form-labels">
+                    <label for="candidate-address">Address: </label>
+                    <input class="sign-up-entry" id="candidate-address" type="text">
+                </div>
+                <div class="form-labels">
+                    <label for="candidate-education">Education: </label>
+                    <input class="sign-up-entry" id="candidate-education" type="text" placeholder="Computer Engineer">
+                </div>
+                <div class="form-labels">
+                    <label for="candidate-skills">Skills: </label>
+                    <input class="sign-up-entry" id="candidate-skills" type="text"
+                        placeholder="Python, Java, JavaScript...">
+                </div>
+            </div>
+            <button class="sign-up-button" id="candidate-sign-up-button" type="submit">Sign Up</button>
+        </form>
+        
+        <form id="candidate-login-form">
+            <h2>Log In</h2>
+            <div class="form-labels">
+                <label for="candidate-email-login">Email</label>
+                <input id="candidate-email-login" placehoder="johndoe@example.com">
+            </div>
+            <button class="login-button" id="candidate-login-button" type="submit">Log In</button>
+        </form>
+    </section>
+</body>
+
+</html>
