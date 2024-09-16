@@ -1,13 +1,19 @@
 import { Candidate } from "../../models/Candidate";
+import { JobOpening } from "../../models/JobOpening";
 
 export class CandidateView {
 
-    public showProfile(candidate: Candidate): void {
-        const profile = this.buildProfile(candidate)
+    public showProfile(candidate: Candidate, jobOPeningList: JobOpening[]): void {
+        const profile = this.buildProfile(candidate, jobOPeningList)
         document.body = profile;
     }
 
-    private buildProfile(candidate: Candidate): HTMLElement {
+    private buildProfile(candidate: Candidate, jobOPeningList: JobOpening[]): HTMLElement {
+
+        const skills: string = this.buildSkillsString(candidate.skills);
+        const jobOpeningTable: string = this.buildJobOpeningTable(jobOPeningList);
+
+
         let HTMLText: string = `
         <body>
             <h1>Profile</h1>
@@ -30,7 +36,7 @@ export class CandidateView {
                 </div>
                 <div class="profile-entry">
                     <div>Skills:</div>
-                    <div>${candidate.skills}</div>
+                    <div>${skills}</div>
                 </div>
                 <div class="profile-entry">
                     <div>Education:</div>
@@ -45,7 +51,8 @@ export class CandidateView {
                     <div>${candidate.CPF}</div>
                 </div>
             </section>
-            <section>
+            <section id="display-job-openings">
+                ${jobOpeningTable}
             </section>
         </body>
         `;
@@ -53,6 +60,57 @@ export class CandidateView {
         const dom: Document = this.buildDocument(HTMLText);
 
         return dom.body;
+    }
+
+    private buildJobOpeningTable(jobOpeningList: JobOpening[]): string {
+        let table = '';
+
+        if (jobOpeningList.length < 1) {
+            return table;
+        }
+
+        let tableBody = '';
+        for (let job of jobOpeningList) {
+            let skillsRequired = this.buildSkillsString(job.skillsRequired)
+            tableBody +=
+                `<tr>
+                    <th>${job.title}</th>
+                    <th>${job.description}</th>
+                    <th>${skillsRequired}</th>
+                    <th>${job.educationRequired}</th>
+                    <th>${job.location}</th>
+                    <th>${job.salary != 0 ? job.salary : 'negotiable'}</th>
+                </tr>`
+        }
+
+        table = `
+            <h3>Company Open Positions</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Skills</th>
+                        <th>Education</th>
+                        <th>Location</th>
+                        <th>Salary</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${tableBody}
+                </tbody>
+            </table>`;
+
+        return table;
+    }
+
+    private buildSkillsString(skills?: string[]): string {
+        if (!skills) throw new Error('Skill cannot be empty');
+
+        return skills
+                .map(skill => ' ' + skill)
+                .toString()
+                .trim();
     }
 
     private buildDocument(text: string): Document {

@@ -201,7 +201,9 @@ export class Handler {
             return;
         }
 
-        this.candidateView.showProfile(candidate);
+        const jobOpenings: JobOpening[] = this.jobOpeningService.getAll();
+
+        this.candidateView.showProfile(candidate, jobOpenings);
     }
 
     private parseSkills(skills: string): string[] {
