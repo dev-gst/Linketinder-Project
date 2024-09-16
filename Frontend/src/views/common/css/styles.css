@@ -8,8 +8,62 @@
 
 }
 
-body {
+#index-page-parent {
+    display: flex;
+    justify-content: center;
+}
+
+#index-page {
     background-color: var(--background-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items:stretch;
+    min-height: 50vh;
+    min-width: 800px;
+    max-width: 800px;
+}
+
+.index-section {
+    min-height: 100%;
+    min-width: 50%;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.index-section a {
+    min-height: 100%;
+    min-width: 100%;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+#candidate-index,
+#company-index {
+    background-color: var(--primary-color);
+}
+
+#candidate-index:hover,
+#company-index:hover {
+    background-color: var(--secondary-color);
+}
+
+#candidate-index div,
+#company-index div {
+    font-weight: bolder;
+    color: white;
+}
+
+#candidate-index:hover div,
+#company-index:hover div {
+    font-weight: bolder;
+    color: black;
 }
 
 h1, h2, h3, h4, h5, h6 {
