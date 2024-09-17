@@ -11,8 +11,7 @@ export class CandidateView {
     private buildProfile(candidate: Candidate, jobOPeningList: JobOpening[]): HTMLElement {
 
         const skills: string = this.buildSkillsString(candidate.skills);
-        const jobOpeningTable: string = this.buildJobOpeningTable(jobOPeningList);
-
+        const jobOpeningTable: string = this.buildJobOpeningTable(jobOPeningList, candidate.skills);
 
         let HTMLText: string = `
         <body>
@@ -62,7 +61,10 @@ export class CandidateView {
         return dom.body;
     }
 
-    private buildJobOpeningTable(jobOpeningList: JobOpening[]): string {
+    private buildJobOpeningTable(
+        jobOpeningList: JobOpening[],
+        candidateSkills?: string[]
+    ): string {
         let table = '';
 
         if (jobOpeningList.length < 1) {
@@ -71,6 +73,9 @@ export class CandidateView {
 
         let tableBody = '';
         for (let job of jobOpeningList) {
+            let affinity: number = candidateSkills && candidateSkills.length >= 1 ?
+                this.buildAffinityField(candidateSkills, job.skillsRequired) : 0.00;
+
             let skillsRequired = this.buildSkillsString(job.skillsRequired)
             tableBody +=
                 `<tr>
@@ -80,6 +85,7 @@ export class CandidateView {
                     <th>${job.educationRequired}</th>
                     <th>${job.location}</th>
                     <th>${job.salary != 0 ? job.salary : 'negotiable'}</th>
+                    <th>${affinity.toFixed(2)}%</th>
                 </tr>`
         }
 
@@ -94,6 +100,7 @@ export class CandidateView {
                         <th>Education</th>
                         <th>Location</th>
                         <th>Salary</th>
+                        <th>Affinity</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -108,9 +115,26 @@ export class CandidateView {
         if (!skills) throw new Error('Skill cannot be empty');
 
         return skills
-                .map(skill => ' ' + skill)
-                .toString()
-                .trim();
+            .map(skill => ' ' + skill)
+            .toString()
+            .trim();
+    }
+
+    private buildAffinityField(
+        candidateSkills: string[],
+        jobOpeningSkils: string[]
+    ): number {
+
+        let counter = 0;
+        for (let cSkill of candidateSkills) {
+            for (let jSkill of jobOpeningSkils) {
+                if (cSkill.toLowerCase().trim() === jSkill.toLowerCase().trim()) {
+                    counter++;
+                }
+            }
+        }
+
+        return (counter / jobOpeningSkils.length) * 100;
     }
 
     private buildDocument(text: string): Document {
