@@ -47,13 +47,21 @@ export class CompanyRepository {
             }) as any[];
 
             for (let data of parsedCompanyList) {
-                const company: Company = new Company();
-                company.id = data._id;
-                company.name = data._name;
-                company.description = data._description;
-                company.email = data._email;
-                company.address = data._address;
-                company.CNPJ = data._CNPJ;
+                const company: Company = new Company(
+                    data._id,
+                    data._name,
+                    data._description,
+                    data._email,
+                    data._linkedin,
+                    data._phone,
+                    data._street,
+                    data._number,
+                    data._district,
+                    data._city,
+                    data._state,
+                    data._zip,
+                    data._CNPJ
+                );
 
                 this.companyList.push(company);
             }

@@ -15,19 +15,40 @@ export class CompanyService {
         return this._companyRepository;
     }
 
-    public create(name?: string, email?: string, description?: string,
-        address?: string, CNPJ?: string): Company {
-        const company: Company = new Company();
-        company.id = this._currentID;
-        company.name = name;
-        company.email = email;
-        company.description = description;
-        company.address = address;
-        company.CNPJ = CNPJ;
-        
+    public create(
+        name: string,
+        description: string,
+        email: string,
+        linkedin: string,
+        phone: string,
+        street: string,
+        number: string,
+        district: string,
+        city: string,
+        state: string,
+        zip: string,
+        CNPJ: string
+    ): Company {
+
+        const candidate: Company = new Company(
+            this._currentID,
+            name,
+            description,
+            email,
+            street,
+            linkedin,
+            phone,
+            number,
+            district,
+            city,
+            state,
+            zip,
+            CNPJ
+        );
+
         this._currentID++;
 
-        return company;
+        return candidate;
     }
 
     public save(company: Company) {

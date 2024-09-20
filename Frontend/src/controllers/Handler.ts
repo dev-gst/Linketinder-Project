@@ -58,14 +58,28 @@ export class Handler {
         const name: string = (companySignUpForm.querySelector('#company-name') as HTMLInputElement).value;
         const email: string = (companySignUpForm.querySelector('#company-email') as HTMLInputElement).value;
         const description: string = (companySignUpForm.querySelector('#company-description') as HTMLTextAreaElement).value;
-        const address: string = (companySignUpForm.querySelector('#company-address') as HTMLInputElement).value;
+        const linkedin: string = (companySignUpForm.querySelector('#company-linkedin') as HTMLInputElement).value;
+        const phone: string = (companySignUpForm.querySelector('#company-phone') as HTMLInputElement).value;
+        const street: string = (companySignUpForm.querySelector('#company-address-street') as HTMLInputElement).value;
+        const number: string = (companySignUpForm.querySelector('#company-address-number') as HTMLInputElement).value;
+        const district: string = (companySignUpForm.querySelector('#company-address-district') as HTMLInputElement).value;
+        const city: string = (companySignUpForm.querySelector('#company-address-city') as HTMLInputElement).value;
+        const state: string = (companySignUpForm.querySelector('#company-address-state') as HTMLInputElement).value;
+        const zip: string = (companySignUpForm.querySelector('#company-address-zip') as HTMLInputElement).value;
         const CNPJ: string = (companySignUpForm.querySelector('#company-cnpj') as HTMLInputElement).value;
 
         const company: Company = this.companyService.create(
             name,
-            email,
             description,
-            address,
+            email,
+            linkedin,
+            phone,
+            street,
+            number,
+            district,
+            city,
+            state,
+            zip,
             CNPJ,
         )
         
@@ -85,7 +99,14 @@ export class Handler {
         const name: string = (candidateSignUpForm.querySelector('#candidate-name') as HTMLInputElement).value;
         const email: string = (candidateSignUpForm.querySelector('#candidate-email') as HTMLInputElement).value;
         const description: string = (candidateSignUpForm.querySelector('#candidate-description') as HTMLTextAreaElement).value;
-        const address: string = (candidateSignUpForm.querySelector('#candidate-address') as HTMLInputElement).value;
+        const linkedin: string = (candidateSignUpForm.querySelector('#candidate-linkedin') as HTMLInputElement).value;
+        const phone: string = (candidateSignUpForm.querySelector('#candidate-phone') as HTMLInputElement).value;
+        const street: string = (candidateSignUpForm.querySelector('#candidate-address-street') as HTMLInputElement).value;
+        const number: string = (candidateSignUpForm.querySelector('#candidate-address-number') as HTMLInputElement).value;
+        const district: string = (candidateSignUpForm.querySelector('#candidate-address-district') as HTMLInputElement).value;
+        const city: string = (candidateSignUpForm.querySelector('#candidate-address-city') as HTMLInputElement).value;
+        const state: string = (candidateSignUpForm.querySelector('#candidate-address-state') as HTMLInputElement).value;
+        const zip: string = (candidateSignUpForm.querySelector('#candidate-address-zip') as HTMLInputElement).value;
         const skills: string[] = this.parseSkills((candidateSignUpForm.querySelector('#candidate-skills') as HTMLInputElement).value);
         const age: number = validAge;
         const education: string = (candidateSignUpForm.querySelector('#candidate-education') as HTMLInputElement).value;
@@ -93,13 +114,20 @@ export class Handler {
 
         const candidate: Candidate = this.candidateService.create(
             name,
-            email,
             description,
-            address,
-            skills,
-            education,
+            email,
+            linkedin,
+            phone,
+            street,
+            number,
+            district,
+            city,
+            state,
+            zip,
             age,
-            CPF
+            education,
+            CPF,
+            skills,
         )
         
         this.candidateService.save(candidate);
