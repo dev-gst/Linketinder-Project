@@ -18,31 +18,39 @@ export class CandidateView {
             <h1>Profile</h1>
             <section class="profile" id="candidate-profile">
                 <div class="profile-entry">
-                    <div>Name:</div>
+                    <div>Nome:</div>
                     <div>${candidate.name}</div>
                 </div>
                 <div class="profile-entry">
                     <div>Email:</div>
                     <div>${candidate.email}</div>
                 </div>
+                 <div class="profile-entry">
+                    <div>Linkedin:</div>
+                    <div>${candidate.linkedin}</div>
+                </div>
+                <div class="profile-entry">
+                    <div>Tel:</div>
+                    <div>${candidate.phone}</div>
+                </div>
                 <div class="profile-entry">
                     <div>Bio:</div>
                     <div>${candidate.description}</div>
                 </div>
                 <div class="profile-entry">
-                    <div>Adress:</div>
+                    <div>Endereço:</div>
                     <div>${candidate.address}</div>
                 </div>
                 <div class="profile-entry">
-                    <div>Skills:</div>
+                    <div>Habilidades:</div>
                     <div>${skills}</div>
                 </div>
                 <div class="profile-entry">
-                    <div>Education:</div>
+                    <div>Educação:</div>
                     <div>${candidate.education}</div>
                 </div>
                 <div class="profile-entry">
-                    <div>Age:</div>
+                    <div>Idade:</div>
                     <div>${candidate.age}</div>
                 </div>
                 <div class="profile-entry">

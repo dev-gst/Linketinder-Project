@@ -52,19 +52,27 @@ export class CompanyView {
             <h1>Profile</h1>
             <section class="profile" id="company-profile">
                 <div class="profile-entry">
-                    <div>Name:</div>
+                    <div>Nome:</div>
                     <div>${company.name}</div>
+                </div>
+                <div class="profile-entry">
+                    <div>Descrição:</div>
+                    <div>${company.description}</div>
                 </div>
                 <div class="profile-entry">
                     <div>Email:</div>
                     <div>${company.email}</div>
                 </div>
                 <div class="profile-entry">
-                    <div>Description:</div>
-                    <div>${company.description}</div>
+                    <div>Linkedin:</div>
+                    <div>${company.linkedin}</div>
                 </div>
                 <div class="profile-entry">
-                    <div>Adress:</div>
+                    <div>Tel:</div>
+                    <div>${company.phone}</div>
+                </div>
+                <div class="profile-entry">
+                    <div>Endereço:</div>
                     <div>${company.address}</div>
                 </div>
                 <div class="profile-entry">
