@@ -8,7 +8,7 @@ export class JobOpeningService {
 
     constructor(jobOpeningRepository: JobOpeningRepository) {
         this._jobOpeningRepository = jobOpeningRepository;
-        this._currentID = this._jobOpeningRepository.lastJobOpeningID + BigInt(1);
+        this._currentID = this._jobOpeningRepository.lastJobOpeningID;
     }
 
     get jobOpeningRepository(): JobOpeningRepository {

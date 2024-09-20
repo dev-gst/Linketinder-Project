@@ -66,7 +66,9 @@ export class CompanyRepository {
                 this.companyList.push(company);
             }
 
-            if (parsedCompanyList.length > 0) {
+            if (parsedCompanyList.length > 0 &&
+                parsedCompanyList[parsedCompanyList.length - 1]._id > this._lastCompanyID
+            ) {
                 this._lastCompanyID = parsedCompanyList[parsedCompanyList.length - 1]._id;
             }
         }

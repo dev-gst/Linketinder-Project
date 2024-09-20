@@ -9,7 +9,7 @@ export class CandidateRepository {
     constructor(candidateList: Candidate[]) {
         this._candidateList = candidateList;
         this._candidateStorage = 'candidateStorage';
-        this._lastCandidateID = BigInt(0);
+        this._lastCandidateID = BigInt(1);
 
         this.load();
     }
@@ -69,7 +69,9 @@ export class CandidateRepository {
                 this.candidateList.push(candidate);
             }
 
-            if (parsedCandidateList.length > 0) {
+            if (parsedCandidateList.length > 0 &&
+                parsedCandidateList[parsedCandidateList.length - 1]._id > this._lastCandidateID
+            ) {
                 this._lastCandidateID = parsedCandidateList[parsedCandidateList.length - 1]._id;
             }
         }

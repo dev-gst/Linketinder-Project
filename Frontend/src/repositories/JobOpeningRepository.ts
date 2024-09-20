@@ -9,7 +9,7 @@ export class JobOpeningRepository {
     constructor(jobOpeningList: JobOpening[]) {
         this._jobOpeningList = jobOpeningList;
         this._jobOpeningStorage = 'jobOpeningStorage';
-        this._lastJobOpeningID = BigInt(0);
+        this._lastJobOpeningID = BigInt(1);
 
         this.load();
     }
@@ -61,7 +61,9 @@ export class JobOpeningRepository {
                 this.jobOpeningList.push(jobOpening);
             }
 
-            if (parsedJobOpeningList.length > 0) {
+            if (parsedJobOpeningList.length > 0 &&
+                parsedJobOpeningList[parsedJobOpeningList.length - 1]._id > this._lastJobOpeningID
+            ) {
                 this._lastJobOpeningID = parsedJobOpeningList[parsedJobOpeningList.length - 1]._id;
             }
         }

@@ -8,7 +8,7 @@ export class CandidateService {
 
     constructor(candidateRepository: CandidateRepository) {
         this._candidateRepository = candidateRepository;
-        this._currentID = this._candidateRepository.lastCandidateID + BigInt(1);
+        this._currentID = this._candidateRepository.lastCandidateID;
     }
 
     get candidateRepository(): CandidateRepository {
