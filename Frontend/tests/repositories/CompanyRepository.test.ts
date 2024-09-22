@@ -4,35 +4,59 @@ import { CompanyRepository } from "../../src/repositories/CompanyRepository";
 describe('Test CompanyRepository', () => {
     let companyRepository: CompanyRepository;
     let companyList: Company[];
-    let mockedCompany1: jest.Mocked<Company>;
-    let mockedCompany2: jest.Mocked<Company>;
-    let mockedCompany3: jest.Mocked<Company>;
+    let company1: Company;
+    let company2: Company;
+    let company3: Company;
 
     beforeAll(() => {
-        mockedCompany1 = new Company as jest.Mocked<Company>;
-        mockedCompany1.id = BigInt(1);
-        mockedCompany1.name = 'Company A';
-        mockedCompany1.description = 'good company';
-        mockedCompany1.email = 'companya@example.com';
-        mockedCompany1.address = 'Good street, 1';
-        mockedCompany1.CNPJ = '1234567891';
+        company1 = new Company(
+            BigInt(1),
+            'Company A',
+            'good company',
+            'companya@example.com',
+            'linkedin.com/companya',
+            '1234567890',
+            'Good street',
+            '1',
+            'District 1',
+            'City 1',
+            'State 1',
+            '12345',
+            '1234567891'
+        );
 
-        mockedCompany2 = new Company as jest.Mocked<Company>;
-        mockedCompany2.id = BigInt(2);
-        mockedCompany2.name = 'Company B';
-        mockedCompany2.description = 'exceptional company';
-        mockedCompany2.email = 'companyb@example.com';
-        mockedCompany2.address = 'Good street, 2';
-        mockedCompany2.CNPJ = '121234123434567891';
+        company2 = new Company(
+            BigInt(2),
+            'Company B',
+            'another good company',
+            'companyb@example.com',
+            'linkedin.com/companyb',
+            '0987654321',
+            'Great street',
+            '2',
+            'District 2',
+            'City 2',
+            'State 2',
+            '54321',
+            '9876543210'
+        );
 
-        mockedCompany3 = new Company as jest.Mocked<Company>;
-        mockedCompany3.id = BigInt(3);
-        mockedCompany3.name = 'Company A';
-        mockedCompany3.description = 'nice company';
-        mockedCompany3.email = 'companyc@example.com';
-        mockedCompany3.address = 'Good street, 3';
-        mockedCompany3.CNPJ = '943506921';
-    })
+        company3 = new Company(
+            BigInt(3),
+            'Company C',
+            'yet another good company',
+            'companyc@example.com',
+            'linkedin.com/companyc',
+            '1357924680',
+            'Awesome street',
+            '3',
+            'District 3',
+            'City 3',
+            'State 3',
+            '67890',
+            '2468135790'
+        );
+    });
 
     beforeEach(() => {
         localStorage.clear();
@@ -52,32 +76,30 @@ describe('Test CompanyRepository', () => {
     });
 
     test('persist works with filled list', () => {
-        companyRepository.companyList.push(mockedCompany1);
+        companyRepository.companyList.push(company1);
         companyRepository.persist();
         const items: string | null = localStorage.getItem(companyRepository.companyStorage);
 
         expect(items).toBe(
-            `[{"_id":"1","_name":"Company A","_description":"good company",` +
-            `"_email":"companya@example.com","_address":"Good street, 1",` + 
-            `"_CNPJ":"1234567891"}]`
+            `[{\"_id\":\"1\",\"_name\":\"Company A\",\"_description\":\"good company\",\"_email\":\"companya@example.com\",\"_street\":\"Good street\",\"_linkedin\":\"linkedin.com/companya\",\"_phone\":\"1234567890\",\"_number\":\"1\",\"_district\":\"District 1\",\"_city\":\"City 1\",\"_state\":\"State 1\",\"_zip\":\"12345\",\"_CNPJ\":\"1234567891\"}]`
         );
     });
 
     test('save works with correct values', () => {
-        companyRepository.save(mockedCompany1);
+        companyRepository.save(company1);
         expect(companyList.length).toBe(1);
-        expect(companyList[0]).toBe(mockedCompany1);
+        expect(companyList[0]).toBe(company1);
 
-        companyRepository.save(mockedCompany2);
+        companyRepository.save(company2);
         expect(companyList.length).toBe(2);
-        expect(companyList[1]).toBe(mockedCompany2);
+        expect(companyList[1]).toBe(company2);
 
-        companyRepository.save(mockedCompany3);
+        companyRepository.save(company3);
         expect(companyList.length).toBe(3);
-        expect(companyList[2]).toBe(mockedCompany3);
+        expect(companyList[2]).toBe(company3);
     });
 
-    test('load does not work with empty localStorage', () => {
+    test('load works with empty localStorage', () => {
         companyRepository.load();
         const spy = jest.spyOn(companyRepository['companyList'], 'push');
         expect(spy).toHaveBeenCalledTimes(0);
@@ -86,7 +108,7 @@ describe('Test CompanyRepository', () => {
     });
 
     test('load works with filled localStorage', () => {
-        const newCompanyList: Company[] = [mockedCompany1, mockedCompany2, mockedCompany3];
+        const newCompanyList: Company[] = [company1, company2, company3];
 
         const jsonData = JSON.stringify(newCompanyList, (k, v) => {
             return typeof v === 'bigint' ? v.toString() : v;
@@ -96,36 +118,36 @@ describe('Test CompanyRepository', () => {
 
         companyRepository.load();
 
-        expect(companyRepository.companyList).toContainEqual<Company>(mockedCompany1);
-        expect(companyRepository.companyList).toContainEqual<Company>(mockedCompany2);
-        expect(companyRepository.companyList).toContainEqual<Company>(mockedCompany3);
+        expect(companyRepository.companyList).toContainEqual<Company>(company1);
+        expect(companyRepository.companyList).toContainEqual<Company>(company2);
+        expect(companyRepository.companyList).toContainEqual<Company>(company3);
     });
 
     test('Get company by email returns null when the company is not found', () => {
-        companyList.push(mockedCompany1);
-        companyList.push(mockedCompany2);
+        companyList.push(company1);
+        companyList.push(company2);
 
-        expect(companyRepository.getByEmail(mockedCompany3.email)).toBeNull();
+        expect(companyRepository.getByEmail(company3.email)).toBeNull();
     });
 
     test('Get company by email returns the correct value', () => {
-        companyList.push(mockedCompany1);
-        companyList.push(mockedCompany2);
+        companyList.push(company1);
+        companyList.push(company2);
 
-        expect(companyRepository.getByEmail(mockedCompany2.email)).toBe(mockedCompany2);
+        expect(companyRepository.getByEmail(company2.email)).toBe(company2);
     });
 
     test('Get company by CPF returns null when the company is not found', () => {
-        companyList.push(mockedCompany1);
-        companyList.push(mockedCompany2);
+        companyList.push(company1);
+        companyList.push(company2);
 
-        expect(companyRepository.getByCNPJ(mockedCompany3.CNPJ)).toBeNull();
+        expect(companyRepository.getByCNPJ(company3.CNPJ)).toBeNull();
     });
 
     test('Get company by CPF returns the correct value', () => {
-        companyList.push(mockedCompany1);
-        companyList.push(mockedCompany2);
+        companyList.push(company1);
+        companyList.push(company2);
 
-        expect(companyRepository.getByCNPJ(mockedCompany2.CNPJ)).toBe(mockedCompany2);
+        expect(companyRepository.getByCNPJ(company2.CNPJ)).toBe(company2);
     });
 });

@@ -2,62 +2,90 @@ import { Company } from '../../src/models/Company';
 import { CompanyRepository } from '../../src/repositories/CompanyRepository';
 import { CompanyService } from '../../src/services/CompanyService';
 
+jest.mock('../../src/repositories/CompanyRepository', () => {
+    return {
+        CompanyRepository: jest.fn().mockImplementation(() => {
+            return {
+                _companyStorage: 'companyStorage',
+                _companyList: [],
+                lastCompanyID: BigInt(1),
+                save: jest.fn(),
+                persist: jest.fn(),
+                getByEmail: jest.fn(),
+                getByCNPJ: jest.fn(),
+                getByID: jest.fn(),
+            };
+        })
+    }
+});
+
+
 describe('Test CompanyService', () => {
-    let companyList: Company[];
-    let mockedCompanyRepository: jest.Mocked<CompanyRepository>
-    let mockedCompany: jest.Mocked<Company>
+    let company: jest.Mocked<Company>;
+    let mockedCompanyRepository: jest.Mocked<CompanyRepository>;
     let companyService: CompanyService;
 
     beforeEach(() => {
-        companyList = [];
-        mockedCompanyRepository = new CompanyRepository(companyList) as jest.Mocked<CompanyRepository>
+        jest.clearAllMocks();
 
-        mockedCompanyRepository.getByEmail = jest.fn();
-        mockedCompanyRepository.getByCNPJ = jest.fn();
-        
-        mockedCompany = {
-            id: BigInt(1),
-            name: 'John Doe',
-            email: `johndoe@example.com`,
-            description: `good person`,
-            address: `Good street, 1`,
-            CNPJ: `1234567891`,
-        }
+        company = new Company(
+            BigInt(1),
+            'Company A',
+            'good company',
+            'companya@example.com',
+            'Good street',
+            'linkedin.com/companya',
+            '1234567890',
+            '1',
+            'District 1',
+            'City 1',
+            'State 1',
+            '12345',
+            '1234567891'
+        );
 
+        mockedCompanyRepository = new CompanyRepository([]) as jest.Mocked<CompanyRepository>;
         companyService = new CompanyService(mockedCompanyRepository);
     });
 
     test('Creates a new Company', () => {
-        const company: Company = companyService.create (
-            mockedCompany.name,
-            mockedCompany.email,
-            mockedCompany.description,
-            mockedCompany.address,
-            mockedCompany.CNPJ,
+        const newCompany: Company = companyService.create (
+            company.name,
+            company.description,
+            company.email,
+            company.linkedin,
+            company.phone,
+            company.street,
+            company.number,
+            company.district,
+            company.city,
+            company.state,
+            company.zip,
+            company.CNPJ,
         );
 
-        expect(company.id).toEqual(mockedCompany.id);
-        expect(company.name).toEqual(mockedCompany.name);
-        expect(company.description).toEqual(mockedCompany.description);
-        expect(company.email).toEqual(mockedCompany.email);
-        expect(company.address).toEqual(mockedCompany.address);
-        expect(company.CNPJ).toEqual(mockedCompany.CNPJ);
+        expect(newCompany.id).toEqual(company.id);
+        expect(newCompany.name).toEqual(company.name);
+        expect(newCompany.description).toEqual(company.description);
+        expect(newCompany.email).toEqual(company.email);
+        expect(newCompany.address).toEqual(company.address);
+        expect(newCompany.CNPJ).toEqual(company.CNPJ);
     });
 
     test('Saves a Company to the "Database"', () => {
         const spy1 = jest.spyOn(companyService['companyRepository'], 'save');
         const spy2 = jest.spyOn(companyService['companyRepository'], 'persist');
 
-        companyService.save(mockedCompany);
+        companyService.save(company);
 
         expect(spy1).toHaveBeenCalledTimes(1)
         expect(spy1).toHaveBeenCalledWith(expect.objectContaining({
-            id: mockedCompany.id,
-            name: mockedCompany.name,
-            description: mockedCompany.description,
-            email: mockedCompany.email,
-            address: mockedCompany.address,
-            CNPJ: mockedCompany.CNPJ,
+            id: company.id,
+            name: company.name,
+            description: company.description,
+            email: company.email,
+            address: company.address,
+            CNPJ: company.CNPJ,
         }));
 
         expect(spy2).toHaveBeenCalledTimes(1);
@@ -69,21 +97,21 @@ describe('Test CompanyService', () => {
 
     test('Get by email returns null when the company is not present', () => {
         mockedCompanyRepository.getByEmail.mockReturnValue(null);
-        expect(companyService.getByEmail(mockedCompany.email)).toBeNull();
+        expect(companyService.getByEmail(company.email)).toBeNull();
     });
 
     test('Get by email returns company when present', () => {
-        mockedCompanyRepository.getByEmail.mockReturnValue(mockedCompany);
-        expect(companyService.getByEmail(mockedCompany.email)).toBe(mockedCompany);
+        mockedCompanyRepository.getByEmail.mockReturnValue(company);
+        expect(companyService.getByEmail(company.email)).toBe(company);
     });
 
     test('Get by CNPJ returns null when the company is not present', () => {
         mockedCompanyRepository.getByCNPJ.mockReturnValue(null);
-        expect(companyService.getByCNPJ(mockedCompany.email)).toBeNull();
+        expect(companyService.getByCNPJ(company.email)).toBeNull();
     });
 
     test('Get by CNPJ returns company when present', () => {
-        mockedCompanyRepository.getByCNPJ.mockReturnValue(mockedCompany);
-        expect(companyService.getByCNPJ(mockedCompany.CNPJ)).toBe(mockedCompany);
+        mockedCompanyRepository.getByCNPJ.mockReturnValue(company);
+        expect(companyService.getByCNPJ(company.CNPJ)).toBe(company);
     });   
 });
