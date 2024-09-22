@@ -25,7 +25,7 @@ export class Candidate extends Person {
         CPF: string,
         skills: string[]
     ) {
-        super(id, name, description, email, street, linkedin, phone, number, district, city, state, zip);
+        super(id, name, description, email, linkedin, phone, street, number, district, city, state, zip);
         this._age = age;
         this._education = education;
         this._CPF = CPF;

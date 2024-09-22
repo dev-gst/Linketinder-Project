@@ -9,9 +9,9 @@ export class Company extends Person {
         name: string,
         description: string,
         email: string,
-        street: string,
         linkedin: string,
         phone: string,
+        street: string,
         number: string,
         district: string,
         city: string,
@@ -19,7 +19,7 @@ export class Company extends Person {
         zip: string,
         CNPJ: string,
     ) {
-        super(id, name, description, email, street, linkedin, phone, number, district, city, state, zip);
+        super(id, name, description, email, linkedin, phone, street, number, district, city, state, zip);
         this._CNPJ = CNPJ;
     }
     
