@@ -5,7 +5,13 @@
     --background-color: #ffffff;
     --choose-button-color: #ccddff;
     --choose-button-color-hover: #ffffff;
+    --error-color: #ff4d4d;
+    --success-color: #28a745;
+}
 
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
 #index-page-parent {
@@ -123,6 +129,19 @@ button:hover {
     border: solid 2px var(--primary-color);
     background-color: #ffffff;
     color: var(--primary-color);
+}
+
+.error-message,
+.success-message {
+    background-color: var(--error-color);
+    color: white;
+    font-weight: 600;
+    border-radius: 4px;
+    padding: 1px 16px;
+}
+
+.success-message {
+    background-color: var(--success-color);
 }
 
 .profile {
