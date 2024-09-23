@@ -5,7 +5,7 @@ export class Validation {
             throw new Error('Name is required');
         }
 
-        const nameLenRegex = /^[\sA-Za-zÀ-ÖØ-öø-ÿ]{2,50}$/;
+        const nameLenRegex = /^[\s\dA-Za-zÀ-ÖØ-öø-ÿ]{2,50}$/;
         if (!nameLenRegex.test(name)) {
             throw new Error('Name needs to be between 2 and 50 characters');
         }
