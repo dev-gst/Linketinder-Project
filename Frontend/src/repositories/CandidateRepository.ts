@@ -92,4 +92,10 @@ export class CandidateRepository {
 
         return candidate ? candidate : null;
     }
+
+    public getByID(id: bigint): Candidate | null {
+        const candidate: Candidate | undefined = this._candidateList.find(p => p.id === id);
+
+        return candidate ? candidate : null;
+    }
 }

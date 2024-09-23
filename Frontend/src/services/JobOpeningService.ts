@@ -42,6 +42,10 @@ export class JobOpeningService {
     }
 
     public save(jobOpening: JobOpening) {
+        if (this.getByID(jobOpening.id)) {
+            throw new Error("Job Opening already exists");
+        }
+
         this._jobOpeningRepository.save(jobOpening);
         this._jobOpeningRepository.persist();
     }

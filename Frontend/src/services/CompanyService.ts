@@ -53,9 +53,10 @@ export class CompanyService {
 
     public save(company: Company) {
         if (this.getByEmail(company.email) ||
-            this.getByCNPJ(company.CNPJ)) {
-            console.error("Company already exists");
-            return;
+            this.getByCNPJ(company.CNPJ) ||
+            this.getByID(company.id)) {
+            
+            throw new Error("Company already exists");
         }
 
         this._companyRepository.save(company);

@@ -57,15 +57,20 @@ export class CandidateService {
         return candidate;
     }
 
-    public save(candidate: Candidate) {
+    public save(candidate: Candidate): void {
         if (this.getByEmail(candidate.email) ||
-            this.getByCPF(candidate.CPF)) {
-            console.error("Candidate already exists");
-            return;
+            this.getByCPF(candidate.CPF) ||
+            this.getByID(candidate.id)) {
+            
+            throw new Error("Candidate already exists");
         }
 
         this._candidateRepository.save(candidate);
         this._candidateRepository.persist();
+    }
+
+    public getByID(id: bigint): Candidate | null {
+        return this._candidateRepository.getByID(id);;
     }
 
     public getByEmail(email?: string): Candidate | null {
