@@ -150,14 +150,12 @@ button:hover {
     background-color: var(--primary-color);
     max-width: 500px;
     padding: 20px;
-    margin: auto;
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
 }
 
 #create-job-opening-form {
-    margin: auto;
     margin-top: 20px;
 }
 
@@ -183,6 +181,11 @@ button:hover {
     flex-direction: column;
     overflow-x: auto;
     margin-bottom: 30px;
+}
+
+#display-skill-chart {
+    max-width: 500px;
+    border-collapse: collapse;
 }
 
 table {

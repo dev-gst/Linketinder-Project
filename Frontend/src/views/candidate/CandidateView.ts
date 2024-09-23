@@ -46,7 +46,7 @@ export class CandidateView {
                     <div>${skills}</div>
                 </div>
                 <div class="profile-entry">
-                    <div>Educação:</div>
+                    <div>Escolaridade:</div>
                     <div>${candidate.education}</div>
                 </div>
                 <div class="profile-entry">
@@ -92,23 +92,23 @@ export class CandidateView {
                     <th>${skillsRequired}</th>
                     <th>${job.educationRequired}</th>
                     <th>${job.location}</th>
-                    <th>${job.salary != 0 ? job.salary : 'negotiable'}</th>
+                    <th>${job.salary != 0 ? job.salary : 'negociável'}</th>
                     <th>${affinity.toFixed(2)}%</th>
                 </tr>`
         }
 
         table = `
-            <h3>Company Open Positions</h3>
+            <h3>Posições abertas na Empresa</h3>
             <table>
                 <thead>
                     <tr>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Skills</th>
-                        <th>Education</th>
-                        <th>Location</th>
-                        <th>Salary</th>
-                        <th>Affinity</th>
+                        <th>Título</th>
+                        <th>Descrições</th>
+                        <th>Habilidades</th>
+                        <th>Escolaridade</th>
+                        <th>Localidade</th>
+                        <th>Salário</th>
+                        <th>Afinidade</th>
                     </tr>
                 </thead>
                 <tbody>
