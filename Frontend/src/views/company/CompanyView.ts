@@ -52,19 +52,27 @@ export class CompanyView {
             <h1>Profile</h1>
             <section class="profile" id="company-profile">
                 <div class="profile-entry">
-                    <div>Name:</div>
+                    <div>Nome:</div>
                     <div>${company.name}</div>
+                </div>
+                <div class="profile-entry">
+                    <div>Descrição:</div>
+                    <div>${company.description}</div>
                 </div>
                 <div class="profile-entry">
                     <div>Email:</div>
                     <div>${company.email}</div>
                 </div>
                 <div class="profile-entry">
-                    <div>Description:</div>
-                    <div>${company.description}</div>
+                    <div>Linkedin:</div>
+                    <div>${company.linkedin}</div>
                 </div>
                 <div class="profile-entry">
-                    <div>Adress:</div>
+                    <div>Tel:</div>
+                    <div>${company.phone}</div>
+                </div>
+                <div class="profile-entry">
+                    <div>Endereço:</div>
                     <div>${company.address}</div>
                 </div>
                 <div class="profile-entry">
@@ -90,31 +98,31 @@ export class CompanyView {
                     <h2>Create Job Opening</h2>
                     <div class="form-content">
                         <div class="form-labels">
-                            <label for="job-opening-title">Title: </label>
-                            <input id="job-opening-title" type="text">
+                            <label for="job-opening-title">Título: </label>
+                            <input required id="job-opening-title" type="text">
                         </div>
                         <div class="form-labels">
-                            <label for="job-opening-description">Description: </label>
-                            <textarea id="job-opening-description" type="text""></textarea>
+                            <label for="job-opening-description">Descrição: </label>
+                            <textarea required id="job-opening-description" type="text""></textarea>
                         </div>
                         <div class="form-labels">
-                            <label for="job-opening-skills">Skills Required: </label>
-                            <input id="job-opening-skills" type="text">
+                            <label for="job-opening-skills">Habilidades: </label>
+                            <input required id="job-opening-skills" type="text">
                         </div>
                         <div class="form-labels">
-                            <label for="job-opening-education">Education: </label>
-                            <input id="job-opening-education" type="text">
+                            <label for="job-opening-education">Escolaridade: </label>
+                            <input required id="job-opening-education" type="text">
                         </div>
                         <div class="form-labels">
-                            <label for="job-opening-location">Location: </label>
-                            <input id="job-opening-location" type="text">
+                            <label for="job-opening-location">Localidade: </label>
+                            <input required id="job-opening-location" type="text">
                         </div>
                         <div class="form-labels">
-                            <label for="job-opening-salary">Salary: </label>
+                            <label for="job-opening-salary">Salário: </label>
                             <input id="job-opening-salary" type="text">
                         </div>
                     </div>
-                    <button id="create-job-opening-button" type="submit">Create</button>
+                    <button id="create-job-opening-button" type="submit">Criar</button>
                 </form>
             </section>
         </body>
@@ -142,21 +150,21 @@ export class CompanyView {
                     <th>${skillsRequired}</th>
                     <th>${job.educationRequired}</th>
                     <th>${job.location}</th>
-                    <th>${job.salary != 0 ? job.salary : 'negotiable'}</th>
+                    <th>${job.salary != 0 ? job.salary : 'negociável'}</th>
                 </tr>`
         }
 
         table = `
-            <h3>Company Open Positions</h3>
+            <h3>Posições Abertas na Empresa</h3>
             <table>
                 <thead>
                     <tr>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Skills</th>
-                        <th>Education</th>
-                        <th>Location</th>
-                        <th>Salary</th>
+                        <th>Título</th>
+                        <th>Descrição</th>
+                        <th>Habilidades</th>
+                        <th>Escolaridade</th>
+                        <th>Localidade</th>
+                        <th>Salário</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -186,13 +194,13 @@ export class CompanyView {
         }
 
         table = `
-            <h3>Candidates</h3>
+            <h3>Candidatos</h3>
             <table>
                 <thead>
                     <tr>
-                        <th>Skills</th>
-                        <th>Education</th>
-                        <th>Choose</th>
+                        <th>Habilidades</th>
+                        <th>Escolaridade</th>
+                        <th>Like</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -236,7 +244,7 @@ export class CompanyView {
             data: {
                 labels: data.keys,
                 datasets: [{
-                    label: '# Candidate by competence',
+                    label: '# Candidato por habilidade',
                     data: data.values,
                     backgroundColor: [
                         'rgba(0, 128, 0, 0.6)',
