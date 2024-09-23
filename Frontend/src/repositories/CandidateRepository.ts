@@ -9,7 +9,7 @@ export class CandidateRepository {
     constructor(candidateList: Candidate[]) {
         this._candidateList = candidateList;
         this._candidateStorage = 'candidateStorage';
-        this._lastCandidateID = BigInt(1);
+        this._lastCandidateID = BigInt(0);
 
         this.load();
     }
