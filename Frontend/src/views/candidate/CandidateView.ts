@@ -98,7 +98,7 @@ export class CandidateView {
         }
 
         table = `
-            <h3>Posições abertas na Empresa</h3>
+            <h3>Vagas abertas:</h3>
             <table>
                 <thead>
                     <tr>

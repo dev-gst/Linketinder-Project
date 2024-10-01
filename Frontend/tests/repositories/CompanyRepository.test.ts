@@ -81,7 +81,11 @@ describe('Test CompanyRepository', () => {
         const items: string | null = localStorage.getItem(companyRepository.companyStorage);
 
         expect(items).toBe(
-            `[{\"_id\":\"1\",\"_name\":\"Company A\",\"_description\":\"good company\",\"_email\":\"companya@example.com\",\"_street\":\"Good street\",\"_linkedin\":\"linkedin.com/companya\",\"_phone\":\"1234567890\",\"_number\":\"1\",\"_district\":\"District 1\",\"_city\":\"City 1\",\"_state\":\"State 1\",\"_zip\":\"12345\",\"_CNPJ\":\"1234567891\"}]`
+            `[{\"_id\":\"1\",\"_name\":\"Company A\",\"_description\":\"good company\",`+
+            `\"_email\":\"companya@example.com\",\"_street\":\"Good street\",` +
+            `\"_linkedin\":\"linkedin.com/companya\",\"_phone\":\"1234567890\",` +
+            `\"_number\":\"1\",\"_district\":\"District 1\",\"_city\":\"City 1\",` +
+            `\"_state\":\"State 1\",\"_zip\":\"12345\",\"_CNPJ\":\"1234567891\"}]`
         );
     });
 
