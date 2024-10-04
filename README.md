@@ -16,3 +16,10 @@ by Gustavo de Araújo Garcia
 ### How to execute the Frontend
 #### 02 - From the Frontend folder type in Bash:
 ```npm run serve```
+
+## Design of Database
+
+![db_design.png](src/main/resources/db_design.png)
+Created with DBeaver
+
+This project uses Postgresql to store its data.
