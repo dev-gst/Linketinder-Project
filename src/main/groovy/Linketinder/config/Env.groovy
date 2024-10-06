@@ -2,6 +2,8 @@ package Linketinder.config
 
 import org.yaml.snakeyaml.Yaml
 
+import java.time.ZoneId
+
 class Env {
     static final String DB_URL
     static final String DB_USER
@@ -9,6 +11,8 @@ class Env {
     static final String DB_DRIVER
     static final String DB_SCHEMAS
     static final String DB_LOCATIONS
+
+    static final ZoneId TIMEZONE
 
     static {
         Yaml yaml = new Yaml()
@@ -24,5 +28,7 @@ class Env {
         DB_DRIVER = config.get("db").get("driver")
         DB_SCHEMAS = config.get("db").get("schemas")
         DB_LOCATIONS = config.get("db").get("locations")
+
+        TIMEZONE = ZoneId.of(config.get("timezone").toString())
     }
 }
