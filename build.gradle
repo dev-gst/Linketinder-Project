@@ -15,15 +15,24 @@ ext {
     junitSuiteAPI = '1.11.0-M2'
     mockitoCore = '5.12.0'
     postgresql = '42.7.4'
+    flywayCore = '10.19.0'
+    flywayDatabasePostgresql = '10.19.0'
+    snakeYaml = '2.3'
 }
 
 dependencies {
     implementation "org.apache.groovy:groovy:$groovy"
+    implementation "org.flywaydb:flyway-core:$flywayCore"
+    implementation "org.postgresql:postgresql:$postgresql"
+    implementation "org.yaml:snakeyaml:$snakeYaml"
+
+    runtimeOnly "org.flywaydb:flyway-database-postgresql:$flywayDatabasePostgresql"
+
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
     testImplementation "org.junit.platform:junit-platform-suite-api:$junitSuiteAPI"
     testImplementation "org.mockito:mockito-core:$mockitoCore"
-    implementation "org.postgresql:postgresql:$postgresql"
+
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 }
 
 sourceSets {
