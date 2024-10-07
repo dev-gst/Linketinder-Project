@@ -51,4 +51,17 @@ class JobOpening {
 
         return result
     }
+
+    @Override
+    String toString() {
+        return "Detalhes da Vaga:\n" +
+                "ID: ${id}\n" +
+                "Nome: ${name}\n" +
+                "Descrição: ${description}\n" +
+                "Remoto: ${isRemote ? 'Sim' : 'Não'}\n" +
+                "Aberta: ${isOpen ? 'Sim' : 'Não'}\n" +
+                "Empresa: ${company}\n" +
+                "${address}\n" +
+                "Habilidades Requeridas: ${requiredSkills}"
+    }
 }

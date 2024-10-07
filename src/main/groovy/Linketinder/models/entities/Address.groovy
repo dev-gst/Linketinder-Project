@@ -42,4 +42,17 @@ class Address {
         result = 31 * result + (zipCode != null ? zipCode.hashCode() : 0)
         return result
     }
+
+    @Override
+    String toString() {
+        return "Endereço:\n" +
+                "ID: ${id}\n" +
+                "País: ${country}\n" +
+                "Região: ${region}\n" +
+                "Cidade: ${city}\n" +
+                "Bairro: ${neighborhood}\n" +
+                "Rua: ${street}\n" +
+                "Número: ${number}\n" +
+                "CEP: ${zipCode}"
+    }
 }

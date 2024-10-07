@@ -43,4 +43,16 @@ class Company {
 
         return result
     }
+
+    String toString() {
+        return "Empresa:\n" +
+                "ID: ${id}\n" +
+                "Nome: ${name}\n" +
+                "Email: ${email}\n" +
+                "Senha: ${password}\n" +
+                "Descrição: ${description}\n" +
+                "CNPJ: ${cnpj}\n" +
+                "${address}\n" +
+                "Vagas de Emprego: ${jobOpenings}"
+    }
 }

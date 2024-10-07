@@ -1,5 +1,11 @@
 package Linketinder.models.entities
 
+import Linketinder.config.Env
+
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
+
 class Candidate {
     int id
     String firstName
@@ -7,11 +13,19 @@ class Candidate {
     String email
     String password
     String description
-    Date birthDate
+    Instant birthDate
     String cpf
     String education
     Address address
     Set<Skill> skills = new HashSet<Skill>()
+
+    void addSkill (Skill skill) {
+        this.skills.add(skill)
+    }
+
+    void removeSkill (Skill skill) {
+        this.skills.remove(skill)
+    }
 
     @Override
     boolean equals(o) {
@@ -51,5 +65,21 @@ class Candidate {
         result = 31 * result + (skills != null ? skills.hashCode() : 0)
 
         return result
+    }
+
+    @Override
+    String toString() {
+        return "Candidato:\n" +
+                "ID: ${id}\n" +
+                "Nome: ${firstName}\n" +
+                "Sobrenome: ${lastName}\n" +
+                "Email: ${email}\n" +
+                "Senha: ${password}\n" +
+                "Descrição: ${description}\n" +
+                "Data de Nascimento: ${LocalDate.ofInstant(this.birthDate, Env.TIMEZONE as ZoneId).toString()}\n" +
+                "CPF: ${cpf}\n" +
+                "Educação: ${education}\n" +
+                "${address}\n" +
+                "Habilidades: ${skills}"
     }
 }

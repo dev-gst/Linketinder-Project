@@ -25,4 +25,9 @@ class Skill {
 
         return result
     }
+
+    @Override
+    String toString() {
+        return name
+    }
 }
