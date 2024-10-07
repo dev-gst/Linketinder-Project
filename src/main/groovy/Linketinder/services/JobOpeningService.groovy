@@ -97,11 +97,31 @@ class JobOpeningService {
     }
 
     void delete(int id) {
-        int addressID = jobOpeningDAO.getById(id).address.id
+        JobOpening oldJobOpening = jobOpeningDAO.getById(id)
+        if (!oldJobOpening) {
+            throw new IllegalArgumentException("Job opening not found for the given ID")
+        }
+
+        int oldAddressID = oldJobOpening.address.id
 
         jobOpeningDAO.delete(id)
-        addressDAO.delete(addressID)
+        addressDAO.delete(oldAddressID)
 
         skillDAO.deleteJobOpeningSkills(id)
+    }
+
+    void deleteByCompanyId(int id) {
+        List<JobOpening> jobOpenings = jobOpeningDAO.getByCompanyId(id)
+        if (jobOpenings.isEmpty()) {
+            throw new IllegalArgumentException("Job openings not found for the given company ID")
+        }
+
+        for (JobOpening jobOpening : jobOpenings) {
+            int addressID = jobOpening.address.id
+
+            jobOpeningDAO.delete(jobOpening.id)
+            addressDAO.delete(addressID)
+            skillDAO.deleteJobOpeningSkills(jobOpening.id)
+        }
     }
 }
