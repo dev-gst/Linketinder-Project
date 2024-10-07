@@ -77,6 +77,29 @@ class SkillDAO {
         return skills
     }
 
+    List<Skill> getByJobOpeningId(int jobOpeningId) {
+        String query = "SELECT * FROM skills " +
+                "JOIN job_opening_skills ON skills.id = job_opening_skills.skill_id " +
+                "WHERE job_opening_skills.job_openings_id = ?"
+
+        PreparedStatement stmt = conn.prepareStatement(query, ResultSet.CONCUR_READ_ONLY)
+        stmt.setInt(1, jobOpeningId)
+
+        List<Skill> skills = new ArrayList<>()
+
+        ResultSet rs = stmt.executeQuery()
+        while (rs.next()) {
+            Skill skill = new Skill()
+
+            skill.id = rs.getInt("id")
+            skill.name = rs.getString("name")
+
+            skills.add(skill)
+        }
+
+        return skills
+    }
+
     List<Skill> getAll() {
         String query = "SELECT * FROM skills"
 
@@ -128,6 +151,21 @@ class SkillDAO {
         }
     }
 
+    void saveJobOpeningSkills(int jobOpeningId, Set<Skill> skills) {
+        String query = "INSERT INTO public.job_opening_skills (job_openings_id, skill_id) VALUES (?, ?)"
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            for (Skill skill : skills) {
+                stmt.setInt(1, jobOpeningId)
+                stmt.setInt(2, skill.id)
+
+                stmt.addBatch()
+            }
+
+            stmt.executeBatch()
+        }
+    }
+
     void update(int id, SkillDTO skillDTO) {
         String query = "UPDATE skills SET name = ? WHERE id = ?"
 
@@ -152,6 +190,15 @@ class SkillDAO {
 
         PreparedStatement stmt = conn.prepareStatement(query)
         stmt.setInt(1, candidateId)
+
+        stmt.executeUpdate()
+    }
+
+    void deleteJobOpeningSkills(int jobOpeningId) {
+        String query = "DELETE FROM job_opening_skills WHERE job_openings_id = ?"
+
+        PreparedStatement stmt = conn.prepareStatement(query)
+        stmt.setInt(1, jobOpeningId)
 
         stmt.executeUpdate()
     }
