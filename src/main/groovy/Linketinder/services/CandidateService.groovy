@@ -68,14 +68,20 @@ class CandidateService {
             AddressDTO addressDTO,
             Set<SkillDTO> skillDTOList
     ) {
-        int oldAddressID = candidateDAO.getById(candidateID).address.id
-        AddressDAO.delete(oldAddressID)
+        Candidate oldCandidate = candidateDAO.getById(candidateID)
+        if (!oldCandidate) {
+            throw new IllegalArgumentException("Candidate not found for the given id")
+        }
+
+        int oldAddressID = oldCandidate.address.id
 
         int newAddressID = addressDAO.save(addressDTO)
         candidateDAO.update(candidateID, candidateDTO, newAddressID)
 
         Set<Skill> skills = skillService.save(skillDTOList)
         skillDAO.saveCandidateSkills(candidateID, skills)
+
+        addressDAO.delete(oldAddressID)
     }
 
     void delete(int id) {
