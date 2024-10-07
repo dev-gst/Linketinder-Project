@@ -1,48 +1,41 @@
 package Linketinder.services
 
-import Linketinder.models.entities.Address
 import Linketinder.models.entities.Company
-import Linketinder.models.enums.SkillEnum
+import Linketinder.models.entities.JobOpening
+import Linketinder.repositories.AddressDAO
+import Linketinder.repositories.CompanyDAO
+import Linketinder.repositories.JobOpeningDAO
 
-class CompanyService implements IEntityService {
-    static final int MIN_COMPANIES = 5
+class CompanyService {
+    CompanyDAO companyDAO
+    JobOpeningDAO jobOpeningDAO
+    AddressDAO addressDAO
 
-    int currentId
-    List<Company> companies
-
-    CompanyService() {
-        this.currentId = 1
-        this.companies = new LinkedList<>()
+    CompanyService(
+            CompanyDAO companyDAO,
+            JobOpeningDAO jobOpeningDAO,
+            AddressDAO addressDAO
+    ) {
+        this.companyDAO = companyDAO
+        this.jobOpeningDAO = jobOpeningDAO
+        this.addressDAO = addressDAO
     }
 
-    @Override
-    void populate() {
-        for (int i = 0; i < MIN_COMPANIES; i++) {
-            Company company = new Company()
-            company.ID = currentId.toBigInteger()
-            company.name = "Company Name" + i
-            company.description = i <= 3 ? "Good company" : "Bad company"
-            company.email = "${i}@example.com"
-            company.address = i <= 3 ?
-                    new Address(country: "Brazil", state: "DF", zipCode: "123456789" + i) :
-                    new Address(country: "Brazil", state: "GO", zipCode: "987654321" + i)
-            company.CNPJ = "00000000000" + i
+    Company getById(int id) {
+        Company company = companyDAO.getById(id)
 
-            i < 3 ? company.addSkill(SkillEnum.JAVA, SkillEnum.SPRING_BOOT, SkillEnum.GROOVY) :
-                    company.addSkill(SkillEnum.ANGULAR, SkillEnum.JAVASCRIPT)
+        company.address = addressDAO.getByCompanyId(company.id)
+        company.jobOpenings = jobOpeningDAO.getByCompanyId(company.id)
 
-            currentId++
-
-            this.companies.add(company)
-        }
+        return company
     }
 
-    @Override
-    <T> void add(T company) {
-        if (company instanceof Company) {
-            company.ID = currentId
-            this.companies.add(company)
-            currentId++
-        }
+    Company getByJobOpeningId(int jobOpeningId) {
+        Company company = companyDAO.getByJobOpeningId(jobOpeningId)
+
+        company.address = addressDAO.getByCompanyId(company.id)
+        company.jobOpenings = jobOpeningDAO.getByCompanyId(company.id)
+
+        return company
     }
 }
