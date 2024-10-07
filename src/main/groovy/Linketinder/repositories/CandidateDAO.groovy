@@ -36,6 +36,8 @@ class CandidateDAO {
             candidate.birthDate = rs.getObject("birth_date", LocalDate.class).atStartOfDay(Env.TIMEZONE).toInstant()
             candidate.cpf = rs.getString("cpf")
             candidate.education = rs.getString("education")
+
+            return candidate
         }
 
         return null
