@@ -3,27 +3,29 @@ package Linketinder.services
 import Linketinder.models.DTOs.AddressDTO
 import Linketinder.models.DTOs.CompanyDTO
 import Linketinder.models.entities.Company
+import Linketinder.models.entities.JobOpening
 import Linketinder.repositories.AddressDAO
 import Linketinder.repositories.CompanyDAO
 import Linketinder.repositories.JobOpeningDAO
+import Linketinder.repositories.SkillDAO
 
 class CompanyService {
     CompanyDAO companyDAO
     JobOpeningDAO jobOpeningDAO
     AddressDAO addressDAO
+    SkillDAO skillDAO
 
-    JobOpeningService jobOpeningService
 
     CompanyService(
             CompanyDAO companyDAO,
             JobOpeningDAO jobOpeningDAO,
             AddressDAO addressDAO,
-            JobOpeningService jobOpeningService
+            SkillDAO skillDAO
     ) {
         this.companyDAO = companyDAO
         this.jobOpeningDAO = jobOpeningDAO
         this.addressDAO = addressDAO
-        this.jobOpeningService = jobOpeningService
+        this.skillDAO = skillDAO
     }
 
     Company getById(int id) {
@@ -90,10 +92,25 @@ class CompanyService {
 
         int oldAddressID = companyDAO.getById(id).address.id
 
-        jobOpeningService.deleteByCompanyId(id)
+        cleanCompanyJobOpenings(id)
 
         companyDAO.delete(id)
         addressDAO.delete(oldAddressID)
+    }
+
+    private void cleanCompanyJobOpenings(int companyId) {
+        List<JobOpening> jobOpenings = jobOpeningDAO.getByCompanyId(companyId)
+        if (jobOpenings.isEmpty()) {
+            throw new IllegalArgumentException("Job openings not found for the given company ID")
+        }
+
+        for (JobOpening jobOpening : jobOpenings) {
+            int addressID = jobOpening.address.id
+
+            jobOpeningDAO.delete(jobOpening.id)
+            addressDAO.delete(addressID)
+            skillDAO.deleteJobOpeningSkills(jobOpening.id)
+        }
     }
 
 }

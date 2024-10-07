@@ -109,19 +109,4 @@ class JobOpeningService {
 
         skillDAO.deleteJobOpeningSkills(id)
     }
-
-    void deleteByCompanyId(int id) {
-        List<JobOpening> jobOpenings = jobOpeningDAO.getByCompanyId(id)
-        if (jobOpenings.isEmpty()) {
-            throw new IllegalArgumentException("Job openings not found for the given company ID")
-        }
-
-        for (JobOpening jobOpening : jobOpenings) {
-            int addressID = jobOpening.address.id
-
-            jobOpeningDAO.delete(jobOpening.id)
-            addressDAO.delete(addressID)
-            skillDAO.deleteJobOpeningSkills(jobOpening.id)
-        }
-    }
 }
