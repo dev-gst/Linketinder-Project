@@ -65,6 +65,56 @@ class AddressDAO {
         return null
     }
 
+    Address getByCompanyId(int companyId) {
+        String query = "SELECT * FROM addresses WHERE id = (SELECT address_id FROM companies WHERE id = ?)"
+
+        PreparedStatement stmt = conn.prepareStatement(query, ResultSet.CONCUR_READ_ONLY)
+        stmt.setInt(1, companyId)
+
+        ResultSet rs = stmt.executeQuery()
+        if (rs.next()) {
+            Address address = new Address()
+
+            address.id = rs.getInt("id")
+            address.country = rs.getString("country")
+            address.region = rs.getString("region")
+            address.city = rs.getString("city")
+            address.neighborhood = rs.getString("neighborhood")
+            address.street = rs.getString("street")
+            address.number = rs.getString("number")
+            address.zipCode = rs.getString("zip_code")
+
+            return address
+        }
+
+        return null
+    }
+
+    Address getByJobOpeningId(int jobOpeningId) {
+        String query = "SELECT * FROM addresses WHERE id = (SELECT address_id FROM job_openings WHERE id = ?)"
+
+        PreparedStatement stmt = conn.prepareStatement(query, ResultSet.CONCUR_READ_ONLY)
+        stmt.setInt(1, jobOpeningId)
+
+        ResultSet rs = stmt.executeQuery()
+        if (rs.next()) {
+            Address address = new Address()
+
+            address.id = rs.getInt("id")
+            address.country = rs.getString("country")
+            address.region = rs.getString("region")
+            address.city = rs.getString("city")
+            address.neighborhood = rs.getString("neighborhood")
+            address.street = rs.getString("street")
+            address.number = rs.getString("number")
+            address.zipCode = rs.getString("zip_code")
+
+            return address
+        }
+
+        return null
+    }
+
     List<Address> getAll() {
         String query = "SELECT * FROM addresses"
 

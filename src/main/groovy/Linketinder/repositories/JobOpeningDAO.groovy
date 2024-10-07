@@ -39,6 +39,30 @@ class JobOpeningDAO {
         return null
     }
 
+    List<JobOpening> getByCompanyId(int companyId) {
+        String query = "SELECT * FROM job_openings WHERE company_id = ?"
+
+        PreparedStatement stmt = conn.prepareStatement(query, ResultSet.CONCUR_READ_ONLY)
+        stmt.setInt(1, companyId)
+
+        List<JobOpening> jobOpenings = new ArrayList<>()
+
+        ResultSet rs = stmt.executeQuery()
+        while (rs.next()) {
+            JobOpening jobOpening = new JobOpening()
+
+            jobOpening.id = rs.getInt("id")
+            jobOpening.name = rs.getString("name")
+            jobOpening.description = rs.getString("description")
+            jobOpening.isRemote = rs.getBoolean("is_remote")
+            jobOpening.isOpen = rs.getBoolean("is_open")
+
+            jobOpenings.add(jobOpening)
+        }
+
+        return jobOpenings
+    }
+
     List<JobOpening> getAll() {
         String query = "SELECT * FROM job_openings"
 

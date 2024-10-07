@@ -39,6 +39,29 @@ class CompanyDAO {
         return null
     }
 
+    Company getByJobOpeningId(int jobOpeningId) {
+        String query = "SELECT * FROM companies WHERE id = (SELECT company_id FROM job_openings WHERE id = ?)"
+
+        PreparedStatement stmt = conn.prepareStatement(query, ResultSet.CONCUR_READ_ONLY)
+        stmt.setInt(1, jobOpeningId)
+
+        ResultSet rs = stmt.executeQuery()
+        if (rs.next()) {
+            Company company = new Company()
+
+            company.id = rs.getInt("id")
+            company.name = rs.getString("name")
+            company.email = rs.getString("email")
+            company.password = rs.getString("password")
+            company.description = rs.getString("description")
+            company.cnpj = rs.getString("cnpj")
+
+            return company
+        }
+
+        return null
+    }
+
     List<Company> getAll() {
         String query = "SELECT * FROM companies"
 
