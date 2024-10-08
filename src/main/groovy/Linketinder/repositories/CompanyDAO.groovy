@@ -128,6 +128,7 @@ class CompanyDAO {
         stmt.setString(3, company.password)
         stmt.setString(4, company.description)
         stmt.setString(5, company.cnpj)
+        stmt.setInt(6, addressId)
 
         stmt.executeQuery()
 
