@@ -65,7 +65,7 @@ class CompanyAuthMenu {
         String description = Helpers.getStringFieldFromUsr(scanner)
 
         print "Insira o CNPJ: "
-        Instant cnpj = Helpers.getInstantFieldFromUsr(scanner)
+        String cnpj = Helpers.getStringFieldFromUsr(scanner)
 
         AddressDTO addressDTO = Helpers.createAddress()
 
