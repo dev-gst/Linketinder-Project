@@ -83,7 +83,7 @@ class JobOpeningService {
         }
 
         int addressId = 0
-        if (addressDTO =! null) {
+        if (addressDTO != null) {
             addressId = addressDAO.save(addressDTO)
         }
 
