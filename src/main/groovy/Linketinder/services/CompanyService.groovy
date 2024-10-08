@@ -104,7 +104,7 @@ class CompanyService {
             throw new IllegalArgumentException("Company not found for the given id")
         }
         Address oldAddress = addressDAO.getByCompanyId(id)
-        int oldAddressID = oldAddress.id ?: 0
+        int oldAddressID = oldAddress != null ? oldAddress.id : 0
 
         cleanCompanyJobOpenings(id)
 
@@ -121,11 +121,15 @@ class CompanyService {
         }
 
         for (JobOpening jobOpening : jobOpenings) {
-            int addressID = jobOpening.address.id
+            Address address = addressDAO.getByJobOpeningId(jobOpening.id)
+            int addressID = address != null ? address.id : 0
 
             skillDAO.deleteJobOpeningSkills(jobOpening.id)
             jobOpeningDAO.delete(jobOpening.id)
-            addressDAO.delete(addressID)
+
+            if (addressID > 0) {
+                addressDAO.delete(addressID)
+            }
         }
     }
 

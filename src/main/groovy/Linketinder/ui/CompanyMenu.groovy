@@ -13,7 +13,7 @@ import Linketinder.services.JobOpeningService
 import Linketinder.ui.util.Helpers
 
 class CompanyMenu {
-    private static final int MENU_ENTRIES = 7
+    private static final int MENU_ENTRIES = 8
 
     private final CompanyService companyService
     private final JobOpeningService jobOpeningService
@@ -59,6 +59,9 @@ class CompanyMenu {
                 printCandidates()
                 break
             case 7:
+                deleteProfile()
+                return true
+            case MENU_ENTRIES:
                 return true
             default:
                 println "Escolha inválida!"
@@ -205,6 +208,20 @@ class CompanyMenu {
         }
     }
 
+    private void deleteProfile() {
+        Scanner scanner = new Scanner(System.in)
+        println "Tem certeza que deseja deletar o perfil? (s/N)"
+        boolean confirm = Helpers.getBooleanFromUsr(scanner)
+
+        if (!confirm) {
+            println "Operação cancelada."
+            return
+        }
+
+        companyService.delete(company.id)
+        println "Perfil deletado com sucesso!"
+    }
+
     private static void printMenu() {
         println()
         println "***********************"
@@ -214,7 +231,8 @@ class CompanyMenu {
         println "4 - Ver Vagas"
         println "5 - Atualizar Vaga"
         println "6 - Ver Candidatos"
-        println "7 - Voltar"
+        println "7 - Delete Profile"
+        println "8 - Voltar"
         println "***********************"
     }
 }
