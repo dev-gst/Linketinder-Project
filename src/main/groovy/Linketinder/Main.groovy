@@ -28,7 +28,7 @@ class Main {
         SkillService skillService = new SkillService(skillDAO)
         CandidateService candidateService = new CandidateService(candidateDAO, addressDAO, skillDAO, skillService)
         CompanyService companyService = new CompanyService(companyDAO, jobOpeningDAO, addressDAO, skillDAO)
-        JobOpeningService jobOpeningService = new JobOpeningService(jobOpeningDAO, skillDAO, companyService, addressDAO)
+        JobOpeningService jobOpeningService = new JobOpeningService(jobOpeningDAO, skillDAO, skillService, companyService, addressDAO)
 
         MainMenu mainMenu = new MainMenu(
                 companyService,

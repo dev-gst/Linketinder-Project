@@ -2,6 +2,7 @@ package Linketinder.services
 
 import Linketinder.models.DTOs.AddressDTO
 import Linketinder.models.DTOs.CompanyDTO
+import Linketinder.models.entities.Address
 import Linketinder.models.entities.Company
 import Linketinder.models.entities.JobOpening
 import Linketinder.repositories.AddressDAO
@@ -80,19 +81,19 @@ class CompanyService {
     }
 
     void update(
-            int companyID,
+            int companyId,
             CompanyDTO companyDTO,
             AddressDTO addressDTO
     ) {
-        Company oldCompany = companyDAO.getById(companyID)
+        Company oldCompany = companyDAO.getById(companyId)
         if (!oldCompany) {
             throw new IllegalArgumentException("Company not found for the given id")
         }
 
-        int oldAddressID = oldCompany.address.id
+        int oldAddressID = addressDAO.getByCompanyId(companyId).id
 
         int addressID = addressDAO.save(addressDTO)
-        companyDAO.update(companyID, companyDTO, addressID)
+        companyDAO.update(companyId, companyDTO, addressID)
 
         addressDAO.delete(oldAddressID)
     }
@@ -102,13 +103,15 @@ class CompanyService {
         if (!oldCompany) {
             throw new IllegalArgumentException("Company not found for the given id")
         }
-
-        int oldAddressID = companyDAO.getById(id).address.id
+        Address oldAddress = addressDAO.getByCompanyId(id)
+        int oldAddressID = oldAddress.id ?: 0
 
         cleanCompanyJobOpenings(id)
 
         companyDAO.delete(id)
-        addressDAO.delete(oldAddressID)
+        if (oldAddressID > 0){
+            addressDAO.delete(oldAddressID)
+        }
     }
 
     private void cleanCompanyJobOpenings(int companyId) {
