@@ -1,79 +1,62 @@
 package Linketinder.ui
 import Linketinder.services.CompanyService
 import Linketinder.services.CandidateService
+import Linketinder.services.JobOpeningService
+import Linketinder.services.SkillService
+import Linketinder.ui.util.Helpers
 
 class MainMenu {
-    static final int MenuEntries = 5
+    static final int MENU_ENTRIES = 3
 
     final CandidateService candidateService
     final CompanyService companyService
+    final JobOpeningService jobOpeningService
+    final SkillService skillService
 
-    MainMenu() {
-        this.candidateService = new CandidateService()
-        this.candidateService.populate()
-
-        this.companyService = new CompanyService()
-        this.companyService.populate()
+    MainMenu(
+            CompanyService companyService,
+            CandidateService candidateService,
+            JobOpeningService jobOpeningService,
+            SkillService skillService
+    ) {
+        this.candidateService = candidateService
+        this.companyService = companyService
+        this.jobOpeningService = jobOpeningService
+        this.skillService = skillService
     }
 
     void start() {
-        while (true) {
+        do {
             printMenu()
-
-            int usrInput = getUsrChoice()
-            if (MenuEntries == usrInput) {
-                return
-            }
-
-            printUsrChoice usrInput
-        }
+        } while (!selectOption(Helpers.getUsrChoice(MENU_ENTRIES)))
     }
 
-    private void printUsrChoice(int choice) {
+    private boolean selectOption(int choice) {
         switch (choice) {
             case 1:
-                printEntities(this.candidateService.candidates)
+                CandidateAuthMenu candidateAuthMenu =
+                        new CandidateAuthMenu(candidateService, jobOpeningService)
+
+                candidateAuthMenu.start()
                 break
             case 2:
-                printEntities(this.companyService.companies)
+                CompanyAuthMenu companyAuthMenu = new CompanyAuthMenu(companyService, jobOpeningService, candidateService)
+                companyAuthMenu.start()
                 break
-            case 3:
-                this.candidateService.add(CandidateBuilderMenu.create())
-                break
-            case 4:
-                this.companyService.add(CompanyBuilderMenu.create())
+            case MENU_ENTRIES:
+                return true
+            default:
+                println "Opção inválida!"
         }
-    }
 
-    private static int getUsrChoice() {
-        while (true) {
-            Scanner scanner = new Scanner(System.in)
-            try {
-                int usrInput = scanner.nextInt()
-                if (usrInput > 0 && usrInput <= MenuEntries) {
-                    return usrInput
-                } else {
-                    println "Please insert a valid number"
-                }
-            } catch (NoSuchElementException | IllegalStateException ignored) {
-                println "Please insert a valid number"
-            }
-        }
+        return false
     }
 
     private static void printMenu() {
         println "***********************"
-        println "1 - Show candidates"
-        println "2 - Show companies"
-        println "3 - Add Job Applicant"
-        println "4 - Add Company"
-        println "5 - Exit"
+        println "1 - Sou um Candidato"
+        println "2 - Sou uma Empresa"
+        println "3 - Sair"
         println "***********************"
-    }
-
-    private static <E> void printEntities(List<E> elementList) {
-        elementList.forEach {
-            element -> println element
-        }
     }
 }
