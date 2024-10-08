@@ -1,5 +1,6 @@
 package Linketinder.services
 
+import Linketinder.models.DTOs.AddressDTO
 import Linketinder.models.DTOs.JobOpeningDTO
 import Linketinder.models.DTOs.SkillDTO
 import Linketinder.models.entities.Address
@@ -74,9 +75,18 @@ class JobOpeningService {
     void save(
             JobOpeningDTO jobOpeningDTO,
             int companyId,
-            int addressId,
+            AddressDTO addressDTO,
             Set<SkillDTO> skillDTOs
     ) {
+        if (jobOpeningDTO.isRemote) {
+            addressDTO = null
+        }
+
+        int addressId = 0
+        if (addressDTO =! null) {
+            addressId = addressDAO.save(addressDTO)
+        }
+
         int jobOpeningId = jobOpeningDAO.save(jobOpeningDTO, companyId, addressId)
         Set<Skill> skills = skillService.save(skillDTOs)
 
@@ -87,7 +97,7 @@ class JobOpeningService {
             int jobOpeningId,
             JobOpeningDTO jobOpeningDTO,
             int companyId,
-            int addressId,
+            AddressDTO addressDTO,
             Set<SkillDTO> skillDTOs
     ) {
         JobOpening oldJobOpening = jobOpeningDAO.getById(jobOpeningId)
@@ -95,14 +105,24 @@ class JobOpeningService {
             throw new IllegalArgumentException("Job opening not found for the given ID")
         }
 
-        int oldAddressID = oldJobOpening.address.id
+        int addressId
+        int oldAddressID
+        if (jobOpeningDTO.isRemote) {
+            addressId = 0
+            oldAddressID = 0
+        } else {
+            addressId = addressDAO.save(addressDTO)
+            oldAddressID = oldJobOpening.address.id
+        }
 
         jobOpeningDAO.update(jobOpeningId, jobOpeningDTO, companyId, addressId)
         Set<Skill> skills = skillService.save(skillDTOs)
 
         skillDAO.saveJobOpeningSkills(jobOpeningId, skills)
 
-        addressDAO.delete(oldAddressID)
+        if (oldAddressID > 0) {
+            addressDAO.delete(oldAddressID)
+        }
     }
 
     void delete(int id) {
