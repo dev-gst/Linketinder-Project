@@ -39,6 +39,30 @@ class CompanyDAO {
         return null
     }
 
+    Company getByEmailAndPassword(String email, String password) {
+        String query = "SELECT * FROM companies WHERE email = ? AND password = ?"
+
+        PreparedStatement stmt = conn.prepareStatement(query, ResultSet.CONCUR_READ_ONLY)
+        stmt.setString(1, email)
+        stmt.setString(2, password)
+
+        ResultSet rs = stmt.executeQuery()
+        if (rs.next()) {
+            Company company = new Company()
+
+            company.id = rs.getInt("id")
+            company.name = rs.getString("name")
+            company.email = rs.getString("email")
+            company.password = rs.getString("password")
+            company.description = rs.getString("description")
+            company.cnpj = rs.getString("cnpj")
+
+            return company
+        }
+
+        return null
+    }
+
     Company getByJobOpeningId(int jobOpeningId) {
         String query = "SELECT * FROM companies WHERE id = (SELECT company_id FROM job_openings WHERE id = ?)"
 
