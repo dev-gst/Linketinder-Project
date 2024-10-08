@@ -1,77 +1,141 @@
 package Linketinder.ui.util
 
-import Linketinder.models.enums.SkillEnum
+import Linketinder.models.DTOs.AddressDTO
+import Linketinder.models.DTOs.SkillDTO
+
+import java.time.Instant
+import java.time.LocalDate
+import java.time.format.DateTimeParseException
 
 class Helpers {
-    static String getFieldFromUsr(Scanner scanner) {
+
+    static int getUsrChoice(int limit) {
+        while (true) {
+            Scanner scanner = new Scanner(System.in)
+            try {
+                int usrInput = scanner.nextInt()
+                if (usrInput > 0 && usrInput <= limit) {
+                    return usrInput
+                } else {
+                    throw new NumberFormatException()
+                }
+            } catch (NoSuchElementException | IllegalStateException | NumberFormatException ignored) {
+                println "Please insert a valid number"
+            }
+        }
+    }
+
+    static String getStringFieldFromUsr(Scanner scanner) {
         while (true) {
             try {
                 String field = scanner.nextLine()
                 if (field) {
                     return field
                 } else {
-                    println "Invalid input, try again!"
+                    throw new IllegalArgumentException("Field cannot be empty")
                 }
-            } catch (NoSuchElementException | IllegalStateException ignored) {
+            } catch (NoSuchElementException | IllegalStateException | IllegalArgumentException ignored) {
                 println "Invalid input, try again!"
             }
         }
     }
 
-    static int getAgeFromUsr(Scanner scanner) {
-        int age
+    static Instant getInstantFieldFromUsr(Scanner scanner) {
         while (true) {
-            String field = getFieldFromUsr(scanner)
             try {
-                age = Integer.valueOf(field)
-                if (age >= 16 && age <= 125) {
-                    return age
-                }
-            } catch (NumberFormatException ignored) {}
+                String field = scanner.nextLine()
+                LocalDate date = LocalDate.parse(field)
+                Instant instant = Instant.parse(date.toString() + "T00:00:00Z")
 
-            println "Invalid age, try again!"
-        }
-    }
-
-    static SkillEnum[] getSkillsFromUsr(Scanner scanner) {
-        List<SkillEnum> skillList = new LinkedList<>()
-        while (true) {
-            String commonString = getFieldFromUsr(scanner)
-            String[] rawSkills = new String[1]
-
-            if (commonString.contains(",")) {
-                rawSkills = Arrays.asList(commonString.split(","))
-            } else {
-                rawSkills[0] = commonString
-            }
-
-            rawSkills.each { String skill ->
-                 switch (skill.toUpperCase().trim()) {
-                    case "JAVA":
-                        skillList.add(SkillEnum.JAVA)
-                        break
-                    case "SPRING BOOT":
-                        skillList.add(SkillEnum.SPRING_BOOT)
-                        break
-                    case "GROOVY":
-                        skillList.add(SkillEnum.GROOVY)
-                        break
-                    case "JAVASCRIPT":
-                        skillList.add(SkillEnum.JAVASCRIPT)
-                        break
-                    case "ANGULAR":
-                        skillList.add(SkillEnum.ANGULAR)
-                        break
-                }
-            }
-
-            if (!skillList.isEmpty()) {
-                break
-            } else {
+                return instant
+            } catch (DateTimeParseException | NoSuchElementException | IllegalStateException ignored) {
                 println "Invalid input, try again!"
             }
         }
+    }
 
-        return skillList.toArray() as SkillEnum[]
+    static AddressDTO createAddress() {
+        Scanner scanner = new Scanner(System.in)
+        AddressDTO addressDTO = new AddressDTO()
+
+        print "Digite o país: "
+        String country = getStringFieldFromUsr(scanner)
+
+        print "Digite o estado: "
+        String region = getStringFieldFromUsr(scanner)
+
+        print "Digite a cidade: "
+        String city = getStringFieldFromUsr(scanner)
+
+        print "Digite o bairro: "
+        String neighborhood = getStringFieldFromUsr(scanner)
+
+        print "Digite a rua: "
+        String street = getStringFieldFromUsr(scanner)
+
+        print "Digite o número: "
+        String number = getStringFieldFromUsr(scanner)
+
+        print "Digite o CEP: "
+        String zipCode = getStringFieldFromUsr(scanner)
+
+        addressDTO.country = country
+        addressDTO.region = region
+        addressDTO.city = city
+        addressDTO.neighborhood = neighborhood
+        addressDTO.street = street
+        addressDTO.number = number
+        addressDTO.zipCode = zipCode
+
+        return addressDTO
+    }
+
+    static Set<SkillDTO> gatherSkills() {
+        Scanner scanner = new Scanner(System.in)
+        Set<SkillDTO> skills = new HashSet<>()
+
+        while (true) {
+            println "Digite uma habilidade (ou 'sair' para finalizar): "
+            String skill = getStringFieldFromUsr(scanner)
+
+            if (skill.equalsIgnoreCase("sair")) {
+                if (skills.isEmpty()) {
+                    println "É necessário inserir pelo menos uma habilidade"
+                    continue
+                }
+
+                break
+            }
+
+            SkillDTO skillDTO = new SkillDTO()
+            skillDTO.name = skill
+
+            skills.add(skillDTO)
+        }
+
+        return skills
+    }
+
+    static boolean getBooleanFromUsr(Scanner scanner) {
+        while (true) {
+            try {
+                String field = scanner.nextLine()
+                return field.equalsIgnoreCase("s")
+
+            } catch (NoSuchElementException | IllegalStateException | IllegalArgumentException ignored) {
+                println "Invalid input, try again!"
+            }
+        }
+    }
+
+    static int getIntFromUsr(Scanner scanner) {
+        while (true) {
+            try {
+                int field = scanner.nextInt()
+                return field
+            } catch (NoSuchElementException | IllegalStateException | NumberFormatException ignored) {
+                println "Invalid input, try again!"
+            }
+        }
     }
 }

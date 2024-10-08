@@ -1,49 +1,110 @@
+
 package Linketinder.services
 
-import Linketinder.models.entities.Address
+import Linketinder.models.DTOs.AddressDTO
+import Linketinder.models.DTOs.CandidateDTO
+import Linketinder.models.DTOs.SkillDTO
 import Linketinder.models.entities.Candidate
-import Linketinder.models.enums.SkillEnum
+import Linketinder.models.entities.Skill
+import Linketinder.repositories.AddressDAO
+import Linketinder.repositories.CandidateDAO
 
-class CandidateService implements IEntityService {
-    static final int MIN_CANDIDATES = 5
+import Linketinder.repositories.SkillDAO
 
-    int currentID
-    List<Candidate> candidates
+class CandidateService {
 
-    CandidateService() {
-        this.candidates = new LinkedList<>()
-        currentID = 1
+    AddressDAO addressDAO
+    CandidateDAO candidateDAO
+    SkillDAO skillDAO
+
+    SkillService skillService
+
+    // TODO: Decouple skillDAO from CandidateService
+    // TODO: Decouple addressDAO from CandidateService
+
+    CandidateService(
+            CandidateDAO candidateDAO,
+            AddressDAO addressDAO,
+            SkillDAO skillDAO,
+            SkillService skillService
+    ) {
+        this.addressDAO = addressDAO
+        this.candidateDAO = candidateDAO
+        this.skillDAO = skillDAO
+        this.skillService = skillService
     }
 
-    @Override
-    void populate() {
-        for (int i = 0; i < MIN_CANDIDATES; i++) {
-            Candidate candidate = new Candidate()
-            candidate.ID = currentID.toBigInteger()
-            candidate.name = "Nome" + i
-            candidate.description = i <= 3 ? "Good on programing" : "Good on math"
-            candidate.email = "${i}@example.com"
-            candidate.address = i <= 3 ?
-                    new Address(country: "Brazil", state: "DF", zipCode: "123456789" + i) :
-                    new Address(country: "Brazil", state: "GO", zipCode: "987654321" + i)
-            candidate.age = 18 + i
-            candidate.CPF = "00000000000" + i
+    Candidate getById(int id) {
+        Candidate candidate = candidateDAO.getById(id)
 
-            i <= 3 ? candidate.addSkill(SkillEnum.JAVA, SkillEnum.SPRING_BOOT, SkillEnum.GROOVY) :
-                    candidate.addSkill(SkillEnum.ANGULAR, SkillEnum.JAVASCRIPT)
+        candidate.address = addressDAO.getByCandidateId(candidate.id)
+        candidate.skills =  skillDAO.getByCandidateId(candidate.id)
 
-            currentID++
-
-            this.candidates.add(candidate)
-        }
+        return candidate
     }
 
-    @Override
-    <T> void add(T candidate) {
-        if (candidate instanceof Candidate) {
-            candidate.ID = currentID
-            this.candidates.add(candidate)
-            currentID++
+    Candidate authenticate(String email, String password) {
+        Candidate candidate = candidateDAO.getByEmailAndPassword(email, password)
+
+        if (candidate == null) {
+            return null
         }
+
+        candidate.address = addressDAO.getByCandidateId(candidate.id)
+        candidate.skills =  skillDAO.getByCandidateId(candidate.id)
+
+        return candidate
+    }
+
+    List<Candidate> getAll() {
+        List<Candidate> candidates = candidateDAO.getAll()
+
+        for (Candidate candidate : candidates) {
+            candidate.address = addressDAO.getByCandidateId(candidate.id)
+            candidate.skills = skillDAO.getByCandidateId(candidate.id)
+        }
+
+        return candidates
+    }
+
+    void save(CandidateDTO candidateDTO, AddressDTO addressDTO, Set<SkillDTO> skillDTOList) {
+        int addressID = addressDAO.save(addressDTO)
+        Set<Skill> skills = skillService.save(skillDTOList)
+        int candidateID = candidateDAO.save(candidateDTO, addressID)
+
+        skillDAO.saveCandidateSkills(candidateID, skills)
+    }
+
+    void update(
+            int candidateID,
+            CandidateDTO candidateDTO,
+            AddressDTO addressDTO,
+            Set<SkillDTO> skillDTOList
+    ) {
+        Candidate oldCandidate = candidateDAO.getById(candidateID)
+        if (oldCandidate == null) {
+            throw new IllegalArgumentException("Candidate not found for the given id")
+        }
+
+        int oldAddressID = addressDAO.getByCandidateId(candidateID).id
+        int newAddressID = addressDAO.save(addressDTO)
+
+        candidateDAO.update(candidateID, candidateDTO, newAddressID)
+
+        addressDAO.delete(oldAddressID)
+
+        skillDAO.deleteCandidateSkills(candidateID)
+
+        Set<Skill> skills = skillService.save(skillDTOList)
+        skillDAO.saveCandidateSkills(candidateID, skills)
+    }
+
+    void delete(int id) {
+        int addressID = addressDAO.getByCandidateId(id).id
+
+        skillDAO.deleteCandidateSkills(id)
+        candidateDAO.delete(id)
+        addressDAO.delete(addressID)
     }
 }
+
