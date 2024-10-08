@@ -85,6 +85,9 @@ class CompanyMenu {
         print "Insira o novo email: "
         String email = Helpers.getStringFieldFromUsr(scanner)
 
+        print "Insira a nova senha: "
+        String password = Helpers.getStringFieldFromUsr(scanner)
+
         print "Insira a nova descrição: "
         String description = Helpers.getStringFieldFromUsr(scanner)
 
@@ -95,6 +98,7 @@ class CompanyMenu {
 
         companyDTO.name = name
         companyDTO.email = email
+        companyDTO.password = password
         companyDTO.description = description
         companyDTO.cnpj = cnpj
 
@@ -114,8 +118,9 @@ class CompanyMenu {
         print "Insira a descrição da vaga: "
         String description = Helpers.getStringFieldFromUsr(scanner)
 
-        print "A vaga é remota? (s/n): "
+        print "A vaga é remota? (s/N): "
         boolean isRemote = Helpers.getBooleanFromUsr(scanner)
+        println "Sua resposta foi ${isRemote ? 'Sim' : 'Não'}"
 
         AddressDTO addressDTO = null
         if (!isRemote) {

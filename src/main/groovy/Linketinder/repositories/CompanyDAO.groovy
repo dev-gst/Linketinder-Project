@@ -147,7 +147,7 @@ class CompanyDAO {
                 "password = ?," +
                 "description = ?," +
                 "cnpj = ?," +
-                "address_id = ?" +
+                "address_id = ? " +
                 "WHERE id = ?"
 
         PreparedStatement stmt = conn.prepareStatement(query)
@@ -157,7 +157,7 @@ class CompanyDAO {
         stmt.setString(4, companyDTO.description)
         stmt.setString(5, companyDTO.cnpj)
         stmt.setInt(6, addressId)
-        stmt.setInt(6, id)
+        stmt.setInt(7, id)
 
         stmt.executeUpdate()
     }
