@@ -80,19 +80,19 @@ class CompanyService {
     }
 
     void update(
-            int companyID,
+            int companyId,
             CompanyDTO companyDTO,
             AddressDTO addressDTO
     ) {
-        Company oldCompany = companyDAO.getById(companyID)
+        Company oldCompany = companyDAO.getById(companyId)
         if (!oldCompany) {
             throw new IllegalArgumentException("Company not found for the given id")
         }
 
-        int oldAddressID = oldCompany.address.id
+        int oldAddressID = addressDAO.getByCompanyId(companyId).id
 
         int addressID = addressDAO.save(addressDTO)
-        companyDAO.update(companyID, companyDTO, addressID)
+        companyDAO.update(companyId, companyDTO, addressID)
 
         addressDAO.delete(oldAddressID)
     }
