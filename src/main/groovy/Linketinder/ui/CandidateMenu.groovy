@@ -113,6 +113,7 @@ class CandidateMenu {
         candidateDTO.education = education
 
         candidateService.update(candidate.id, candidateDTO, addressDTO, skillDTOSet)
+        candidate = candidateService.getById(candidate.id)
         println "Informações atualizadas com sucesso!"
     }
 

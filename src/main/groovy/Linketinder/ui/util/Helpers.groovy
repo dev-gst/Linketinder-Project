@@ -115,4 +115,27 @@ class Helpers {
 
         return skills
     }
+
+    static boolean getBooleanFromUsr(Scanner scanner) {
+        while (true) {
+            try {
+                String field = scanner.nextLine()
+                return field.equalsIgnoreCase("s")
+
+            } catch (NoSuchElementException | IllegalStateException | IllegalArgumentException ignored) {
+                println "Invalid input, try again!"
+            }
+        }
+    }
+
+    static int getIntFromUsr(Scanner scanner) {
+        while (true) {
+            try {
+                int field = scanner.nextInt()
+                return field
+            } catch (NoSuchElementException | IllegalStateException | NumberFormatException ignored) {
+                println "Invalid input, try again!"
+            }
+        }
+    }
 }
