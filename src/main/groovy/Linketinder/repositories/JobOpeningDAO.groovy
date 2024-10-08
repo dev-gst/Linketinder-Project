@@ -94,7 +94,8 @@ class JobOpeningDAO {
                 "is_open," +
                 "company_id," +
                 "address_id" +
-                ") VALUES (?, ?, ?, ?, ?, ?)"
+                ") VALUES (?, ?, ?, ?, ?, ?)" +
+                "RETURNING id"
 
         PreparedStatement stmt = conn.prepareStatement(query)
         stmt.setString(1, jobOpeningDTO.name)
