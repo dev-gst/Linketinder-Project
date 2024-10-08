@@ -61,7 +61,7 @@ class JobOpening {
                 "Remoto: ${isRemote ? 'Sim' : 'Não'}\n" +
                 "Aberta: ${isOpen ? 'Sim' : 'Não'}\n" +
                 "Empresa: ${company}\n" +
-                "${address}\n" +
+                "Endereço:\n${address}\n" +
                 "Habilidades Requeridas: ${requiredSkills}"
     }
 }

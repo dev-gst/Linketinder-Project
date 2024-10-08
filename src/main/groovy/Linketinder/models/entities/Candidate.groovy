@@ -79,7 +79,7 @@ class Candidate {
                 "Data de Nascimento: ${LocalDate.ofInstant(this.birthDate, Env.TIMEZONE as ZoneId).toString()}\n" +
                 "CPF: ${cpf}\n" +
                 "Educação: ${education}\n" +
-                "${address}\n" +
+                "Endereço: \n${address}\n" +
                 "Habilidades: ${skills}"
     }
 }

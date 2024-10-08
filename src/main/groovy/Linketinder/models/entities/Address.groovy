@@ -45,9 +45,7 @@ class Address {
 
     @Override
     String toString() {
-        return "Endereço:\n" +
-                "ID: ${id}\n" +
-                "País: ${country}\n" +
+        return "País: ${country}\n" +
                 "Região: ${region}\n" +
                 "Cidade: ${city}\n" +
                 "Bairro: ${neighborhood}\n" +

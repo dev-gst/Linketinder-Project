@@ -52,7 +52,7 @@ class Company {
                 "Senha: ${password}\n" +
                 "Descrição: ${description}\n" +
                 "CNPJ: ${cnpj}\n" +
-                "${address}\n" +
+                "Endereço:\n${address}\n" +
                 "Vagas de Emprego: ${jobOpenings}"
     }
 }
