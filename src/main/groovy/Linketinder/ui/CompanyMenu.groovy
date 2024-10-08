@@ -4,26 +4,31 @@ import Linketinder.models.DTOs.AddressDTO
 import Linketinder.models.DTOs.CompanyDTO
 import Linketinder.models.DTOs.JobOpeningDTO
 import Linketinder.models.DTOs.SkillDTO
+import Linketinder.models.entities.Candidate
 import Linketinder.models.entities.Company
 import Linketinder.models.entities.JobOpening
+import Linketinder.services.CandidateService
 import Linketinder.services.CompanyService
 import Linketinder.services.JobOpeningService
 import Linketinder.ui.util.Helpers
 
 class CompanyMenu {
-    private static final int MENU_ENTRIES = 6
+    private static final int MENU_ENTRIES = 7
 
     private final CompanyService companyService
     private final JobOpeningService jobOpeningService
+    private final CandidateService candidateService
     private Company company
 
     CompanyMenu(
             CompanyService companyService,
             JobOpeningService jobOpeningService,
+            CandidateService candidateService,
             Company company
     ) {
         this.companyService = companyService
         this.jobOpeningService = jobOpeningService
+        this.candidateService = candidateService
         this.company = company
     }
 
@@ -51,6 +56,9 @@ class CompanyMenu {
                 updateJobOpening()
                 break
             case 6:
+                printCandidates()
+                break
+            case 7:
                 return true
             default:
                 println "Escolha inválida!"
@@ -180,6 +188,17 @@ class CompanyMenu {
         }
     }
 
+    private void printCandidates() {
+        List<Candidate> candidates = candidateService.getAll()
+        println "***** Candidatos *****"
+        candidates.each { candidate ->
+            println "Descrição: ${candidate.description}"
+            println "Skills: ${candidate.skills.collect { it.name }}"
+            println "Formação: ${candidate.education}"
+            println "-----------------------------"
+        }
+    }
+
     private static void printMenu() {
         println()
         println "***********************"
@@ -188,7 +207,8 @@ class CompanyMenu {
         println "3 - Criar Vaga"
         println "4 - Ver Vagas"
         println "5 - Atualizar Vaga"
-        println "6 - Voltar"
+        println "6 - Ver Candidatos"
+        println "7 - Voltar"
         println "***********************"
     }
 }

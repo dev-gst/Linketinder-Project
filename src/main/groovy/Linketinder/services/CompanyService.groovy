@@ -40,6 +40,9 @@ class CompanyService {
     Company authenticate(String email, String password) {
         Company company = companyDAO.getByEmailAndPassword(email, password)
 
+        if (company == null) {
+            return null
+        }
 
         company.address = addressDAO.getByCompanyId(company.id)
         company.jobOpenings = jobOpeningDAO.getByCompanyId(company.id)

@@ -40,7 +40,7 @@ class MainMenu {
                 candidateAuthMenu.start()
                 break
             case 2:
-                CompanyAuthMenu companyAuthMenu = new CompanyAuthMenu()
+                CompanyAuthMenu companyAuthMenu = new CompanyAuthMenu(companyService, jobOpeningService, candidateService)
                 companyAuthMenu.start()
                 break
             case MENU_ENTRIES:

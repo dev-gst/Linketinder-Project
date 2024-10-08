@@ -3,6 +3,7 @@ package Linketinder.ui
 import Linketinder.models.DTOs.AddressDTO
 import Linketinder.models.DTOs.CompanyDTO
 import Linketinder.models.entities.Company
+import Linketinder.services.CandidateService
 import Linketinder.services.CompanyService
 import Linketinder.services.JobOpeningService
 import Linketinder.ui.util.Helpers
@@ -13,14 +14,17 @@ class CompanyAuthMenu {
     private static final int MENU_ENTRIES = 3
 
     private final CompanyService companyService
+    private final CandidateService candidateService
     private final JobOpeningService jobOpeningService
 
     CompanyAuthMenu(
             CompanyService companyService,
-            JobOpeningService jobOpeningService
+            JobOpeningService jobOpeningService,
+            CandidateService candidateService
     ) {
         this.companyService = companyService
         this.jobOpeningService = jobOpeningService
+        this.candidateService = candidateService
     }
 
     void start() {
@@ -94,6 +98,7 @@ class CompanyAuthMenu {
             CompanyMenu companyMenu = new CompanyMenu(
                     companyService,
                     jobOpeningService,
+                    candidateService,
                     company
             )
 
