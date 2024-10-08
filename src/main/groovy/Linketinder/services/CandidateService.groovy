@@ -43,6 +43,19 @@ class CandidateService {
         return candidate
     }
 
+    Candidate authenticate(String email, String password) {
+        Candidate candidate = candidateDAO.getByEmailAndPassword(email, password)
+
+        if (candidate == null) {
+            return null
+        }
+
+        candidate.address = addressDAO.getByCandidateId(candidate.id)
+        candidate.skills =  skillDAO.getByCandidateId(candidate.id)
+
+        return candidate
+    }
+
     List<Candidate> getAll() {
         List<Candidate> candidates = candidateDAO.getAll()
 
@@ -69,28 +82,29 @@ class CandidateService {
             Set<SkillDTO> skillDTOList
     ) {
         Candidate oldCandidate = candidateDAO.getById(candidateID)
-        if (!oldCandidate) {
+        if (oldCandidate == null) {
             throw new IllegalArgumentException("Candidate not found for the given id")
         }
 
-        int oldAddressID = oldCandidate.address.id
-
+        int oldAddressID = addressDAO.getByCandidateId(candidateID).id
         int newAddressID = addressDAO.save(addressDTO)
+
         candidateDAO.update(candidateID, candidateDTO, newAddressID)
+
+        addressDAO.delete(oldAddressID)
+
+        skillDAO.deleteCandidateSkills(candidateID)
 
         Set<Skill> skills = skillService.save(skillDTOList)
         skillDAO.saveCandidateSkills(candidateID, skills)
-
-        addressDAO.delete(oldAddressID)
     }
 
     void delete(int id) {
-        int addressID = candidateDAO.getById(id).address.id
-
-        candidateDAO.delete(id)
-        addressDAO.delete(addressID)
+        int addressID = addressDAO.getByCandidateId(id).id
 
         skillDAO.deleteCandidateSkills(id)
+        candidateDAO.delete(id)
+        addressDAO.delete(addressID)
     }
 }
 

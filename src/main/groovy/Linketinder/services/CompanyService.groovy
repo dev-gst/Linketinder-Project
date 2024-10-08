@@ -107,9 +107,9 @@ class CompanyService {
         for (JobOpening jobOpening : jobOpenings) {
             int addressID = jobOpening.address.id
 
+            skillDAO.deleteJobOpeningSkills(jobOpening.id)
             jobOpeningDAO.delete(jobOpening.id)
             addressDAO.delete(addressID)
-            skillDAO.deleteJobOpeningSkills(jobOpening.id)
         }
     }
 

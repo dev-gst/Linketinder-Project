@@ -2,6 +2,7 @@ package Linketinder.services
 
 import Linketinder.models.DTOs.JobOpeningDTO
 import Linketinder.models.DTOs.SkillDTO
+import Linketinder.models.entities.Address
 import Linketinder.models.entities.JobOpening
 import Linketinder.models.entities.Skill
 import Linketinder.repositories.AddressDAO
@@ -21,11 +22,13 @@ class JobOpeningService {
     JobOpeningService(
             JobOpeningDAO jobOpeningDAO,
             SkillDAO skillDAO,
-            CompanyService companyService
+            CompanyService companyService,
+            AddressDAO addressDAO
     ) {
         this.jobOpeningDAO = jobOpeningDAO
         this.skillDAO = skillDAO
         this.companyService = companyService
+        this.addressDAO = addressDAO
     }
 
     JobOpening getById(int id) {
@@ -54,9 +57,15 @@ class JobOpeningService {
         List<JobOpening> jobOpenings = jobOpeningDAO.getAll()
 
         for (JobOpening jobOpening : jobOpenings) {
+            if (jobOpening == null) continue
+
+            Address address = addressDAO.getByJobOpeningId(jobOpening.id)
+
             jobOpening.company = companyService.getByJobOpeningId(jobOpening.id)
-            jobOpening.address = addressDAO.getByJobOpeningId(jobOpening.id)
+
             jobOpening.requiredSkills = skillDAO.getByJobOpeningId(jobOpening.id)
+
+            jobOpening.address = address ?: new Address()
         }
 
         return jobOpenings
@@ -104,9 +113,8 @@ class JobOpeningService {
 
         int oldAddressID = oldJobOpening.address.id
 
+        skillDAO.deleteJobOpeningSkills(id)
         jobOpeningDAO.delete(id)
         addressDAO.delete(oldAddressID)
-
-        skillDAO.deleteJobOpeningSkills(id)
     }
 }

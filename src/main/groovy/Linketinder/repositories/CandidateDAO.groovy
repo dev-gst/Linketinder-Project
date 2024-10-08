@@ -43,6 +43,33 @@ class CandidateDAO {
         return null
     }
 
+    Candidate getByEmailAndPassword(String email, String password) {
+        String query = "SELECT * FROM candidates WHERE email = ? AND password = ?"
+
+        PreparedStatement stmt = conn.prepareStatement(query, ResultSet.CONCUR_READ_ONLY)
+        stmt.setString(1, email)
+        stmt.setString(2, password)
+
+        ResultSet rs = stmt.executeQuery()
+        if (rs.next()) {
+            Candidate candidate = new Candidate()
+
+            candidate.id = rs.getInt("id")
+            candidate.firstName = rs.getString("first_name")
+            candidate.lastName = rs.getString("last_name")
+            candidate.email = rs.getString("email")
+            candidate.password = rs.getString("password")
+            candidate.description = rs.getString("description")
+            candidate.birthDate = rs.getObject("birth_date", LocalDate.class).atStartOfDay(Env.TIMEZONE).toInstant()
+            candidate.cpf = rs.getString("cpf")
+            candidate.education = rs.getString("education")
+
+            return candidate
+        }
+
+        return null
+    }
+
     List<Candidate> getAll() {
         String query = "SELECT * FROM candidates"
 
