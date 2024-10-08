@@ -68,7 +68,7 @@ class JobOpeningService {
 
             jobOpening.requiredSkills = skillDAO.getByJobOpeningId(jobOpening.id)
 
-            jobOpening.address = address ?: new Address()
+            jobOpening.address = address ? address : null
         }
 
         return jobOpenings
@@ -115,7 +115,7 @@ class JobOpeningService {
         } else {
             Address oldAddress = addressDAO.getByJobOpeningId(jobOpeningId)
 
-            oldAddressID = oldAddress ?: 0
+            oldAddressID = oldAddress ? oldAddress.id : 0
             addressId = addressDAO.save(addressDTO)
         }
 
