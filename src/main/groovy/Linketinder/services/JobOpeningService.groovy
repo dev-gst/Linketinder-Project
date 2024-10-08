@@ -23,11 +23,13 @@ class JobOpeningService {
     JobOpeningService(
             JobOpeningDAO jobOpeningDAO,
             SkillDAO skillDAO,
+            SkillService skillService,
             CompanyService companyService,
             AddressDAO addressDAO
     ) {
         this.jobOpeningDAO = jobOpeningDAO
         this.skillDAO = skillDAO
+        this.skillService = skillService
         this.companyService = companyService
         this.addressDAO = addressDAO
     }
@@ -111,8 +113,10 @@ class JobOpeningService {
             addressId = 0
             oldAddressID = 0
         } else {
+            Address oldAddress = addressDAO.getByJobOpeningId(jobOpeningId)
+
+            oldAddressID = oldAddress ?: 0
             addressId = addressDAO.save(addressDTO)
-            oldAddressID = oldJobOpening.address.id
         }
 
         jobOpeningDAO.update(jobOpeningId, jobOpeningDTO, companyId, addressId)

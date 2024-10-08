@@ -94,7 +94,7 @@ class JobOpeningDAO {
                 "is_open," +
                 "company_id," +
                 "address_id" +
-                ") VALUES (?, ?, ?, ?, ?, ?)" +
+                ") VALUES (?, ?, ?, ?, ?, ?) " +
                 "RETURNING id"
 
         PreparedStatement stmt = conn.prepareStatement(query)
@@ -125,7 +125,7 @@ class JobOpeningDAO {
                 "is_remote = ?," +
                 "is_open = ?," +
                 "company_id = ?," +
-                "address_id = ?" +
+                "address_id = ? " +
                 "WHERE id = ?"
 
         PreparedStatement stmt = conn.prepareStatement(query)

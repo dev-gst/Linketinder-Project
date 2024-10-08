@@ -153,6 +153,7 @@ class CompanyMenu {
 
         JobOpeningDTO jobOpeningDTO = new JobOpeningDTO()
 
+        println()
         print "Insira o novo nome da vaga (atual: ${existingJobOpening.name}): "
         String name = Helpers.getStringFieldFromUsr(scanner)
 
