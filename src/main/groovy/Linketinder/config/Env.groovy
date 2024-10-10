@@ -16,11 +16,23 @@ class Env {
 
     static {
         Yaml yaml = new Yaml()
-        Map<String, Map<String, String>> config = yaml.load(
-                new FileInputStream(
-                        "src/main/resources/application.yml"
-                )
-        )
+        InputStream inputStream = Env.class.
+                getClassLoader().
+                getResourceAsStream("application.yml")
+
+        if (inputStream == null) {
+            DB_URL = null
+            DB_USER = null
+            DB_PASSWORD = null
+            DB_DRIVER = null
+            DB_SCHEMAS = null
+            DB_LOCATIONS = null
+            TIMEZONE = null
+
+            throw new FileNotFoundException("application.yml not found in classpath")
+        }
+
+        Map<String, Map<String, String>> config = yaml.load(inputStream)
 
         DB_URL = config.get("db").get("url")
         DB_USER = config.get("db").get("user")
