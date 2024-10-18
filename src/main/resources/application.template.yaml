@@ -1,0 +1,12 @@
+db:
+  url: "jdbc:postgresql://localhost:5432/yourDatabase"
+  user: "yourUsername"
+  password: "yourPassword"
+  driver: "org.postgresql.Driver"
+  schemas: "public"
+
+flyway:
+  location: "classpath:db/migrations"
+
+timezone:
+  current: "GMT+3"
