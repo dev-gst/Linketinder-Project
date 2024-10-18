@@ -1,0 +1,12 @@
+db:
+  url: "jdbc:postgresql://localhost:5432/test"
+  user: "testUsername"
+  password: "testPassword"
+  driver: "testDriver"
+  schemas: "testSchema"
+
+flyway:
+  location: "testLocation"
+
+timezone:
+  current: "testTimezone"
