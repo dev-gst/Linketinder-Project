@@ -39,11 +39,13 @@ class Env {
         this.TIMEZONE = ZoneId.of(configLoader.getConfig("timezone", "current"))
     }
 
-    static Env getInstance(ConfigLoader configLoader) {
+    static void init(ConfigLoader configLoader) {
         if (instance == null) {
             instance = new Env(configLoader)
         }
+    }
 
+    static Env getInstance() {
         return instance
     }
 

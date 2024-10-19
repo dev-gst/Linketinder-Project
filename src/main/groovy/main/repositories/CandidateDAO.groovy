@@ -11,6 +11,8 @@ import java.sql.SQLException
 import java.time.LocalDate
 
 class CandidateDAO {
+    private Env env = Env.getInstance()
+
     private Connection conn
 
     CandidateDAO(Connection conn) {
@@ -33,7 +35,7 @@ class CandidateDAO {
             candidate.email = rs.getString("email")
             candidate.password = rs.getString("password")
             candidate.description = rs.getString("description")
-            candidate.birthDate = rs.getObject("birth_date", LocalDate.class).atStartOfDay(Env.TIMEZONE).toInstant()
+            candidate.birthDate = rs.getObject("birth_date", LocalDate.class).atStartOfDay(env.TIMEZONE).toInstant()
             candidate.cpf = rs.getString("cpf")
             candidate.education = rs.getString("education")
 
@@ -60,7 +62,7 @@ class CandidateDAO {
             candidate.email = rs.getString("email")
             candidate.password = rs.getString("password")
             candidate.description = rs.getString("description")
-            candidate.birthDate = rs.getObject("birth_date", LocalDate.class).atStartOfDay(Env.TIMEZONE).toInstant()
+            candidate.birthDate = rs.getObject("birth_date", LocalDate.class).atStartOfDay(env.TIMEZONE).toInstant()
             candidate.cpf = rs.getString("cpf")
             candidate.education = rs.getString("education")
 
@@ -87,7 +89,7 @@ class CandidateDAO {
             candidate.email = rs.getString("email")
             candidate.password = rs.getString("password")
             candidate.description = rs.getString("description")
-            candidate.birthDate = rs.getObject("birth_date", LocalDate.class).atStartOfDay(Env.TIMEZONE).toInstant()
+            candidate.birthDate = rs.getObject("birth_date", LocalDate.class).atStartOfDay(env.TIMEZONE).toInstant()
             candidate.cpf = rs.getString("cpf")
             candidate.education = rs.getString("education")
 
@@ -118,7 +120,7 @@ class CandidateDAO {
         stmt.setString(3, candidateDTO.email)
         stmt.setString(4, candidateDTO.password)
         stmt.setString(5, candidateDTO.description)
-        stmt.setObject(6, LocalDate.ofInstant(candidateDTO.birthDate, Env.TIMEZONE))
+        stmt.setObject(6, LocalDate.ofInstant(candidateDTO.birthDate, env.TIMEZONE))
         stmt.setString(7, candidateDTO.cpf)
         stmt.setString(8, candidateDTO.education)
         stmt.setInt(9, addressID)
@@ -152,7 +154,7 @@ class CandidateDAO {
         stmt.setString(3, candidateDTO.email)
         stmt.setString(4, candidateDTO.password)
         stmt.setString(5, candidateDTO.description)
-        stmt.setObject(6, LocalDate.ofInstant(candidateDTO.birthDate, Env.TIMEZONE))
+        stmt.setObject(6, LocalDate.ofInstant(candidateDTO.birthDate, env.TIMEZONE))
         stmt.setString(7, candidateDTO.cpf)
         stmt.setString(8, candidateDTO.education)
         stmt.setInt(9, addressID)
