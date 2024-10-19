@@ -3,31 +3,18 @@ package main.util.config
 import java.time.ZoneId
 
 class Env {
-
-    private static instance
     private static final String applicationYml = "application.yaml"
 
-    final String DB_URL
-    final String DB_USER
-    final String DB_PASSWORD
-    final String DB_DRIVER
-    final String DB_SCHEMAS
-    final String FLYWAY_LOCATION
-    final ZoneId TIMEZONE
+    private final String DB_URL
+    private final String DB_USER
+    private final String DB_PASSWORD
+    private final String DB_DRIVER
+    private final String DB_SCHEMAS
+    private final String FLYWAY_LOCATION
+    private final ZoneId TIMEZONE
 
-    private Env(ConfigLoader configLoader) {
-        if (configLoader == null) {
-            this.DB_URL = null
-            this.DB_USER = null
-            this.DB_PASSWORD = null
-            this.DB_DRIVER = null
-            this.DB_SCHEMAS = null
-            this.FLYWAY_LOCATION = null
-            this.TIMEZONE = null
-
-            throw new IllegalArgumentException("ConfigLoader is null")
-        }
-
+    Env(ConfigLoader configLoader) {
+        Objects.requireNonNull(configLoader, "ConfigLoader cannot be null")
         configLoader.loadConfigs(applicationYml)
 
         this.DB_URL = configLoader.getConfig("db", "url")
@@ -39,17 +26,31 @@ class Env {
         this.TIMEZONE = ZoneId.of(configLoader.getConfig("timezone", "current"))
     }
 
-    static void init(ConfigLoader configLoader) {
-        if (instance == null) {
-            instance = new Env(configLoader)
-        }
+    String getDbUrl() {
+        return DB_URL
     }
 
-    static Env getInstance() {
-        return instance
+    String getDbUser() {
+        return DB_USER
     }
 
-    static resetInstance() {
-        instance = null
+    String getDbPassword() {
+        return DB_PASSWORD
+    }
+
+    String getDbDriver() {
+        return DB_DRIVER
+    }
+
+    String getDbSchemas() {
+        return DB_SCHEMAS
+    }
+
+    String getFlywayLocation() {
+        return FLYWAY_LOCATION
+    }
+
+    ZoneId getTimezone() {
+        return TIMEZONE
     }
 }
