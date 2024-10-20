@@ -4,6 +4,11 @@ class Skill {
     int id
     String name
 
+    Skill(int id, String name) {
+        this.id = id
+        this.name = name
+    }
+
     @Override
     boolean equals(o) {
         if (this.is(o)) return true
