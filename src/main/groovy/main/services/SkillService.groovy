@@ -1,6 +1,6 @@
 package main.services
 
-import main.models.DTOs.SkillDTO
+import main.models.dtos.skills.SkillDTO
 import main.models.entities.Skill
 import main.repositories.SkillDAO
 
@@ -9,29 +9,41 @@ class SkillService {
     SkillDAO skillDAO
 
     SkillService(SkillDAO skillDAO) {
+        Objects.requireNonNull(skillDAO, "SkillDAO cannot be null")
+
         this.skillDAO = skillDAO
     }
 
-    Set<Skill> save(Set<SkillDTO> skillDTOList) {
-        Set<Skill> skills = new HashSet<>()
-        List<Skill> dbSkills = skillDAO.getAll()
+    Skill getSkillByName(String skillName) {
+        Objects.requireNonNull(skillName, "Skill name cannot be null")
+        if (skillName.isBlank()) throw new IllegalArgumentException("Skill name cannot be blank")
 
-        for (SkillDTO skillDTO : skillDTOList) {
-            Skill dbSkill = dbSkills.stream()
-                    .filter(s -> s.name == skillDTO.name)
-                    .findFirst()
-                    .orElse(null)
+        return skillDAO.getByName(skillName)
+    }
 
-            if (dbSkill) {
-                skills.add(dbSkill)
-            } else {
-                int newSkillInDbId = skillDAO.save(skillDTO)
-                Skill newSkillInDb = skillDAO.getById(newSkillInDbId)
+    Set<Skill> saveAll(Set<SkillDTO> skillDTOSet) {
+        Objects.requireNonNull(skillDTOSet, "SkillDTO set cannot be null")
 
-                skills.add(newSkillInDb)
-            }
+        if (skillDTOSet.isEmpty()) throw new IllegalArgumentException("SkillDTO set cannot be empty")
+
+        Set<Skill> skills = new LinkedHashSet<>()
+        for (SkillDTO skillDTO : skillDTOSet) {
+            skills.add(save(skillDTO))
         }
 
         return skills
+    }
+
+    Skill save(SkillDTO skillDTO) {
+        Objects.requireNonNull(skillDTO, "SkillDTO cannot be null")
+
+        Skill skill = getSkillByName(skillDTO.getName())
+        if (skill != null) {
+            return skill
+        } else {
+            int newSkillId = skillDAO.save(skillDTO)
+
+            return new Skill(newSkillId, skillDTO.getName())
+        }
     }
 }
