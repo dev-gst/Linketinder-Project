@@ -5,6 +5,7 @@ import main.models.entities.Skill
 import main.repositories.SkillDAO
 import main.services.interfaces.SearchableService
 import main.util.exception.ParamValidation
+import main.util.exception.custom.EntityNotFoundException
 
 class SkillService implements SearchableService<Skill, SkillDTO> {
 
@@ -30,10 +31,8 @@ class SkillService implements SearchableService<Skill, SkillDTO> {
 
     @Override
     Set<Skill> findByField(String fieldName, String fieldValue) {
-        ParamValidation.requireNonNull(fieldName, "Field name cannot be null")
-        ParamValidation.requireNonNull(fieldValue, "Field value cannot be null")
-        ParamValidation.requireNonBlank(fieldName, "Field name cannot be blank")
-        ParamValidation.requireNonBlank(fieldValue, "Field value cannot be blank")
+        ParamValidation.requireNonBlank(fieldName, "Field name cannot be blank or null")
+        ParamValidation.requireNonBlank(fieldValue, "Field value cannot be blank or null")
 
         return skillDAO.findByField(fieldName, fieldValue)
     }
@@ -42,7 +41,10 @@ class SkillService implements SearchableService<Skill, SkillDTO> {
     Skill save(SkillDTO skillDTO) {
         ParamValidation.requireNonNull(skillDTO, "SkillDTO cannot be null")
 
-        Skill skill = findByField("name", skillDTO.getName())[0]
+        Set<Skill> skills = findByField("name", skillDTO.getName())
+        if (skills == null) throw new EntityNotFoundException("Skills for this parameters 'name', ${skillDTO.getName()} not found")
+
+        Skill skill = skills.isEmpty() ? null : skills[0]
         if (skill != null) {
             return skill
         } else {
@@ -53,8 +55,7 @@ class SkillService implements SearchableService<Skill, SkillDTO> {
 
     @Override
     Set<Skill> saveAll(Set<SkillDTO> skillDTOSet) {
-        ParamValidation.requireNonNull(skillDTOSet, "SkillDTO set cannot be null")
-        if (skillDTOSet.isEmpty()) throw new IllegalArgumentException("SkillDTO set cannot be empty")
+        ParamValidation.requireNonEmpty(skillDTOSet, "SkillDTO set cannot be null or empty")
 
         Set<Skill> skills = new LinkedHashSet<>()
         for (SkillDTO skillDTO : skillDTOSet) {
@@ -67,10 +68,10 @@ class SkillService implements SearchableService<Skill, SkillDTO> {
     @Override
     Skill updateById(int id, SkillDTO skillDTO) {
         ParamValidation.requireNonNull(skillDTO, "SkillDTO cannot be null")
-        if (id <= 0) throw new IllegalArgumentException("Skill ID must be greater than 0")
+        ParamValidation.requirePositive(id, "Skill ID must be greater than 0")
 
         Skill skill = getById(id)
-        if (skill == null) throw new IllegalArgumentException("Skill with ID $id not found")
+        if (skill == null) throw new EntityNotFoundException("Skill with ID $id not found")
 
         skill.setName(skillDTO.getName())
         skillDAO.updateById(id, skillDTO)
@@ -80,7 +81,7 @@ class SkillService implements SearchableService<Skill, SkillDTO> {
 
     @Override
     void deleteById(int id) {
-        if (id <= 0) throw new IllegalArgumentException("Skill ID must be greater than 0")
+        ParamValidation.requirePositive(id, "Skill ID must be greater than 0")
 
         skillDAO.deleteById(id)
     }

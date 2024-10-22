@@ -20,30 +20,33 @@ class SkillServiceTest extends Specification {
         new SkillService(null)
 
         then:
-        thrown(NullPointerException)
+        thrown(IllegalArgumentException)
     }
 
-    def "get skill by name should return skill"() {
+    def "find by field should return skill when found"() {
+        Set<Skill> skills = new LinkedHashSet<>()
+        skills.add(new Skill(1, "Java"))
+
         when:
-        skillDAO.getByName("Java") >> new Skill(1, "Java")
-        Skill skill = skillService.getSkillByName("Java")
+        skillDAO.findByField("name", "Java") >> skills
+        Set<Skill> foundSkills = skillService.findByField("name", "Java")
 
         then:
-        skill.id == 1
-        skill.name == "Java"
+        foundSkills[0].id == 1
+        foundSkills[0].name == "Java"
     }
 
-    def "get skill by name should throw exception when skill name is null"() {
+    def "find by field should throw exception when skill name is null"() {
         when:
-        skillService.getSkillByName(null)
+        skillService.findByField("name", null)
 
         then:
-        thrown(NullPointerException)
+        thrown(IllegalArgumentException)
     }
 
-    def "get skill by name should throw exception when skill name is blank"() {
+    def "find by field should throw exception when skill name is blank"() {
         when:
-        skillService.getSkillByName("")
+        skillService.findByField("name", "")
 
         then:
         thrown(IllegalArgumentException)
@@ -52,10 +55,10 @@ class SkillServiceTest extends Specification {
     def "save should return newly saved skill"() {
         given:
         SkillDTO java = new SkillDTO("Java")
+        skillDAO.findByField("name", "Java") >> new LinkedHashSet<>()
+        skillDAO.save(java) >> 67
 
         when:
-        skillDAO.getByName("Java") >> null
-        skillDAO.save(java) >> 67
         Skill saved = skillService.save(java)
 
         then:
@@ -67,9 +70,11 @@ class SkillServiceTest extends Specification {
         given:
         SkillDTO java = new SkillDTO("Java")
         Skill existingJava = new Skill(56, "Java")
+        Set<Skill> foundSkills = new LinkedHashSet<>()
+        foundSkills.add(existingJava)
 
         when:
-        skillDAO.getByName("Java") >> existingJava
+        skillDAO.findByField("name", "Java") >> foundSkills
         Skill saved = skillService.save(java)
 
         then:
@@ -82,10 +87,10 @@ class SkillServiceTest extends Specification {
         skillService.save(null)
 
         then:
-        thrown(NullPointerException)
+        thrown(IllegalArgumentException)
     }
 
-    def "save all should return saved skills"() {
+    def "save all should return already saved and newly saved skills"() {
         given:
         SkillDTO java = new SkillDTO("Java")
         SkillDTO python = new SkillDTO("Python")
@@ -94,18 +99,20 @@ class SkillServiceTest extends Specification {
         skillDTOSet.add(java)
         skillDTOSet.add(python)
 
-        Skill existingPython = new Skill(89, "Python")
+        Set<Skill> existingPython = new LinkedHashSet<>()
+        existingPython.add(new Skill(56, "Python"))
 
         when:
-        skillDAO.getByName("Java") >> null
+        skillDAO.findByField("name", "Java") >> new LinkedHashSet<Skill>()
         skillDAO.save(java) >> 67
-        skillDAO.getByName("Python") >> existingPython
+        skillDAO.findByField("name", "Python") >> existingPython
+
         Set<Skill> saved = skillService.saveAll(skillDTOSet)
 
         then:
         saved[0].id == 67
         saved[0].name == "Java"
-        saved[1] == existingPython
+        saved[1] == existingPython[0]
     }
 
     def "save all should throw exception when skillDTO set is null"() {
@@ -113,7 +120,7 @@ class SkillServiceTest extends Specification {
         skillService.saveAll(null)
 
         then:
-        thrown(NullPointerException)
+        thrown(IllegalArgumentException)
     }
 
 
