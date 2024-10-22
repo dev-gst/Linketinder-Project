@@ -1,5 +1,6 @@
 package main.util.parser.yaml
 
+import main.util.exception.ParamValidation
 import org.yaml.snakeyaml.Yaml
 
 class SnakeYamlParser implements YamlParser {
@@ -7,18 +8,15 @@ class SnakeYamlParser implements YamlParser {
     Yaml yaml
 
     SnakeYamlParser(Yaml yaml) {
-        if (yaml == null) {
-            throw new IllegalArgumentException("Yaml instance cannot be null")
-        }
+        ParamValidation.requireNonNull(yaml, "Yaml cannot be null")
 
         this.yaml = yaml
     }
 
     @Override
     Map<String, Map<String, String>> parse(String path) {
-        if (path == null || path.isEmpty()) {
-            throw new IllegalArgumentException("Path cannot be null or empty")
-        }
+        ParamValidation.requireNonNull(path, "Path cannot be null")
+        if (path.isBlank()) throw new IllegalArgumentException("Path cannot be blank")
 
         InputStream inputStream = getInputStream(path)
 
