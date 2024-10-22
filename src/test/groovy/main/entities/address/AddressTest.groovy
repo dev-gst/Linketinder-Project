@@ -6,20 +6,20 @@ import spock.lang.Specification
 
 class AddressTest extends Specification {
 
-    def "Location should be created with all fields"() {
+    def "Address should be created with all fields"() {
         given:
         def detailedAddress = new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345")
-        def location = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress)
+        def address = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress)
 
         expect:
-        location.id == 1
-        location.country == "Brazil"
-        location.region == "São Paulo"
-        location.city == "São Paulo"
-        location.detailedAddress == detailedAddress
+        address.id == 1
+        address.country == "Brazil"
+        address.region == "São Paulo"
+        address.city == "São Paulo"
+        address.detailedAddress == detailedAddress
     }
 
-    def "Location should not be created with null country"() {
+    def "Address should not be created with null country"() {
         when:
         new Address(1, null, "São Paulo", "São Paulo", new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345"))
 
@@ -27,7 +27,7 @@ class AddressTest extends Specification {
         thrown(IllegalArgumentException)
     }
 
-    def "Location should not be created with null region"() {
+    def "Address should not be created with null region"() {
         when:
         new Address(1, "Brazil", null, "São Paulo", new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345"))
 
@@ -35,7 +35,7 @@ class AddressTest extends Specification {
         thrown(IllegalArgumentException)
     }
 
-    def "Location should not be created with null city"() {
+    def "Address should not be created with null city"() {
         when:
         new Address(1, "Brazil", "São Paulo", null, new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345"))
 
@@ -43,7 +43,7 @@ class AddressTest extends Specification {
         thrown(IllegalArgumentException)
     }
 
-    def "Location should not be created with null detailed address"() {
+    def "Address should not be created with null detailed address"() {
         when:
         new Address(1, "Brazil", "São Paulo", "São Paulo", null)
 
@@ -51,54 +51,78 @@ class AddressTest extends Specification {
         thrown(IllegalArgumentException)
     }
 
-    def "Location should be equal to another Location with the same fields"() {
-        given:
-        def detailedAddress = new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345")
-        def location1 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress)
-        def location2 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress)
+    def "Address should not be created with blank country"() {
+        when:
+        new Address(1, "", "São Paulo", "São Paulo", new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345"))
 
-        expect:
-        location1 == location2
+        then:
+        thrown(IllegalArgumentException)
     }
 
-    def "Location should not be equal to another Location with different field"() {
-        given:
-        def detailedAddress = new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345")
-        def location1 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress)
-        def location2 = new Address(2, "Brazil", "São Paulo", "São Paulo", detailedAddress) // Different id
+    def "Address should not be created with blank region"() {
+        when:
+        new Address(1, "Brazil", "", "São Paulo", new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345"))
 
-        expect:
-        location1 != location2
+        then:
+        thrown(IllegalArgumentException)
     }
 
-    def "Location should not be equal to another Location with different detailed address"() {
+    def "Address should not be created with blank city"() {
+        when:
+        new Address(1, "Brazil", "São Paulo", "", new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345"))
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "Address should be equal to another Address with the same fields"() {
+        given:
+        def detailedAddress = new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345")
+        def address1 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress)
+        def address2 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress)
+
+        expect:
+        address1 == address2
+    }
+
+    def "Address should not be equal to another Address with different field"() {
+        given:
+        def detailedAddress = new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345")
+        def address1 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress)
+        def address2 = new Address(2, "Brazil", "São Paulo", "São Paulo", detailedAddress) // Different id
+
+        expect:
+        address1 != address2
+    }
+
+    def "Address should not be equal to another Address with different detailed address"() {
         given:
         def detailedAddress1 = new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345")
         def detailedAddress2 = new DetailedAddress("Bairro2", "Rua nenhuma", "0", "12345") // Different neighborhood
-        def location1 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress1)
-        def location2 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress2)
+        def address1 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress1)
+        def address2 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress2)
 
         expect:
-        location1 != location2
+        address1 != address2
     }
 
-    def "Location should have the same hash code as another Location with the same fields"() {
+    def "Address should have the same hash code as another Address with the same fields"() {
         given:
         def detailedAddress = new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345")
-        def location1 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress)
-        def location2 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress)
+        def address1 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress)
+        def address2 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress)
 
         expect:
-        location1.hashCode() == location2.hashCode()
+        address1.hashCode() == address2.hashCode()
     }
 
-    def "Location should not have the same hash code as another Location with different fields"() {
+    def "Address should not have the same hash code as another Address with different fields"() {
         given:
         def detailedAddress = new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345")
-        def location1 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress)
-        def location2 = new Address(2, "Brazil", "São Paulo", "São Paulo", detailedAddress) // Different id
+        def address1 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress)
+        def address2 = new Address(2, "Brazil", "São Paulo", "São Paulo", detailedAddress) // Different id
 
         expect:
-        location1.hashCode() != location2.hashCode()
+        address1.hashCode() != address2.hashCode()
     }
 }
