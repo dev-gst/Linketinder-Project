@@ -6,7 +6,7 @@ class SkillDTO {
     private final String name
 
     SkillDTO(String name) {
-        ParamValidation.requireNonNull(name, "Name cannot be null")
+        ParamValidation.requireNonBlank(name, "Name cannot be blank")
 
         this.name = name
     }
