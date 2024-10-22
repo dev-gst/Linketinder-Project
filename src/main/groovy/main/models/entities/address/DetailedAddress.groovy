@@ -7,6 +7,18 @@ class DetailedAddress {
     String number
     String zipCode
 
+    DetailedAddress(String neighborhood, String street, String number, String zipCode) {
+        Objects.requireNonNull(neighborhood, "Neighborhood cannot be null")
+        Objects.requireNonNull(street, "Street cannot be null")
+        Objects.requireNonNull(number, "Number cannot be null")
+        Objects.requireNonNull(zipCode, "Zip code cannot be null")
+
+        this.neighborhood = neighborhood
+        this.street = street
+        this.number = number
+        this.zipCode = zipCode
+    }
+
     @Override
     boolean equals(o) {
         if (this.is(o)) return true

@@ -8,6 +8,19 @@ class Location {
     String city
     DetailedAddress detailedAddress
 
+    Location(int id, String country, String region, String city, DetailedAddress detailedAddress) {
+        Objects.requireNonNull(country, "Country cannot be null")
+        Objects.requireNonNull(region, "Region cannot be null")
+        Objects.requireNonNull(city, "City cannot be null")
+        Objects.requireNonNull(detailedAddress, "Detailed address cannot be null")
+
+        this.id = id
+        this.country = country
+        this.region = region
+        this.city = city
+        this.detailedAddress = detailedAddress
+    }
+
     @Override
     boolean equals(o) {
         if (this.is(o)) return true
