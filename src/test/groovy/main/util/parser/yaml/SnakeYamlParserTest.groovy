@@ -27,6 +27,17 @@ class SnakeYamlParserTest extends Specification {
         thrown(IllegalArgumentException)
     }
 
+    def "parse should throw an exception when path is blank"() {
+        given:
+        def yamlParser = new SnakeYamlParser(new Yaml())
+
+        when:
+        yamlParser.parse("\n")
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
     def "parse should throw an exception when path is invalid"() {
         given:
         def yamlParser = new SnakeYamlParser(new Yaml())
