@@ -6,7 +6,7 @@ import java.sql.SQLException
 
 class DBDriverTest extends Specification {
 
-    def "checkIfDriverIsLoaded throws IllegalArgumentException for null param"() {
+    def "Check if driver is loaded throws IllegalArgumentException for null param"() {
         when:
         DBDriver.checkIfDriverIsLoaded(null)
 
@@ -14,7 +14,15 @@ class DBDriverTest extends Specification {
         thrown(IllegalArgumentException)
     }
 
-    def "checkIfDriverIsLoaded throws SQLException when class does not exists"() {
+    def "Check if driver is loaded throws IllegalArgumentException for empty param"() {
+        when:
+        DBDriver.checkIfDriverIsLoaded("")
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "Check if driver is loaded throws SQLException when class does not exists"() {
         given:
         String driverClassName = "driverClassNameThatDoesNotExist" // Dummy class that does not exists
 
@@ -25,7 +33,7 @@ class DBDriverTest extends Specification {
         thrown(SQLException)
     }
 
-    def "checkIfDriverIsLoaded works with correct driver"() {
+    def "Check if driver is loaded works with correct driver"() {
         given:
         String driverClassName = "java.time.Instant" // Dummy class that exists
 

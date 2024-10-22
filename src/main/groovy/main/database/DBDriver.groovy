@@ -7,7 +7,7 @@ import java.sql.SQLException
 class DBDriver {
 
     static void checkIfDriverIsLoaded(String driverClassName) throws SQLException {
-        ParamValidation.requireNonNull(driverClassName, "Driver class name cannot be null")
+        ParamValidation.requireNonBlank(driverClassName, "Driver class name cannot be blank or null")
         try {
             loadDriverClass(driverClassName)
         } catch (ClassNotFoundException e) {
