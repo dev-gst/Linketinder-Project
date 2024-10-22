@@ -67,4 +67,20 @@ class ParamValidationTest extends Specification {
         then:
         notThrown(IllegalArgumentException)
     }
+
+    def "requireNonEmpty should throw IllegalArgumentException when collection is null"() {
+        when:
+        ParamValidation.requireNonEmpty(null, "Collection cannot be null")
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "requireNonEmpty should throw IllegalArgumentException when collection is empty"() {
+        when:
+        ParamValidation.requireNonEmpty([], "Collection cannot be empty")
+
+        then:
+        thrown(IllegalArgumentException)
+    }
 }

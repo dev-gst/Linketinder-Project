@@ -15,4 +15,9 @@ class ParamValidation {
         if (num == null) throw new IllegalArgumentException(message)
         if (num <= 0) throw new IllegalArgumentException(message)
     }
+
+    static void requireNonEmpty(Collection<?> collection, String message) {
+        if (collection == null) throw new IllegalArgumentException(message)
+        if (collection.isEmpty()) throw new IllegalArgumentException(message)
+    }
 }
