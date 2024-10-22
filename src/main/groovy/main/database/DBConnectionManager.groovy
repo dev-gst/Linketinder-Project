@@ -1,6 +1,7 @@
 package main.database
 
 import main.util.config.Env
+import main.util.exception.ParamValidation
 
 import java.sql.Connection
 import java.sql.DriverManager
@@ -13,7 +14,7 @@ class DBConnectionManager {
     final Env env
 
     DBConnectionManager(Env env) {
-        Objects.requireNonNull(env, "Env cannot be null")
+        ParamValidation.requireNonNull(env, "Env cannot be null")
         this.env = env
     }
 
