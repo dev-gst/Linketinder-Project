@@ -10,10 +10,10 @@ class DetailedAddress {
     String zipCode
 
     DetailedAddress(String neighborhood, String street, String number, String zipCode) {
-        ParamValidation.requireNonNull(neighborhood, "Neighborhood cannot be null")
-        ParamValidation.requireNonNull(street, "Street cannot be null")
-        ParamValidation.requireNonNull(number, "Number cannot be null")
-        ParamValidation.requireNonNull(zipCode, "Zip code cannot be null")
+        ParamValidation.requireNonBlank(neighborhood, "Neighborhood cannot be null")
+        ParamValidation.requireNonBlank(street, "Street cannot be null")
+        ParamValidation.requireNonBlank(number, "Number cannot be null")
+        ParamValidation.requireNonBlank(zipCode, "Zip code cannot be null")
 
         this.neighborhood = neighborhood
         this.street = street

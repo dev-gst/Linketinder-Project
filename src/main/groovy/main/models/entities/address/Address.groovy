@@ -11,9 +11,9 @@ class Address {
     DetailedAddress detailedAddress
 
     Address(int id, String country, String region, String city, DetailedAddress detailedAddress) {
-        ParamValidation.requireNonNull(country, "Country cannot be null")
-        ParamValidation.requireNonNull(region, "Region cannot be null")
-        ParamValidation.requireNonNull(city, "City cannot be null")
+        ParamValidation.requireNonBlank(country, "Country cannot be null")
+        ParamValidation.requireNonBlank(region, "Region cannot be null")
+        ParamValidation.requireNonBlank(city, "City cannot be null")
         ParamValidation.requireNonNull(detailedAddress, "Detailed address cannot be null")
 
         this.id = id

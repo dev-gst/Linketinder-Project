@@ -10,9 +10,9 @@ class AddressDTO {
     private final DetailedAddressDTO detailedAddressDTO
 
     AddressDTO(String country, String region, String city, DetailedAddressDTO detailedAddressDTO) {
-        ParamValidation.requireNonNull(country, "Country cannot be null")
-        ParamValidation.requireNonNull(region, "Region cannot be null")
-        ParamValidation.requireNonNull(city, "City cannot be null")
+        ParamValidation.requireNonBlank(country, "Country cannot be null")
+        ParamValidation.requireNonBlank(region, "Region cannot be null")
+        ParamValidation.requireNonBlank(city, "City cannot be null")
         ParamValidation.requireNonNull(detailedAddressDTO, "DetailedAddressDTO cannot be null")
 
         this.country = country
