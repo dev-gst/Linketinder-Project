@@ -19,4 +19,52 @@ class ParamValidationTest extends Specification {
         then:
         notThrown(IllegalArgumentException)
     }
+
+    def "requireNonBlank should throw IllegalArgumentException when string is null"() {
+        when:
+        ParamValidation.requireNonBlank(null, "String cannot be null")
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "requireNonBlank should throw IllegalArgumentException when string is blank"() {
+        when:
+        ParamValidation.requireNonBlank("", "String cannot be blank")
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "requireNonBlank should not throw IllegalArgumentException when string is not blank"() {
+        when:
+        ParamValidation.requireNonBlank("String", "String cannot be blank")
+
+        then:
+        notThrown(IllegalArgumentException)
+    }
+
+    def "requirePositive should throw IllegalArgumentException when number is null"() {
+        when:
+        ParamValidation.requirePositive(null, "Number cannot be null")
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "requirePositive should throw IllegalArgumentException when number is negative"() {
+        when:
+        ParamValidation.requirePositive(-1, "Number must be positive")
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "requirePositive should not throw IllegalArgumentException when number is positive"() {
+        when:
+        ParamValidation.requirePositive(1, "Number must be positive")
+
+        then:
+        notThrown(IllegalArgumentException)
+    }
 }
