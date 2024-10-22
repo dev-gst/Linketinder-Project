@@ -8,7 +8,7 @@ class Skill {
 
     Skill(int id, String name) {
         ParamValidation.requirePositive(id, "ID needs to be positive")
-        ParamValidation.requireNonNull(name, "Name cannot be null")
+        ParamValidation.requireNonBlank(name, "Name cannot be blank")
 
         this.id = id
         this.name = name

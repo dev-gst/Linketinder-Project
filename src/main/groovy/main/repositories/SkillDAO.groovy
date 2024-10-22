@@ -1,6 +1,6 @@
 package main.repositories
 
-import main.models.DTOs.SkillDTO
+import main.models.dtos.skills.SkillDTO
 import main.models.entities.Skill
 
 import java.sql.Connection
@@ -201,6 +201,18 @@ class SkillDAO {
         stmt.setInt(1, jobOpeningId)
 
         stmt.executeUpdate()
+    }
+
+    def void updateById(int i, SkillDTO skillDTO) {
+        throw new UnsupportedOperationException("Not supported yet.")
+    }
+
+    def void deleteById(int i) {
+        throw new UnsupportedOperationException("Not supported yet.")
+    }
+
+    def Set<Skill> findByField(String s1, String s2) {
+        throw new UnsupportedOperationException("Not supported yet.")
     }
 }
 
