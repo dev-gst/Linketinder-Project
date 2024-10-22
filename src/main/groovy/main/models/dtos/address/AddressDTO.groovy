@@ -2,14 +2,14 @@ package main.models.dtos.address
 
 import main.util.exception.ParamValidation
 
-class LocationDTO {
+class AddressDTO {
 
     private final String country
     private final String region
     private final String city
     private final DetailedAddressDTO detailedAddressDTO
 
-    LocationDTO(String country, String region, String city, DetailedAddressDTO detailedAddressDTO) {
+    AddressDTO(String country, String region, String city, DetailedAddressDTO detailedAddressDTO) {
         ParamValidation.requireNonNull(country, "Country cannot be null")
         ParamValidation.requireNonNull(region, "Region cannot be null")
         ParamValidation.requireNonNull(city, "City cannot be null")

@@ -2,7 +2,7 @@ package main.models.entities.address
 
 import main.util.exception.ParamValidation
 
-class Location {
+class Address {
 
     int id
     String country
@@ -10,7 +10,7 @@ class Location {
     String city
     DetailedAddress detailedAddress
 
-    Location(int id, String country, String region, String city, DetailedAddress detailedAddress) {
+    Address(int id, String country, String region, String city, DetailedAddress detailedAddress) {
         ParamValidation.requireNonNull(country, "Country cannot be null")
         ParamValidation.requireNonNull(region, "Region cannot be null")
         ParamValidation.requireNonNull(city, "City cannot be null")
@@ -28,7 +28,7 @@ class Location {
         if (this.is(o)) return true
         if (o == null || getClass() != o.class) return false
 
-        Location address = (Location) o
+        Address address = (Address) o
 
         if (id != address.id) return false
         if (city != address.city) return false
