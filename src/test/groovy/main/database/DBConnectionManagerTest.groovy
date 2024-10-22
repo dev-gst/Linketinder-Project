@@ -25,7 +25,7 @@ class DBConnectionManagerTest extends Specification {
         dbConnectionManager = new DBConnectionManager(mockedEnv)
     }
 
-    def "getConnectionReturnsConnection"() {
+    def "getConnection returns connection"() {
         when:
         Connection connection = dbConnectionManager.getConnection()
 
@@ -33,7 +33,7 @@ class DBConnectionManagerTest extends Specification {
         connection != null
     }
 
-    def "getConnectionReturnsSameConnection"() {
+    def "getConnection returns same connection"() {
         when:
         Connection connection1 = dbConnectionManager.getConnection()
         Connection connection2 = dbConnectionManager.getConnection()
@@ -42,7 +42,7 @@ class DBConnectionManagerTest extends Specification {
         connection1 == connection2
     }
 
-    def "closeConnectionWorks"() {
+    def "closeConnection closes the connection"() {
         when:
         dbConnectionManager.getConnection()
         dbConnectionManager.closeConnection()
@@ -51,7 +51,7 @@ class DBConnectionManagerTest extends Specification {
         1 * mockedConnection.close()
     }
 
-    def "getConnectionReturnsNewConnectionIfClosed"() {
+    def "getConnection returns new connection if closed"() {
 
         mockedConnection.isClosed() >>> [false, true]
 
