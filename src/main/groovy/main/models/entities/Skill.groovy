@@ -1,10 +1,15 @@
 package main.models.entities
 
+import main.util.exception.ParamValidation
+
 class Skill {
     int id
     String name
 
     Skill(int id, String name) {
+        ParamValidation.requirePositive(id, "ID needs to be positive")
+        ParamValidation.requireNonNull(name, "Name cannot be null")
+
         this.id = id
         this.name = name
     }

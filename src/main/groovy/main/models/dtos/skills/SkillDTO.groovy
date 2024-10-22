@@ -1,10 +1,12 @@
 package main.models.dtos.skills
 
+import main.util.exception.ParamValidation
+
 class SkillDTO {
     private final String name
 
     SkillDTO(String name) {
-        Objects.requireNonNull(name, "Name cannot be null")
+        ParamValidation.requireNonNull(name, "Name cannot be null")
 
         this.name = name
     }
