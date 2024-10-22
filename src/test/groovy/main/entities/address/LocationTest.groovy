@@ -24,7 +24,7 @@ class LocationTest extends Specification {
         new Location(1, null, "São Paulo", "São Paulo", new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345"))
 
         then:
-        thrown(NullPointerException)
+        thrown(IllegalArgumentException)
     }
 
     def "Location should not be created with null region"() {
@@ -32,7 +32,7 @@ class LocationTest extends Specification {
         new Location(1, "Brazil", null, "São Paulo", new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345"))
 
         then:
-        thrown(NullPointerException)
+        thrown(IllegalArgumentException)
     }
 
     def "Location should not be created with null city"() {
@@ -40,7 +40,7 @@ class LocationTest extends Specification {
         new Location(1, "Brazil", "São Paulo", null, new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345"))
 
         then:
-        thrown(NullPointerException)
+        thrown(IllegalArgumentException)
     }
 
     def "Location should not be created with null detailed address"() {
@@ -48,7 +48,7 @@ class LocationTest extends Specification {
         new Location(1, "Brazil", "São Paulo", "São Paulo", null)
 
         then:
-        thrown(NullPointerException)
+        thrown(IllegalArgumentException)
     }
 
     def "Location should be equal to another Location with the same fields"() {

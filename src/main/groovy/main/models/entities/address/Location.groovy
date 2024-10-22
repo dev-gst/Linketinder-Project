@@ -1,5 +1,7 @@
 package main.models.entities.address
 
+import main.util.exception.ParamValidation
+
 class Location {
 
     int id
@@ -9,10 +11,10 @@ class Location {
     DetailedAddress detailedAddress
 
     Location(int id, String country, String region, String city, DetailedAddress detailedAddress) {
-        Objects.requireNonNull(country, "Country cannot be null")
-        Objects.requireNonNull(region, "Region cannot be null")
-        Objects.requireNonNull(city, "City cannot be null")
-        Objects.requireNonNull(detailedAddress, "Detailed address cannot be null")
+        ParamValidation.requireNonNull(country, "Country cannot be null")
+        ParamValidation.requireNonNull(region, "Region cannot be null")
+        ParamValidation.requireNonNull(city, "City cannot be null")
+        ParamValidation.requireNonNull(detailedAddress, "Detailed address cannot be null")
 
         this.id = id
         this.country = country

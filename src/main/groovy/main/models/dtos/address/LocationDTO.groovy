@@ -1,5 +1,7 @@
 package main.models.dtos.address
 
+import main.util.exception.ParamValidation
+
 class LocationDTO {
 
     private final String country
@@ -8,10 +10,10 @@ class LocationDTO {
     private final DetailedAddressDTO detailedAddressDTO
 
     LocationDTO(String country, String region, String city, DetailedAddressDTO detailedAddressDTO) {
-        Objects.requireNonNull(country, "Country cannot be null")
-        Objects.requireNonNull(region, "Region cannot be null")
-        Objects.requireNonNull(city, "City cannot be null")
-        Objects.requireNonNull(detailedAddressDTO, "DetailedAddressDTO cannot be null")
+        ParamValidation.requireNonNull(country, "Country cannot be null")
+        ParamValidation.requireNonNull(region, "Region cannot be null")
+        ParamValidation.requireNonNull(city, "City cannot be null")
+        ParamValidation.requireNonNull(detailedAddressDTO, "DetailedAddressDTO cannot be null")
 
         this.country = country
         this.region = region

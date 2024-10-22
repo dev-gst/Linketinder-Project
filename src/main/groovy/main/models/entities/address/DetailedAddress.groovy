@@ -1,5 +1,7 @@
 package main.models.entities.address
 
+import main.util.exception.ParamValidation
+
 class DetailedAddress {
 
     String neighborhood
@@ -8,10 +10,10 @@ class DetailedAddress {
     String zipCode
 
     DetailedAddress(String neighborhood, String street, String number, String zipCode) {
-        Objects.requireNonNull(neighborhood, "Neighborhood cannot be null")
-        Objects.requireNonNull(street, "Street cannot be null")
-        Objects.requireNonNull(number, "Number cannot be null")
-        Objects.requireNonNull(zipCode, "Zip code cannot be null")
+        ParamValidation.requireNonNull(neighborhood, "Neighborhood cannot be null")
+        ParamValidation.requireNonNull(street, "Street cannot be null")
+        ParamValidation.requireNonNull(number, "Number cannot be null")
+        ParamValidation.requireNonNull(zipCode, "Zip code cannot be null")
 
         this.neighborhood = neighborhood
         this.street = street

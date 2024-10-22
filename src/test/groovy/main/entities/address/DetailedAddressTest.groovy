@@ -21,7 +21,7 @@ class DetailedAddressTest extends Specification {
         new DetailedAddress(null, "Rua nenhuma", "0", "12345")
 
         then:
-        thrown(NullPointerException)
+        thrown(IllegalArgumentException)
     }
 
     def "DetailedAddress should not be created with null street"() {
@@ -29,7 +29,7 @@ class DetailedAddressTest extends Specification {
         new DetailedAddress("Bairro", null, "0", "12345")
 
         then:
-        thrown(NullPointerException)
+        thrown(IllegalArgumentException)
     }
 
     def "DetailedAddress should not be created with null number"() {
@@ -37,7 +37,7 @@ class DetailedAddressTest extends Specification {
         new DetailedAddress("Bairro", "Rua nenhuma", null, "12345")
 
         then:
-        thrown(NullPointerException)
+        thrown(IllegalArgumentException)
     }
 
     def "DetailedAddress should not be created with null zip code"() {
@@ -45,7 +45,7 @@ class DetailedAddressTest extends Specification {
         new DetailedAddress("Bairro", "Rua nenhuma", "0", null)
 
         then:
-        thrown(NullPointerException)
+        thrown(IllegalArgumentException)
     }
 
     def " DetailedAddress should be equal to another DetailedAddress with the same fields"() {
