@@ -5,16 +5,16 @@ import main.util.exception.ParamValidation
 class AnonAddressDTO {
 
     private final String country
-    private final String state
+    private final String region
     private final String city
 
-    AnonAddressDTO(String country, String state, String city) {
+    AnonAddressDTO(String country, String region, String city) {
         ParamValidation.requireNonBlank(country, "Country cannot be null or blank")
-        ParamValidation.requireNonBlank(state, "State cannot be null or blank")
+        ParamValidation.requireNonBlank(region, "State cannot be null or blank")
         ParamValidation.requireNonBlank(city, "City cannot be null or blank")
 
         this.country = country
-        this.state = state
+        this.region = region
         this.city = city
     }
 
@@ -22,8 +22,8 @@ class AnonAddressDTO {
         return country
     }
 
-    String getState() {
-        return state
+    String getRegion() {
+        return region
     }
 
     String getCity() {
