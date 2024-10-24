@@ -1,5 +1,6 @@
 package main.services
 
+import main.models.dtos.anonresponse.AnonAddressDTO
 import main.models.dtos.request.address.AddressDTO
 import main.models.dtos.request.address.DetailedAddressDTO
 import main.models.entities.address.Address
@@ -93,6 +94,77 @@ class AddressServiceTest extends Specification {
         thrown(IllegalArgumentException)
     }
 
+    def "get anon by id returns anon address"() {
+        given:
+        addressDAO.getById(1) >> address1
+
+        when:
+        AnonAddressDTO result = addressService.getAnonById(1)
+
+        then:
+        result.country == "Brasil"
+        result.region == "SP"
+        result.city == "São Paulo"
+        1 * addressDAO.getById(1) >> address1
+    }
+
+    def "get anon by id throws exception when id is less than 1"() {
+        when:
+        addressService.getAnonById(0)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "find by field returns addresses"() {
+        given:
+        Set<Address> addresses = new LinkedHashSet<>()
+        addresses.add(address1)
+        addresses.add(address2)
+        addressDAO.findByField("country", "Brasil") >> addresses
+
+        when:
+        Set<Address> result = addressService.findByField("country", "Brasil")
+
+        then:
+        result.size() == 2
+        result.contains(address1)
+        result.contains(address2)
+        1 * addressDAO.findByField("country", "Brasil") >> addresses
+    }
+
+    def "find by field throws exception when field name is null"() {
+        when:
+        addressService.findByField(null, "Brasil")
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "find by field throws exception when field name is blank"() {
+        when:
+        addressService.findByField("", "Brasil")
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "find by field throws exception when field value is null"() {
+        when:
+        addressService.findByField("country", null)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "find by field throws exception when field value is blank"() {
+        when:
+        addressService.findByField("country", "")
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
     def "get all returns all addresses"() {
         given:
         addressDAO.getAll() >> [address1, address2]
@@ -113,6 +185,41 @@ class AddressServiceTest extends Specification {
 
         when:
         Set<Address> result = addressService.getAll()
+
+        then:
+        result.size() == 0
+        1 * addressDAO.getAll() >> []
+    }
+
+    def "get all anon returns all anon addresses"() {
+        given:
+        Set<Address> addresses = new LinkedHashSet<>()
+        addresses.add(address1)
+        addresses.add(address2)
+        addressDAO.getAll() >> addresses
+
+        when:
+        Set<AnonAddressDTO> result = addressService.getAllAnon()
+
+        then:
+        result.size() == 2
+        result[0].country == "Brasil"
+        result[0].region == "SP"
+        result[0].city == "São Paulo"
+
+        result[1].country == "Brasil"
+        result[1].region == "SP"
+        result[1].city == "São Paulo"
+
+        1 * addressDAO.getAll() >> addresses
+    }
+
+    def "get all anon returns empty set when there are no addresses"() {
+        given:
+        addressDAO.getAll() >> []
+
+        when:
+        Set<AnonAddressDTO> result = addressService.getAllAnon()
 
         then:
         result.size() == 0

@@ -1,13 +1,16 @@
 package main.services
 
+import main.models.dtos.anonresponse.AnonAddressDTO
 import main.models.dtos.request.address.AddressDTO
 import main.models.entities.address.Address
 import main.repositories.AddressDAO
+import main.services.interfaces.AnonService
 import main.services.interfaces.SearchableService
 import main.util.exception.ParamValidation
 import main.util.exception.custom.EntityNotFoundException
 
-class AddressService implements SearchableService<Address, AddressDTO> {
+class AddressService implements SearchableService<Address, AddressDTO>,
+        AnonService<AnonAddressDTO> {
 
     AddressDAO addressDAO
 
@@ -25,13 +28,48 @@ class AddressService implements SearchableService<Address, AddressDTO> {
     }
 
     @Override
+    AnonAddressDTO getAnonById(int id) {
+        ParamValidation.requirePositive(id, "Address ID must be greater than 0")
+
+        Address address = getById(id)
+        AnonAddressDTO anonAddressDTO = new AnonAddressDTO(
+                address.getCountry(),
+                address.getRegion(),
+                address.getCity()
+        )
+
+        return anonAddressDTO
+    }
+
+    @Override
     Set<Address> findByField(String fieldName, String fieldValue) {
-        return null
+        ParamValidation.requireNonBlank(fieldName, "Field name cannot be blank or null")
+        ParamValidation.requireNonBlank(fieldValue, "Field value cannot be blank or null")
+
+        return addressDAO.findByField(fieldName, fieldValue)
     }
 
     @Override
     Set<Address> getAll() {
         return addressDAO.getAll()
+    }
+
+    @Override
+    Set<AnonAddressDTO> getAllAnon() {
+        Set<Address> addresses = getAll()
+        Set<AnonAddressDTO> anonAddresses = new LinkedHashSet<>()
+
+        for (Address address : addresses) {
+            AnonAddressDTO anonAddressDTO = new AnonAddressDTO(
+                    address.getCountry(),
+                    address.getRegion(),
+                    address.getCity()
+            )
+
+            anonAddresses.add(anonAddressDTO)
+        }
+
+        return anonAddresses
     }
 
     @Override
