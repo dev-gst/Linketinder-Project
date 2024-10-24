@@ -8,6 +8,7 @@ import main.services.interfaces.AnonService
 import main.services.interfaces.SearchableService
 import main.util.exception.ParamValidation
 import main.util.exception.custom.EntityNotFoundException
+import main.util.exception.custom.NullCollectionException
 
 class SkillService implements SearchableService<Skill, SkillDTO>, AnonService<AnonSkillDTO> {
 
@@ -64,15 +65,15 @@ class SkillService implements SearchableService<Skill, SkillDTO>, AnonService<An
     int save(SkillDTO skillDTO) {
         ParamValidation.requireNonNull(skillDTO, "SkillDTO cannot be null")
 
-        Set<Skill> skills = findByField("name", skillDTO.getName())
-        if (skills == null) throw new EntityNotFoundException("Skills for this parameters 'name', ${skillDTO.getName()} not found")
+        Set<Skill> foundSkills = findByField("name", skillDTO.getName())
+        if (foundSkills == null) throw new NullCollectionException("Found skills cannot be null")
 
-        Skill skill = skills.isEmpty() ? null : skills[0]
+        Skill skill = foundSkills.isEmpty() ? null : foundSkills[0]
         if (skill != null) {
             return skill.id
-        } else {
-            return skillDAO.save(skillDTO)
         }
+
+        return skillDAO.save(skillDTO)
     }
 
     @Override
