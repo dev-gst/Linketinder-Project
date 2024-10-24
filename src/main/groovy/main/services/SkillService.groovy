@@ -38,7 +38,7 @@ class SkillService implements SearchableService<Skill, SkillDTO> {
     }
 
     @Override
-    Skill save(SkillDTO skillDTO) {
+    int save(SkillDTO skillDTO) {
         ParamValidation.requireNonNull(skillDTO, "SkillDTO cannot be null")
 
         Set<Skill> skills = findByField("name", skillDTO.getName())
@@ -46,20 +46,19 @@ class SkillService implements SearchableService<Skill, SkillDTO> {
 
         Skill skill = skills.isEmpty() ? null : skills[0]
         if (skill != null) {
-            return skill
+            return skill.id
         } else {
-            int newSkillId = skillDAO.save(skillDTO)
-            return new Skill(newSkillId, skillDTO.getName())
+            return skillDAO.save(skillDTO)
         }
     }
 
     @Override
-    Set<Skill> saveAll(Set<SkillDTO> skillDTOSet) {
+    Set<Integer> saveAll(Set<SkillDTO> skillDTOSet) {
         ParamValidation.requireNonEmpty(skillDTOSet, "SkillDTO set cannot be null or empty")
 
-        Set<Skill> skills = new LinkedHashSet<>()
+        Set<Integer> skills = new LinkedHashSet<>()
         for (SkillDTO skillDTO : skillDTOSet) {
-            skills.add(save(skillDTO))
+            skills.add(Integer.valueOf(save(skillDTO)))
         }
 
         return skills
@@ -70,11 +69,8 @@ class SkillService implements SearchableService<Skill, SkillDTO> {
         ParamValidation.requireNonNull(skillDTO, "SkillDTO cannot be null")
         ParamValidation.requirePositive(id, "Skill ID must be greater than 0")
 
-        Skill skill = getById(id)
+        Skill skill = skillDAO.updateById(id, skillDTO)
         if (skill == null) throw new EntityNotFoundException("Skill with ID $id not found")
-
-        skill.setName(skillDTO.getName())
-        skillDAO.updateById(id, skillDTO)
 
         return skill
     }

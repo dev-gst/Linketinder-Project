@@ -5,9 +5,9 @@ interface Service<ENTITY, DTO> {
 
     Set<ENTITY> getAll()
 
-    ENTITY save(DTO entity)
+    int save(DTO entity)
 
-    Set<ENTITY> saveAll(Set<DTO> dtoSet)
+    Set<Integer> saveAll(Set<DTO> dtoSet)
 
     ENTITY updateById(int id, DTO entity)
 

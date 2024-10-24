@@ -56,14 +56,13 @@ class SkillServiceTest extends Specification {
         given:
         SkillDTO java = new SkillDTO("Java")
         skillDAO.findByField("name", "Java") >> new LinkedHashSet<>()
-        skillDAO.save(java) >> 67
+        skillDAO.save(java) >> Integer.valueOf(67)
 
         when:
-        Skill saved = skillService.save(java)
+        Integer id = skillService.save(java)
 
         then:
-        saved.id == 67
-        saved.name == "Java"
+        id == Integer.valueOf(67)
     }
 
     def "save should return already saved skill"() {
@@ -72,14 +71,13 @@ class SkillServiceTest extends Specification {
         Skill existingJava = new Skill(56, "Java")
         Set<Skill> foundSkills = new LinkedHashSet<>()
         foundSkills.add(existingJava)
+        skillDAO.findByField("name", "Java") >> foundSkills
 
         when:
-        skillDAO.findByField("name", "Java") >> foundSkills
-        Skill saved = skillService.save(java)
+        Integer id = skillService.save(java)
 
         then:
-        saved.id == 56
-        saved.name == "Java"
+        id == Integer.valueOf(56)
     }
 
     def "save should throw exception when skillDTO is null"() {
@@ -94,25 +92,21 @@ class SkillServiceTest extends Specification {
         given:
         SkillDTO java = new SkillDTO("Java")
         SkillDTO python = new SkillDTO("Python")
-
         Set<SkillDTO> skillDTOSet = new LinkedHashSet<>()
         skillDTOSet.add(java)
         skillDTOSet.add(python)
-
         Set<Skill> existingPython = new LinkedHashSet<>()
         existingPython.add(new Skill(56, "Python"))
-
-        when:
         skillDAO.findByField("name", "Java") >> new LinkedHashSet<Skill>()
-        skillDAO.save(java) >> 67
+        skillDAO.save(java) >> Integer.valueOf(67)
         skillDAO.findByField("name", "Python") >> existingPython
 
-        Set<Skill> saved = skillService.saveAll(skillDTOSet)
+        when:
+        Set<Integer> savedIds = skillService.saveAll(skillDTOSet)
 
         then:
-        saved[0].id == 67
-        saved[0].name == "Java"
-        saved[1] == existingPython[0]
+        savedIds[0] == 67
+        savedIds[1] == 56
     }
 
     def "save all should throw exception when skillDTO set is null"() {
