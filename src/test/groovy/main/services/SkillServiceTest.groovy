@@ -1,7 +1,7 @@
 package main.services
 
-import main.models.dtos.skills.SkillDTO
-import main.models.entities.Skill
+import main.models.dtos.request.skill.SkillDTO
+import main.models.entities.skill.Skill
 import main.repositories.SkillDAO
 import spock.lang.Specification
 

@@ -1,4 +1,4 @@
-package main.models.dtos.address
+package main.models.dtos.request.address
 
 import main.util.exception.ParamValidation
 

@@ -1,4 +1,4 @@
-package main.models.dtos.skills
+package main.models.dtos.request.skill
 
 import main.util.exception.ParamValidation
 

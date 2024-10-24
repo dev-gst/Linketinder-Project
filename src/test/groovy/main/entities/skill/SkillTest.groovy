@@ -1,6 +1,6 @@
 package main.entities.skill
 
-import main.models.entities.Skill
+import main.models.entities.skill.Skill
 import spock.lang.Specification
 
 class SkillTest extends Specification {

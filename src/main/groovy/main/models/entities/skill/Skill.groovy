@@ -1,4 +1,4 @@
-package main.models.entities
+package main.models.entities.skill
 
 import main.util.exception.ParamValidation
 

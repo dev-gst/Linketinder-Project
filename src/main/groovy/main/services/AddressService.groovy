@@ -1,6 +1,6 @@
 package main.services
 
-import main.models.dtos.address.AddressDTO
+import main.models.dtos.request.address.AddressDTO
 import main.models.entities.address.Address
 import main.repositories.AddressDAO
 import main.services.interfaces.SearchableService

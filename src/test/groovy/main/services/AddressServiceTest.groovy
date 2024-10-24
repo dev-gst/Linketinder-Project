@@ -1,7 +1,7 @@
 package main.services
 
-import main.models.dtos.address.AddressDTO
-import main.models.dtos.address.DetailedAddressDTO
+import main.models.dtos.request.address.AddressDTO
+import main.models.dtos.request.address.DetailedAddressDTO
 import main.models.entities.address.Address
 import main.models.entities.address.DetailedAddress
 import main.repositories.AddressDAO
