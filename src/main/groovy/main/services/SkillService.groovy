@@ -1,13 +1,15 @@
 package main.services
 
+import main.models.dtos.anonresponse.AnonSkillDTO
 import main.models.dtos.request.skill.SkillDTO
 import main.models.entities.skill.Skill
 import main.repositories.SkillDAO
+import main.services.interfaces.AnonService
 import main.services.interfaces.SearchableService
 import main.util.exception.ParamValidation
 import main.util.exception.custom.EntityNotFoundException
 
-class SkillService implements SearchableService<Skill, SkillDTO> {
+class SkillService implements SearchableService<Skill, SkillDTO>, AnonService<AnonSkillDTO> {
 
     SkillDAO skillDAO
 
@@ -25,8 +27,29 @@ class SkillService implements SearchableService<Skill, SkillDTO> {
     }
 
     @Override
+    AnonSkillDTO getAnonById(int id) {
+        ParamValidation.requirePositive(id, "Skill ID must be greater than 0")
+
+        Skill skill = getById(id)
+        AnonSkillDTO anonSkillDTO = new AnonSkillDTO(skill.name)
+
+        return anonSkillDTO
+    }
+
+    @Override
     Set<Skill> getAll() {
         return skillDAO.getAll()
+    }
+
+    @Override
+    Set<AnonSkillDTO> getAllAnon() {
+        Set<Skill> skills = getAll()
+        Set<AnonSkillDTO> anonSkillDTOs = new LinkedHashSet<>()
+        for (Skill skill : skills) {
+            anonSkillDTOs.add(new AnonSkillDTO(skill.name))
+        }
+
+        return anonSkillDTOs
     }
 
     @Override
