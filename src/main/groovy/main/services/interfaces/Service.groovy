@@ -1,6 +1,7 @@
 package main.services.interfaces
 
 interface Service<ENTITY, DTO> {
+
     ENTITY getById(int id)
 
     Set<ENTITY> getAll()

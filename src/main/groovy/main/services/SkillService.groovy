@@ -54,7 +54,7 @@ class SkillService implements SearchableService<Skill, SkillDTO>, AnonService<An
     }
 
     @Override
-    Set<Skill> findByField(String fieldName, String fieldValue) {
+    Set<Skill> getByField(String fieldName, String fieldValue) {
         ParamValidation.requireNonBlank(fieldName, "Field name cannot be blank or null")
         ParamValidation.requireNonBlank(fieldValue, "Field value cannot be blank or null")
 

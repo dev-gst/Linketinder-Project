@@ -42,7 +42,7 @@ class AddressService implements SearchableService<Address, AddressDTO>,
     }
 
     @Override
-    Set<Address> findByField(String fieldName, String fieldValue) {
+    Set<Address> getByField(String fieldName, String fieldValue) {
         ParamValidation.requireNonBlank(fieldName, "Field name cannot be blank or null")
         ParamValidation.requireNonBlank(fieldValue, "Field value cannot be blank or null")
 

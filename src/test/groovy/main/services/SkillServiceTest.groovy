@@ -65,30 +65,30 @@ class SkillServiceTest extends Specification {
         thrown(IllegalArgumentException)
     }
 
-    def "find by field should return skill when found"() {
+    def "get by field should return skill when found"() {
         Set<Skill> skills = new LinkedHashSet<>()
         skills.add(new Skill(1, "Java"))
-        skillDAO.findByField("name", "Java") >> skills
+        skillDAO.getByField("name", "Java") >> skills
 
         when:
-        Set<Skill> foundSkills = skillService.findByField("name", "Java")
+        Set<Skill> foundSkills = skillService.getByField("name", "Java")
 
         then:
         foundSkills[0].id == 1
         foundSkills[0].name == "Java"
     }
 
-    def "find by field should throw exception when skill name is null"() {
+    def "get by field should throw exception when skill name is null"() {
         when:
-        skillService.findByField("name", null)
+        skillService.getByField("name", null)
 
         then:
         thrown(IllegalArgumentException)
     }
 
-    def "find by field should throw exception when skill name is blank"() {
+    def "get by field should throw exception when skill name is blank"() {
         when:
-        skillService.findByField("name", "")
+        skillService.getByField("name", "")
 
         then:
         thrown(IllegalArgumentException)
@@ -114,7 +114,7 @@ class SkillServiceTest extends Specification {
     def "save should return newly saved skill"() {
         given:
         SkillDTO java = new SkillDTO("Java")
-        skillDAO.findByField("name", "Java") >> new LinkedHashSet<>()
+        skillDAO.getByField("name", "Java") >> new LinkedHashSet<>()
         skillDAO.save(java) >> Integer.valueOf(67)
 
         when:
@@ -130,7 +130,7 @@ class SkillServiceTest extends Specification {
         Skill existingJava = new Skill(56, "Java")
         Set<Skill> foundSkills = new LinkedHashSet<>()
         foundSkills.add(existingJava)
-        skillDAO.findByField("name", "Java") >> foundSkills
+        skillDAO.getByField("name", "Java") >> foundSkills
 
         when:
         Integer id = skillService.save(java)
@@ -156,9 +156,9 @@ class SkillServiceTest extends Specification {
         skillDTOSet.add(python)
         Set<Skill> existingPython = new LinkedHashSet<>()
         existingPython.add(new Skill(56, "Python"))
-        skillDAO.findByField("name", "Java") >> new LinkedHashSet<Skill>()
+        skillDAO.getByField("name", "Java") >> new LinkedHashSet<Skill>()
         skillDAO.save(java) >> Integer.valueOf(67)
-        skillDAO.findByField("name", "Python") >> existingPython
+        skillDAO.getByField("name", "Python") >> existingPython
 
         when:
         Set<Integer> savedIds = skillService.saveAll(skillDTOSet)

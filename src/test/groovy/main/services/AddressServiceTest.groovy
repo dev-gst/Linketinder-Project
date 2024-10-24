@@ -116,50 +116,50 @@ class AddressServiceTest extends Specification {
         thrown(IllegalArgumentException)
     }
 
-    def "find by field returns addresses"() {
+    def "get by field returns addresses"() {
         given:
         Set<Address> addresses = new LinkedHashSet<>()
         addresses.add(address1)
         addresses.add(address2)
-        addressDAO.findByField("country", "Brasil") >> addresses
+        addressDAO.getByField("country", "Brasil") >> addresses
 
         when:
-        Set<Address> result = addressService.findByField("country", "Brasil")
+        Set<Address> result = addressService.getByField("country", "Brasil")
 
         then:
         result.size() == 2
         result.contains(address1)
         result.contains(address2)
-        1 * addressDAO.findByField("country", "Brasil") >> addresses
+        1 * addressDAO.getByField("country", "Brasil") >> addresses
     }
 
-    def "find by field throws exception when field name is null"() {
+    def "get by field throws exception when field name is null"() {
         when:
-        addressService.findByField(null, "Brasil")
+        addressService.getByField(null, "Brasil")
 
         then:
         thrown(IllegalArgumentException)
     }
 
-    def "find by field throws exception when field name is blank"() {
+    def "get by field throws exception when field name is blank"() {
         when:
-        addressService.findByField("", "Brasil")
+        addressService.getByField("", "Brasil")
 
         then:
         thrown(IllegalArgumentException)
     }
 
-    def "find by field throws exception when field value is null"() {
+    def "get by field throws exception when field value is null"() {
         when:
-        addressService.findByField("country", null)
+        addressService.getByField("country", null)
 
         then:
         thrown(IllegalArgumentException)
     }
 
-    def "find by field throws exception when field value is blank"() {
+    def "get by field throws exception when field value is blank"() {
         when:
-        addressService.findByField("country", "")
+        addressService.getByField("country", "")
 
         then:
         thrown(IllegalArgumentException)
