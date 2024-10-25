@@ -2,7 +2,10 @@ package main.services
 
 import main.models.dtos.anonresponse.AnonAddressDTO
 import main.models.dtos.request.address.AddressDTO
+import main.models.entities.Candidate
+import main.models.entities.JobOpening
 import main.models.entities.address.Address
+import main.models.entities.company.Company
 import main.repositories.AddressDAO
 import main.services.interfaces.AnonService
 import main.services.interfaces.SearchableService
@@ -46,7 +49,24 @@ class AddressService implements SearchableService<Address, AddressDTO>,
         ParamValidation.requireNonBlank(fieldName, "Field name cannot be blank or null")
         ParamValidation.requireNonBlank(fieldValue, "Field value cannot be blank or null")
 
-        return addressDAO.findByField(fieldName, fieldValue)
+        return addressDAO.getByField(fieldName, fieldValue)
+    }
+
+    @Override
+    Set<Address> getByEntityId(int entityId, Class<?> entityClazz) {
+        ParamValidation.requirePositive(entityId, "Entity ID must be greater than 0")
+        ParamValidation.requireNonNull(entityClazz, "Entity class cannot be null")
+
+        switch (entityClazz) {
+            case Company.class:
+                return addressDAO.getByCompanyId(entityId)
+            case Candidate.class:
+                return addressDAO.getByCandidateId(entityId)
+            case JobOpening.class:
+                return addressDAO.getByJobOpeningId(entityId)
+            default:
+                throw new ClassNotFoundException("Class ${entityClazz} was not found in this context")
+        }
     }
 
     @Override

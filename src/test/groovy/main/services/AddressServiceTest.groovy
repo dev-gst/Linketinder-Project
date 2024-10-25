@@ -2,11 +2,14 @@ package main.services
 
 import main.models.dtos.anonresponse.AnonAddressDTO
 import main.models.dtos.request.address.AddressDTO
-import main.models.dtos.request.address.DetailedAddressDTO
+import main.models.entities.Candidate
+import main.models.entities.JobOpening
 import main.models.entities.address.Address
 import main.models.entities.address.DetailedAddress
+import main.models.entities.company.Company
 import main.repositories.AddressDAO
 import main.util.exception.custom.EntityNotFoundException
+import mocks.AddressMock
 import spock.lang.Specification
 
 class AddressServiceTest extends Specification {
@@ -45,29 +48,8 @@ class AddressServiceTest extends Specification {
                 )
         )
 
-        addressDTO1 = new AddressDTO(
-                "Brasil",
-                "SP",
-                "São Paulo",
-                new DetailedAddressDTO(
-                        "Vila Mariana",
-                        "Rua Domingos de Morais",
-                        "123",
-                        "04010-000"
-                )
-        )
-
-        addressDTO2 = new AddressDTO(
-                "Brasil",
-                "RJ",
-                "Rio de Janeiro",
-                new DetailedAddressDTO(
-                        "Centro",
-                        "Rua da Carioca",
-                        "321",
-                        "20011-000"
-                )
-        )
+        addressDTO1 = new AddressMock().createAddressDTOMock(1)
+        addressDTO2 = new AddressMock().createAddressDTOMock(2)
 
         addressDAO = Mock(AddressDAO)
         addressService = new AddressService(addressDAO)
@@ -92,6 +74,65 @@ class AddressServiceTest extends Specification {
 
         then:
         thrown(IllegalArgumentException)
+    }
+
+    def "get by entity id returns addresses for company"() {
+        given:
+        Set<Address> addresses = new LinkedHashSet<>()
+        addresses.add(address1)
+        addresses.add(address2)
+        addressDAO.getByCompanyId(1) >> addresses
+
+        when:
+        Set<Address> result = addressService.getByEntityId(1, Company.class)
+
+        then:
+        result.size() == 2
+        result.contains(address1)
+        result.contains(address2)
+        1 * addressDAO.getByCompanyId(1) >> addresses
+    }
+
+    def "get by entity id returns addresses for candidate"() {
+        given:
+        Set<Address> addresses = new LinkedHashSet<>()
+        addresses.add(address1)
+        addresses.add(address2)
+        addressDAO.getByCandidateId(1) >> addresses
+
+        when:
+        Set<Address> result = addressService.getByEntityId(1, Candidate.class)
+
+        then:
+        result.size() == 2
+        result.contains(address1)
+        result.contains(address2)
+        1 * addressDAO.getByCandidateId(1) >> addresses
+    }
+
+    def "get by entity id returns addresses for job opening"() {
+        given:
+        Set<Address> addresses = new LinkedHashSet<>()
+        addresses.add(address1)
+        addresses.add(address2)
+        addressDAO.getByJobOpeningId(1) >> addresses
+
+        when:
+        Set<Address> result = addressService.getByEntityId(1, JobOpening.class)
+
+        then:
+        result.size() == 2
+        result.contains(address1)
+        result.contains(address2)
+        1 * addressDAO.getByJobOpeningId(1) >> addresses
+    }
+
+    def "get by entity id throws exception for unknown class"() {
+        when:
+        addressService.getByEntityId(1, String.class)
+
+        then:
+        thrown(ClassNotFoundException)
     }
 
     def "get anon by id returns anon address"() {
