@@ -2,11 +2,14 @@ package main.services
 
 import main.models.dtos.anonresponse.AnonSkillDTO
 import main.models.dtos.request.skill.SkillDTO
+import main.models.entities.Candidate
+import main.models.entities.JobOpening
 import main.models.entities.skill.Skill
 import main.repositories.SkillDAO
 import main.services.interfaces.AnonService
 import main.services.interfaces.SearchableService
 import main.util.exception.ParamValidation
+import main.util.exception.custom.ClassNotFoundException
 import main.util.exception.custom.EntityNotFoundException
 import main.util.exception.custom.NullCollectionException
 
@@ -25,6 +28,21 @@ class SkillService implements SearchableService<Skill, SkillDTO>, AnonService<An
         ParamValidation.requirePositive(id, "Skill ID must be greater than 0")
 
         return skillDAO.getById(id)
+    }
+
+    @Override
+    Set<Skill> getByEntityId(int entityId, Class<?> entityClazz) {
+        ParamValidation.requirePositive(entityId, "Entity ID must be greater than 0")
+        ParamValidation.requireNonNull(entityClazz, "Entity class cannot be null")
+
+        switch (entityClazz) {
+            case Candidate.class:
+                return skillDAO.getByCandidateId(entityId)
+            case JobOpening.class:
+                return skillDAO.getByJobOpeningId(entityId)
+            default:
+                throw new ClassNotFoundException("Class not found for this context")
+        }
     }
 
     @Override
@@ -58,14 +76,14 @@ class SkillService implements SearchableService<Skill, SkillDTO>, AnonService<An
         ParamValidation.requireNonBlank(fieldName, "Field name cannot be blank or null")
         ParamValidation.requireNonBlank(fieldValue, "Field value cannot be blank or null")
 
-        return skillDAO.findByField(fieldName, fieldValue)
+        return skillDAO.getByField(fieldName, fieldValue)
     }
 
     @Override
     int save(SkillDTO skillDTO) {
         ParamValidation.requireNonNull(skillDTO, "SkillDTO cannot be null")
 
-        Set<Skill> foundSkills = findByField("name", skillDTO.getName())
+        Set<Skill> foundSkills = getByField("name", skillDTO.getName())
         if (foundSkills == null) throw new NullCollectionException("Found skills cannot be null")
 
         Skill skill = foundSkills.isEmpty() ? null : foundSkills[0]

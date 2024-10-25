@@ -2,8 +2,11 @@ package main.services
 
 import main.models.dtos.anonresponse.AnonSkillDTO
 import main.models.dtos.request.skill.SkillDTO
+import main.models.entities.Candidate
+import main.models.entities.JobOpening
 import main.models.entities.skill.Skill
 import main.repositories.SkillDAO
+import main.util.exception.custom.ClassNotFoundException
 import spock.lang.Specification
 
 class SkillServiceTest extends Specification {
@@ -63,6 +66,60 @@ class SkillServiceTest extends Specification {
 
         then:
         thrown(IllegalArgumentException)
+    }
+
+    def "get by entity id should return skills for candidate"() {
+        given:
+        Set<Skill> skills = new LinkedHashSet<>()
+        skills.add(new Skill(1, "Java"))
+        skillDAO.getByCandidateId(1) >> skills
+
+        when:
+        Set<Skill> foundSkills = skillService.getByEntityId(1, Candidate.class)
+
+        then:
+        foundSkills.size() == 1
+        foundSkills[0].id == 1
+        foundSkills[0].name == "Java"
+    }
+
+    def "get by entity id should return skills for job opening"() {
+        given:
+        Set<Skill> skills = new LinkedHashSet<>()
+        skills.add(new Skill(2, "Python"))
+        skillDAO.getByJobOpeningId(1) >> skills
+
+        when:
+        Set<Skill> foundSkills = skillService.getByEntityId(1, JobOpening.class)
+
+        then:
+        foundSkills.size() == 1
+        foundSkills[0].id == 2
+        foundSkills[0].name == "Python"
+    }
+
+    def "get by entity id should throw exception when entity id is less than 1"() {
+        when:
+        skillService.getByEntityId(0, Candidate.class)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "get by entity id should throw exception when entity class is null"() {
+        when:
+        skillService.getByEntityId(1, null)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "get by entity id should throw exception when entity class is not found"() {
+        when:
+        skillService.getByEntityId(1, String.class)
+
+        then:
+        thrown(ClassNotFoundException)
     }
 
     def "get by field should return skill when found"() {
