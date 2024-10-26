@@ -1,6 +1,6 @@
 package main.models.entities.company
 
-import main.models.entities.jobOpening.JobOpening
+
 import main.models.entities.login.LoginDetails
 import main.util.exception.ParamValidation
 
@@ -8,18 +8,15 @@ class Company {
     int id
     CompanyDetails companyDetails
     LoginDetails loginDetails
-    Set<JobOpening> jobOpenings
 
-    Company(int id, CompanyDetails companyDetails, LoginDetails loginDetails, Set<JobOpening> jobOpenings) {
+    Company(int id, CompanyDetails companyDetails, LoginDetails loginDetails) {
         ParamValidation.requirePositive(id, "Id cannot be negative")
         ParamValidation.requireNonNull(companyDetails, "CompanyDetails cannot be null")
         ParamValidation.requireNonNull(loginDetails, "LoginDetails cannot be null")
-        ParamValidation.requireNonNull(jobOpenings, "JobOpenings cannot be null")
 
         this.id = id
         this.companyDetails = companyDetails
         this.loginDetails = loginDetails
-        this.jobOpenings = jobOpenings
     }
 
     @Override
