@@ -6,12 +6,14 @@ CREATE TABLE addresses (
 	neighborhood VARCHAR(255) NOT NULL,
 	street VARCHAR(255) NOT NULL,
 	number VARCHAR(100) NOT NULL,
-	zip_code varchar(25) NOT NULL
+    zip_code   varchar(25) NOT NULL,
+    deleted_at TIMESTAMP DEFAULT NULL
 );
 
 CREATE TABLE skills (
 	id SERIAL PRIMARY KEY,
-	name VARCHAR(255) NOT NULL
+    name       VARCHAR(255) NOT NULL,
+    deleted_at TIMESTAMP DEFAULT NULL
 );
 
 CREATE TABLE candidates (
@@ -24,13 +26,15 @@ CREATE TABLE candidates (
 	birth_date DATE NOT NULL,
 	cpf VARCHAR(100) NOT NULL,
 	education VARCHAR(255) NOT NULL,
-    address_id INT REFERENCES addresses (id) NOT NULL
+    address_id INT REFERENCES addresses (id) NOT NULL,
+    deleted_at TIMESTAMP DEFAULT NULL
 );
 
 CREATE TABLE candidate_skills (
 	id SERIAL PRIMARY KEY,
     skill_id INT REFERENCES skills (id) ON DELETE CASCADE NOT NULL,
-    candidate_id INT REFERENCES candidates (id) ON DELETE CASCADE NOT NULL
+    candidate_id INT REFERENCES candidates (id) ON DELETE CASCADE NOT NULL,
+    deleted_at   TIMESTAMP DEFAULT NULL
 );
 
 CREATE TABLE companies (
@@ -40,7 +44,8 @@ CREATE TABLE companies (
 	password VARCHAR(255) NOT NULL,
 	description TEXT NOT NULL,
 	cnpj VARCHAR(255) NOT NULL,
-    address_id INT REFERENCES addresses (id) NOT NULL
+    address_id INT REFERENCES addresses (id) NOT NULL,
+    deleted_at TIMESTAMP DEFAULT NULL
 );
 
 CREATE TABLE job_openings (
@@ -50,20 +55,23 @@ CREATE TABLE job_openings (
 	is_remote BOOLEAN NOT NULL,
 	is_open BOOLEAN NOT NULL,
     company_id INT REFERENCES companies (id) ON DELETE CASCADE NOT NULL,
-    address_id INT REFERENCES addresses (id)
+    address_id INT REFERENCES addresses (id),
+    deleted_at TIMESTAMP DEFAULT NULL
 );
 
 CREATE TABLE job_opening_skills (
 	id SERIAL PRIMARY KEY,
     skill_id INT REFERENCES skills (id) ON DELETE CASCADE NOT NULL,
-    job_openings_id INT REFERENCES job_openings (id) ON DELETE CASCADE NOT NULL
+    job_openings_id INT REFERENCES job_openings (id) ON DELETE CASCADE NOT NULL,
+    deleted_at      TIMESTAMP DEFAULT NULL
 );
 
 CREATE TABLE candidate_likes_job_opening (
     id SERIAL PRIMARY KEY,
     candidate_id INT REFERENCES candidates (id) ON DELETE CASCADE NOT NULL,
     job_opening_id INT REFERENCES job_openings (id) ON DELETE CASCADE NOT NULL,
-    liked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+    liked_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    deleted_at TIMESTAMP DEFAULT NULL
 );
 
 CREATE TABLE company_likes_candidate (
@@ -71,5 +79,6 @@ CREATE TABLE company_likes_candidate (
     company_id   INT REFERENCES companies (id) ON DELETE CASCADE  NOT NULL,
     candidate_id INT REFERENCES candidates (id) ON DELETE CASCADE NOT NULL,
     job_opening_id INT REFERENCES job_openings (id) ON DELETE CASCADE NOT NULL,
-    liked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+    liked_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    deleted_at TIMESTAMP DEFAULT NULL
 );
