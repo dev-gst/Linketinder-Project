@@ -7,17 +7,17 @@ import main.models.entities.JobOpening
 import main.models.entities.address.Address
 import main.models.entities.company.Company
 import main.repositories.AddressDAO
+import main.services.interfaces.AddressService
 import main.services.interfaces.AnonService
-import main.services.interfaces.SearchableService
 import main.util.exception.ParamValidation
 import main.util.exception.custom.EntityNotFoundException
 
-class AddressService implements SearchableService<Address, AddressDTO>,
+class DefaultAddressService implements AddressService,
         AnonService<AnonAddressDTO> {
 
     AddressDAO addressDAO
 
-    AddressService(AddressDAO addressDAO) {
+    DefaultAddressService(AddressDAO addressDAO) {
         ParamValidation.requireNonNull(addressDAO, "AddressDAO cannot be null")
 
         this.addressDAO = addressDAO

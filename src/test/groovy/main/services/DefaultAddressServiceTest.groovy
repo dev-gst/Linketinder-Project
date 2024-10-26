@@ -12,14 +12,14 @@ import main.util.exception.custom.EntityNotFoundException
 import mocks.AddressMock
 import spock.lang.Specification
 
-class AddressServiceTest extends Specification {
+class DefaultAddressServiceTest extends Specification {
 
     Address address1
     Address address2
     AddressDTO addressDTO1
     AddressDTO addressDTO2
     AddressDAO addressDAO
-    AddressService addressService
+    DefaultAddressService addressService
 
     void setup() {
         address1 = new Address(
@@ -52,7 +52,7 @@ class AddressServiceTest extends Specification {
         addressDTO2 = new AddressMock().createAddressDTOMock(2)
 
         addressDAO = Mock(AddressDAO)
-        addressService = new AddressService(addressDAO)
+        addressService = new DefaultAddressService(addressDAO)
     }
 
 
