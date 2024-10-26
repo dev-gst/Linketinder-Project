@@ -3,9 +3,9 @@ package main.services
 import main.models.dtos.anonresponse.AnonAddressDTO
 import main.models.dtos.request.address.AddressDTO
 import main.models.entities.Candidate
-import main.models.entities.JobOpening
 import main.models.entities.address.Address
 import main.models.entities.company.Company
+import main.models.entities.jobOpening.JobOpening
 import main.repositories.AddressDAO
 import main.services.interfaces.AddressService
 import main.services.interfaces.AnonService
