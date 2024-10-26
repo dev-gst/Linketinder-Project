@@ -1,9 +1,9 @@
 package main.services
 
 import main.models.dtos.request.company.CompanyDTO
-import main.models.entities.JobOpening
 import main.models.entities.address.Address
 import main.models.entities.company.Company
+import main.models.entities.jobOpening.JobOpening
 import main.repositories.CompanyDAO
 import main.services.interfaces.AddressService
 import main.services.interfaces.CompanyService
@@ -20,6 +20,9 @@ class DefaultCompanyService implements CompanyService {
     AddressService addressService
 
     DefaultCompanyService(CompanyDAO companyDAO, AddressService addressService) {
+        ParamValidation.requireNonNull(companyDAO, "companyDAO cannot be null")
+        ParamValidation.requireNonNull(addressService, "addressService cannot be null")
+
         this.companyDAO = companyDAO
         this.addressService = addressService
     }
