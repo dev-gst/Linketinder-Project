@@ -24,13 +24,13 @@ CREATE TABLE candidates (
 	birth_date DATE NOT NULL,
 	cpf VARCHAR(100) NOT NULL,
 	education VARCHAR(255) NOT NULL,
-	address_id INT REFERENCES addresses(id) NOT NULL
+    address_id INT REFERENCES addresses (id) ON DELETE CASCADE NOT NULL
 );
 
 CREATE TABLE candidate_skills (
 	id SERIAL PRIMARY KEY,
-	skill_id INT REFERENCES skills(id) NOT NULL,
-	candidate_id INT REFERENCES candidates(id) NOT NULL
+    skill_id     INT REFERENCES skills (id) ON DELETE CASCADE     NOT NULL,
+    candidate_id INT REFERENCES candidates (id) ON DELETE CASCADE NOT NULL
 );
 
 CREATE TABLE companies (
@@ -40,7 +40,7 @@ CREATE TABLE companies (
 	password VARCHAR(255) NOT NULL,
 	description TEXT NOT NULL,
 	cnpj VARCHAR(255) NOT NULL,
-	address_id INT REFERENCES addresses(id) NOT NULL
+    address_id INT REFERENCES addresses (id) ON DELETE CASCADE NOT NULL
 );
 
 CREATE TABLE job_openings (
@@ -49,27 +49,27 @@ CREATE TABLE job_openings (
 	description VARCHAR(255) NOT NULL,
 	is_remote BOOLEAN NOT NULL,
 	is_open BOOLEAN NOT NULL,
-	company_id INT REFERENCES companies(id) NOT NULL,
-	address_id INT REFERENCES addresses(id)
+    company_id INT REFERENCES companies (id) ON DELETE CASCADE NOT NULL,
+    address_id INT REFERENCES addresses (id) ON DELETE CASCADE
 );
 
 CREATE TABLE job_opening_skills (
 	id SERIAL PRIMARY KEY,
-	skill_id INT REFERENCES skills(id) NOT NULL,
-	job_openings_id INT REFERENCES job_openings(id) NOT NULL
+    skill_id        INT REFERENCES skills (id) ON DELETE CASCADE       NOT NULL,
+    job_openings_id INT REFERENCES job_openings (id) ON DELETE CASCADE NOT NULL
 );
 
 CREATE TABLE candidate_likes_job_opening (
     id SERIAL PRIMARY KEY,
-    candidate_id INT REFERENCES candidates(id) NOT NULL,
-    job_opening_id INT REFERENCES job_openings(id) NOT NULL,
+    candidate_id   INT REFERENCES candidates (id) ON DELETE CASCADE   NOT NULL,
+    job_opening_id INT REFERENCES job_openings (id) ON DELETE CASCADE NOT NULL,
     liked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TABLE company_likes_candidate (
     id SERIAL PRIMARY KEY,
-    company_id INT REFERENCES companies(id) NOT NULL,
-    candidate_id INT REFERENCES candidates(id) NOT NULL,
-    job_opening_id INT REFERENCES job_openings(id) NOT NULL,
+    company_id     INT REFERENCES companies (id) ON DELETE CASCADE    NOT NULL,
+    candidate_id   INT REFERENCES candidates (id) ON DELETE CASCADE   NOT NULL,
+    job_opening_id INT REFERENCES job_openings (id) ON DELETE CASCADE NOT NULL,
     liked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
