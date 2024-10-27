@@ -6,7 +6,7 @@ import main.models.entities.Candidate
 import main.models.entities.address.Address
 import main.models.entities.company.Company
 import main.models.entities.jobOpening.JobOpening
-import main.repositories.AddressDAO
+import main.repositories.interfaces.AddressDAO
 import main.services.interfaces.AddressService
 import main.services.interfaces.AnonService
 import main.util.exception.ParamValidation
@@ -126,6 +126,6 @@ class DefaultAddressService implements AddressService,
     void deleteById(int id) {
         ParamValidation.requirePositive(id, "Skill ID must be greater than 0")
 
-        addressDAO.deleteById(id)
+        addressDAO.delete(id)
     }
 }
