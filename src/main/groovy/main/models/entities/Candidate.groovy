@@ -1,6 +1,7 @@
 package main.models.entities
 
 import main.models.entities.login.LoginDetails
+import main.util.exception.custom.FieldNotSetException
 
 import java.time.Instant
 import java.time.LocalDate
@@ -153,14 +154,14 @@ class Candidate {
         }
 
         void validateFields() {
-            if (!firstNameSet) throw new IllegalStateException("First name must be set")
-            if (!lastNameSet) throw new IllegalStateException("Last name must be set")
-            if (!loginDetails) throw new IllegalStateException("Login details must be set")
-            if (!descriptionSet) throw new IllegalStateException("Description must be set")
-            if (!birthDateSet) throw new IllegalStateException("Birth date must be set")
-            if (!cpfSet) throw new IllegalStateException("CPF must be set")
-            if (!educationSet) throw new IllegalStateException("Education must be set")
-            if (!addressIdSet) throw new IllegalStateException("Address ID must be set")
+            if (!firstNameSet) throw new FieldNotSetException("First name must be set")
+            if (!lastNameSet) throw new FieldNotSetException("Last name must be set")
+            if (!loginDetails) throw new FieldNotSetException("Login details must be set")
+            if (!descriptionSet) throw new FieldNotSetException("Description must be set")
+            if (!birthDateSet) throw new FieldNotSetException("Birth date must be set")
+            if (!cpfSet) throw new FieldNotSetException("CPF must be set")
+            if (!educationSet) throw new FieldNotSetException("Education must be set")
+            if (!addressIdSet) throw new FieldNotSetException("Address ID must be set")
         }
     }
 }
