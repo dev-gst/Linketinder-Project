@@ -1,6 +1,6 @@
 package main.models.entities
 
-import main.util.config.Env
+import main.models.entities.login.LoginDetails
 
 import java.time.Instant
 import java.time.LocalDate
@@ -10,21 +10,23 @@ class Candidate {
     int id
     String firstName
     String lastName
-    String email
-    String password
+    LoginDetails loginDetails
     String description
     Instant birthDate
     String cpf
     String education
-    Address address
-    Set<Skill> skills = new HashSet<Skill>()
+    int addressId
 
-    void addSkill (Skill skill) {
-        this.skills.add(skill)
-    }
-
-    void removeSkill (Skill skill) {
-        this.skills.remove(skill)
+    private Candidate(Builder builder) {
+        this.id = builder.id
+        this.firstName = builder.firstName
+        this.lastName = builder.lastName
+        this.loginDetails = builder.loginDetails
+        this.description = builder.description
+        this.birthDate = builder.birthDate
+        this.cpf = builder.cpf
+        this.education = builder.education
+        this.addressId = builder.addressId
     }
 
     @Override
@@ -34,17 +36,14 @@ class Candidate {
 
         Candidate candidate = (Candidate) o
 
+        if (addressId != candidate.addressId) return false
         if (id != candidate.id) return false
-        if (address != candidate.address) return false
         if (birthDate != candidate.birthDate) return false
         if (cpf != candidate.cpf) return false
-        if (description != candidate.description) return false
         if (education != candidate.education) return false
-        if (email != candidate.email) return false
         if (firstName != candidate.firstName) return false
         if (lastName != candidate.lastName) return false
-        if (password != candidate.password) return false
-        if (skills != candidate.skills) return false
+        if (loginDetails != candidate.loginDetails) return false
 
         return true
     }
@@ -55,31 +54,113 @@ class Candidate {
         result = id
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0)
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0)
-        result = 31 * result + (email != null ? email.hashCode() : 0)
-        result = 31 * result + (password != null ? password.hashCode() : 0)
-        result = 31 * result + (description != null ? description.hashCode() : 0)
+        result = 31 * result + (loginDetails != null ? loginDetails.hashCode() : 0)
         result = 31 * result + (birthDate != null ? birthDate.hashCode() : 0)
         result = 31 * result + (cpf != null ? cpf.hashCode() : 0)
         result = 31 * result + (education != null ? education.hashCode() : 0)
-        result = 31 * result + (address != null ? address.hashCode() : 0)
-        result = 31 * result + (skills != null ? skills.hashCode() : 0)
-
+        result = 31 * result + addressId
         return result
     }
 
-    @Override
-    String toString() {
-        return "Candidato:\n" +
-                "ID: ${id}\n" +
-                "Nome: ${firstName}\n" +
-                "Sobrenome: ${lastName}\n" +
-                "Email: ${email}\n" +
-                "Senha: ${password}\n" +
-                "Descrição: ${description}\n" +
-                "Data de Nascimento: ${LocalDate.ofInstant(this.birthDate, Env.TIMEZONE as ZoneId).toString()}\n" +
-                "CPF: ${cpf}\n" +
-                "Educação: ${education}\n" +
-                "Endereço: \n${address}\n" +
-                "Habilidades: ${skills}"
+    static class Builder {
+        int id
+        String firstName
+        String lastName
+        LoginDetails loginDetails
+        String description
+        Instant birthDate
+        String cpf
+        String education
+        int addressId
+
+        private boolean idSet = false
+        private boolean firstNameSet = false
+        private boolean lastNameSet = false
+        private boolean loginDetailsSet = false
+        private boolean descriptionSet = false
+        private boolean birthDateSet = false
+        private boolean cpfSet = false
+        private boolean educationSet = false
+        private boolean addressIdSet = false
+
+        Builder id(int id) {
+            this.id = id
+            this.idSet = true
+
+            return this
+        }
+
+        Builder firstName(String firstName) {
+            this.firstName = firstName
+            this.firstNameSet = true
+
+            return this
+        }
+
+        Builder lastName(String lastName) {
+            this.lastName = lastName
+            this.lastNameSet = true
+
+            return this
+        }
+
+        Builder loginDetails(LoginDetails loginDetails) {
+            this.loginDetails = loginDetails
+            this.loginDetailsSet = true
+
+            return this
+        }
+
+        Builder description(String description) {
+            this.description = description
+            this.descriptionSet = true
+
+            return this
+        }
+
+        Builder birthDate(LocalDate birthDate) {
+            this.birthDate = birthDate.atStartOfDay(ZoneId.systemDefault()).toInstant()
+            this.birthDateSet = true
+
+            return this
+        }
+
+        Builder cpf(String cpf) {
+            this.cpf = cpf
+            this.cpfSet = true
+
+            return this
+        }
+
+        Builder education(String education) {
+            this.education = education
+            this.educationSet = true
+
+            return this
+        }
+
+        Builder addressId(int addressId) {
+            this.addressId = addressId
+            this.addressIdSet = true
+
+            return this
+        }
+
+        Candidate build() {
+            validateFields()
+
+            return new Candidate(this)
+        }
+
+        void validateFields() {
+            if (!firstNameSet) throw new IllegalStateException("First name must be set")
+            if (!lastNameSet) throw new IllegalStateException("Last name must be set")
+            if (!loginDetails) throw new IllegalStateException("Login details must be set")
+            if (!descriptionSet) throw new IllegalStateException("Description must be set")
+            if (!birthDateSet) throw new IllegalStateException("Birth date must be set")
+            if (!cpfSet) throw new IllegalStateException("CPF must be set")
+            if (!educationSet) throw new IllegalStateException("Education must be set")
+            if (!addressIdSet) throw new IllegalStateException("Address ID must be set")
+        }
     }
 }
