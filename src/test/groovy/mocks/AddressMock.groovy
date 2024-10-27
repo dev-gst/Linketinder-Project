@@ -45,7 +45,6 @@ class AddressMock extends Specification {
     DetailedAddress createDetailedAddressMock(int n) {
         DetailedAddress detailedAddress = Mock(DetailedAddress)
 
-        detailedAddress.id >> n
         detailedAddress.neighborhood >> "Centro $n"
         detailedAddress.street >> "Rua $n"
         detailedAddress.number >> "$n"
