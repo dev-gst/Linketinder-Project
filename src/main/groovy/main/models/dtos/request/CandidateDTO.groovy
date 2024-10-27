@@ -5,6 +5,8 @@ import main.util.exception.ParamValidation
 import main.util.exception.custom.FieldNotSetException
 
 import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 
 class CandidateDTO {
 
@@ -83,10 +85,8 @@ class CandidateDTO {
             return this
         }
 
-        Builder birthDate(Instant birthDate) {
-            ParamValidation.requireNonNull(birthDate, "Birth date cannot be null")
-
-            this.birthDate = birthDate
+        Builder birthDate(LocalDate birthDate) {
+            this.birthDate = birthDate.atStartOfDay(ZoneId.systemDefault()).toInstant()
             this.birthDateSet = true
 
             return this
