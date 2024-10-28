@@ -1,7 +1,7 @@
 package main.repositories.interfaces
 
-import main.models.dtos.request.address.AddressDTO
-import main.models.entities.address.Address
+import main.models.dtos.request.AddressDTO
+import main.models.entities.Address
 
 interface AddressDAO extends DAO<Address, AddressDTO> {
 

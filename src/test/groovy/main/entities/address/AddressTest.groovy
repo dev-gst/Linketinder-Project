@@ -1,6 +1,6 @@
 package main.entities.address
 
-import main.models.entities.address.Address
+import main.models.entities.Address
 import main.util.exception.custom.FieldNotSetException
 import spock.lang.Specification
 
