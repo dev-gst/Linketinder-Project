@@ -5,4 +5,5 @@ import main.models.entities.company.Company
 
 interface CompanyDAO extends DAO<Company, CompanyDTO> {
 
+    Set<Company> getByJobOpeningId(int jobOpeningId)
 }
