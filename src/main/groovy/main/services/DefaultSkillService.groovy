@@ -1,23 +1,23 @@
 package main.services
 
 import main.models.dtos.anonresponse.AnonSkillDTO
-import main.models.dtos.request.skill.SkillDTO
+import main.models.dtos.request.SkillDTO
 import main.models.entities.Candidate
+import main.models.entities.Skill
 import main.models.entities.jobOpening.JobOpening
-import main.models.entities.skill.Skill
-import main.repositories.SkillDAO
+import main.repositories.interfaces.SkillDAO
 import main.services.interfaces.AnonService
-import main.services.interfaces.SearchableService
+import main.services.interfaces.SkillService
 import main.util.exception.ParamValidation
 import main.util.exception.custom.ClassNotFoundException
 import main.util.exception.custom.EntityNotFoundException
 import main.util.exception.custom.NullCollectionException
 
-class SkillService implements SearchableService<Skill, SkillDTO>, AnonService<AnonSkillDTO> {
+class DefaultSkillService implements SkillService, AnonService<AnonSkillDTO> {
 
     SkillDAO skillDAO
 
-    SkillService(SkillDAO skillDAO) {
+    DefaultSkillService(SkillDAO skillDAO) {
         ParamValidation.requireNonNull(skillDAO, "SkillDAO cannot be null")
 
         this.skillDAO = skillDAO
@@ -111,7 +111,7 @@ class SkillService implements SearchableService<Skill, SkillDTO>, AnonService<An
         ParamValidation.requireNonNull(skillDTO, "SkillDTO cannot be null")
         ParamValidation.requirePositive(id, "Skill ID must be greater than 0")
 
-        Skill skill = skillDAO.updateById(id, skillDTO)
+        Skill skill = skillDAO.update(id, skillDTO)
         if (skill == null) throw new EntityNotFoundException("Skill with ID $id not found")
 
         return skill
@@ -121,6 +121,6 @@ class SkillService implements SearchableService<Skill, SkillDTO>, AnonService<An
     void deleteById(int id) {
         ParamValidation.requirePositive(id, "Skill ID must be greater than 0")
 
-        skillDAO.deleteById(id)
+        skillDAO.delete(id)
     }
 }

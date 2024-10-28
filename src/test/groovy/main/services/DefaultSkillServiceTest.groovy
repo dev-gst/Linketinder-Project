@@ -1,43 +1,54 @@
 package main.services
 
 import main.models.dtos.anonresponse.AnonSkillDTO
-import main.models.dtos.request.skill.SkillDTO
+import main.models.dtos.request.SkillDTO
 import main.models.entities.Candidate
+import main.models.entities.Skill
 import main.models.entities.jobOpening.JobOpening
-import main.models.entities.skill.Skill
-import main.repositories.SkillDAO
+import main.repositories.interfaces.SkillDAO
 import main.util.exception.custom.ClassNotFoundException
+import mocks.SkillMock
 import spock.lang.Specification
 
-class SkillServiceTest extends Specification {
 
+class DefaultSkillServiceTest extends Specification {
+
+    Skill skill1
+    Skill skill2
+    SkillDTO skillDTO1
+    SkillDTO skillDTO2
     SkillDAO skillDAO
-    SkillService skillService
+    DefaultSkillService skillService
 
     def setup() {
+        SkillMock skillMock = new SkillMock()
+        skill1 = skillMock.createSkillMock(1)
+        skill2 = skillMock.createSkillMock(2)
+        skillDTO1 = skillMock.createSkillDTOMock(1)
+        skillDTO2 = skillMock.createSkillDTOMock(2)
+
         skillDAO = Mock(SkillDAO)
-        skillService = new SkillService(skillDAO)
+        skillService = new DefaultSkillService(skillDAO)
     }
 
     def "skill service constructor should throw exception when skillDAO is null"() {
         when:
-        new SkillService(null)
+        new DefaultSkillService(null)
 
         then:
         thrown(IllegalArgumentException)
     }
 
     def "get by id should return skill when found"() {
-        Skill java = new Skill(1, "Java")
-        skillDAO.getById(1) >> java
+        skillDAO.getById(1) >> skill1
 
         when:
         Skill foundSkill = skillService.getById(1)
 
         then:
         foundSkill.id == 1
-        foundSkill.name == "Java"
-        1 * skillDAO.getById(1) >> java
+        foundSkill.name == "Skill 1"
+        1 * skillDAO.getById(1) >> skill1
     }
 
     def "get by id should throw exception when skill id is less than 1"() {
@@ -49,15 +60,14 @@ class SkillServiceTest extends Specification {
     }
 
     def "get anon by id should return anon skill when found"() {
-        Skill java = new Skill(1, "Java")
-        skillDAO.getById(1) >> java
+        skillDAO.getById(1) >> skill1
 
         when:
         AnonSkillDTO anonSkillDTO = skillService.getAnonById(1)
 
         then:
-        anonSkillDTO.name == "Java"
-        1 * skillDAO.getById(1) >> java
+        anonSkillDTO.name == "Skill 1"
+        1 * skillDAO.getById(1) >> skill1
     }
 
     def "get anon by id should throw exception when skill id is less than 1"() {
@@ -71,7 +81,7 @@ class SkillServiceTest extends Specification {
     def "get by entity id should return skills for candidate"() {
         given:
         Set<Skill> skills = new LinkedHashSet<>()
-        skills.add(new Skill(1, "Java"))
+        skills.add(skill1)
         skillDAO.getByCandidateId(1) >> skills
 
         when:
@@ -80,13 +90,13 @@ class SkillServiceTest extends Specification {
         then:
         foundSkills.size() == 1
         foundSkills[0].id == 1
-        foundSkills[0].name == "Java"
+        foundSkills[0].name == "Skill 1"
     }
 
     def "get by entity id should return skills for job opening"() {
         given:
         Set<Skill> skills = new LinkedHashSet<>()
-        skills.add(new Skill(2, "Python"))
+        skills.add(skill1)
         skillDAO.getByJobOpeningId(1) >> skills
 
         when:
@@ -94,8 +104,8 @@ class SkillServiceTest extends Specification {
 
         then:
         foundSkills.size() == 1
-        foundSkills[0].id == 2
-        foundSkills[0].name == "Python"
+        foundSkills[0].id == 1
+        foundSkills[0].name == "Skill 1"
     }
 
     def "get by entity id should throw exception when entity id is less than 1"() {
@@ -124,15 +134,15 @@ class SkillServiceTest extends Specification {
 
     def "get by field should return skill when found"() {
         Set<Skill> skills = new LinkedHashSet<>()
-        skills.add(new Skill(1, "Java"))
-        skillDAO.getByField("name", "Java") >> skills
+        skills.add(skill1)
+        skillDAO.getByField("name", "Skill 1") >> skills
 
         when:
-        Set<Skill> foundSkills = skillService.getByField("name", "Java")
+        Set<Skill> foundSkills = skillService.getByField("name", "Skill 1")
 
         then:
         foundSkills[0].id == 1
-        foundSkills[0].name == "Java"
+        foundSkills[0].name == "Skill 1"
     }
 
     def "get by field should throw exception when skill name is null"() {
@@ -153,8 +163,8 @@ class SkillServiceTest extends Specification {
 
     def "get all should return all skills"() {
         Set<Skill> skills = new LinkedHashSet<>()
-        skills.add(new Skill(1, "Java"))
-        skills.add(new Skill(2, "Python"))
+        skills.add(skill1)
+        skills.add(skill2)
         skillDAO.getAll() >> skills
 
         when:
@@ -163,19 +173,18 @@ class SkillServiceTest extends Specification {
         then:
         foundSkills.size() == 2
         foundSkills[0].id == 1
-        foundSkills[0].name == "Java"
+        foundSkills[0].name == "Skill 1"
         foundSkills[1].id == 2
-        foundSkills[1].name == "Python"
+        foundSkills[1].name == "Skill 2"
     }
 
     def "save should return newly saved skill"() {
         given:
-        SkillDTO java = new SkillDTO("Java")
-        skillDAO.getByField("name", "Java") >> new LinkedHashSet<>()
-        skillDAO.save(java) >> Integer.valueOf(67)
+        skillDAO.getByField("name", "Skill 1") >> new LinkedHashSet<>()
+        skillDAO.save(skillDTO1) >> Integer.valueOf(67)
 
         when:
-        Integer id = skillService.save(java)
+        Integer id = skillService.save(skillDTO1)
 
         then:
         id == Integer.valueOf(67)
@@ -183,17 +192,15 @@ class SkillServiceTest extends Specification {
 
     def "save should return already saved skill"() {
         given:
-        SkillDTO java = new SkillDTO("Java")
-        Skill existingJava = new Skill(56, "Java")
         Set<Skill> foundSkills = new LinkedHashSet<>()
-        foundSkills.add(existingJava)
-        skillDAO.getByField("name", "Java") >> foundSkills
+        foundSkills.add(skill1)
+        skillDAO.getByField("name", "Skill 1") >> foundSkills
 
         when:
-        Integer id = skillService.save(java)
+        Integer id = skillService.save(skillDTO1)
 
         then:
-        id == Integer.valueOf(56)
+        id == Integer.valueOf(1)
     }
 
     def "save should throw exception when skillDTO is null"() {
@@ -206,23 +213,24 @@ class SkillServiceTest extends Specification {
 
     def "save all should return already saved and newly saved skills"() {
         given:
-        SkillDTO java = new SkillDTO("Java")
-        SkillDTO python = new SkillDTO("Python")
         Set<SkillDTO> skillDTOSet = new LinkedHashSet<>()
-        skillDTOSet.add(java)
-        skillDTOSet.add(python)
-        Set<Skill> existingPython = new LinkedHashSet<>()
-        existingPython.add(new Skill(56, "Python"))
-        skillDAO.getByField("name", "Java") >> new LinkedHashSet<Skill>()
-        skillDAO.save(java) >> Integer.valueOf(67)
-        skillDAO.getByField("name", "Python") >> existingPython
+        skillDTOSet.add(skillDTO1)
+        skillDTOSet.add(skillDTO2)
+
+        Set<Skill> existingSkills = new LinkedHashSet<>()
+        existingSkills.add(skill2)
+
+        skillDAO.getByField("name", "Skill 1") >> new LinkedHashSet<Skill>()
+        skillDAO.save(skillDTO1) >> Integer.valueOf(1)
+
+        skillDAO.getByField("name", "Skill 2") >> existingSkills
 
         when:
         Set<Integer> savedIds = skillService.saveAll(skillDTOSet)
 
         then:
-        savedIds[0] == 67
-        savedIds[1] == 56
+        savedIds[0] == 1
+        savedIds[1] == 2
     }
 
     def "save all should throw exception when skillDTO set is null"() {
@@ -236,6 +244,51 @@ class SkillServiceTest extends Specification {
     def "save all should throw exception when skillDTO set is empty"() {
         when:
         skillService.saveAll(new LinkedHashSet<>())
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "update by id should return updated skill"() {
+        given:
+        skillDAO.getById(1) >> skill1
+        skillDAO.update(1, skillDTO1) >> skill1
+
+        when:
+        Skill updatedSkill = skillService.updateById(1, skillDTO1)
+
+        then:
+        updatedSkill.id == 1
+        updatedSkill.name == "Skill 1"
+    }
+
+    def "update by id should throw exception when skill id is less than 1"() {
+        when:
+        skillService.updateById(0, skillDTO1)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "update by id should throw exception when skillDTO is null"() {
+        when:
+        skillService.updateById(1, null)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "delete by id should return deleted skill"() {
+        when:
+        skillDAO.delete(1)
+
+        then:
+        1 * skillDAO.delete(1)
+    }
+
+    def "delete by id should throw exception when skill id is less than 1"() {
+        when:
+        skillService.deleteById(0)
 
         then:
         thrown(IllegalArgumentException)
