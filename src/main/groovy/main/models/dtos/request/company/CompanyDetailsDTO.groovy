@@ -1,6 +1,6 @@
 package main.models.dtos.request.company
 
-import main.models.dtos.request.address.AddressDTO
+import main.models.dtos.request.AddressDTO
 import main.util.exception.ParamValidation
 
 class CompanyDetailsDTO {
@@ -8,6 +8,8 @@ class CompanyDetailsDTO {
     private final String name
     private final String description
     private final String cnpj
+
+    // TODO: Address id only
     private final AddressDTO addressDTO
 
     CompanyDetailsDTO(String name, String description, String cnpj, AddressDTO addressDTO) {

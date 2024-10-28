@@ -1,7 +1,7 @@
 package mocks
 
-import main.models.dtos.request.address.AddressDTO
-import main.models.entities.address.Address
+import main.models.dtos.request.AddressDTO
+import main.models.entities.Address
 import spock.lang.Specification
 
 class AddressMock extends Specification {

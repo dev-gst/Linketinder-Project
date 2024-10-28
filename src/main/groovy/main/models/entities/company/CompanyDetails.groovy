@@ -1,6 +1,6 @@
 package main.models.entities.company
 
-import main.models.entities.address.Address
+import main.models.entities.Address
 import main.util.exception.ParamValidation
 
 class CompanyDetails {

@@ -1,8 +1,8 @@
 package main.services
 
 import main.models.dtos.request.CandidateDTO
+import main.models.entities.Address
 import main.models.entities.Candidate
-import main.models.entities.address.Address
 import main.repositories.interfaces.CandidateDAO
 import main.services.interfaces.CandidateService
 import main.util.exception.ParamValidation

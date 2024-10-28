@@ -1,7 +1,7 @@
 package main.services
 
 import main.models.dtos.request.company.CompanyDTO
-import main.models.entities.address.Address
+import main.models.entities.Address
 import main.models.entities.company.Company
 import main.models.entities.jobOpening.JobOpening
 import main.repositories.CompanyDAO
