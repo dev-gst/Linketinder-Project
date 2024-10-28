@@ -1,39 +1,122 @@
 package main.models.dtos.request.address
 
 import main.util.exception.ParamValidation
+import main.util.exception.custom.FieldNotSetException
 
 class AddressDTO {
 
-    private final String country
-    private final String region
-    private final String city
-    private final DetailedAddressDTO detailedAddressDTO
+    final String country
+    final String region
+    final String city
+    final String neighborhood
+    final String street
+    final String number
+    final String zipCode
 
-    AddressDTO(String country, String region, String city, DetailedAddressDTO detailedAddressDTO) {
-        ParamValidation.requireNonBlank(country, "Country cannot be null")
-        ParamValidation.requireNonBlank(region, "Region cannot be null")
-        ParamValidation.requireNonBlank(city, "City cannot be null")
-        ParamValidation.requireNonNull(detailedAddressDTO, "DetailedAddressDTO cannot be null")
-
-        this.country = country
-        this.region = region
-        this.city = city
-        this.detailedAddressDTO = detailedAddressDTO
+    private AddressDTO(Builder builder) {
+        this.country = builder.country
+        this.region = builder.region
+        this.city = builder.city
+        this.neighborhood = builder.neighborhood
+        this.street = builder.street
+        this.number = builder.number
+        this.zipCode = builder.zipCode
     }
 
-    String getCountry() {
-        return country
-    }
+    static class Builder {
 
-    String getRegion() {
-        return region
-    }
+        String country
+        String region
+        String city
+        String neighborhood
+        String street
+        String number
+        String zipCode
 
-    String getCity() {
-        return city
-    }
+        private boolean countrySet = false
+        private boolean regionSet = false
+        private boolean citySet = false
+        private boolean neighborhoodSet = false
+        private boolean streetSet = false
+        private boolean numberSet = false
+        private boolean zipCodeSet = false
 
-    DetailedAddressDTO getDetailedAddressDTO() {
-        return detailedAddressDTO
+        Builder country(String country) {
+            ParamValidation.requireNonBlank(country, "Country cannot be null or blank")
+
+            this.countrySet = true
+            this.country = country
+
+            return this
+        }
+
+        Builder region(String region) {
+            ParamValidation.requireNonBlank(region, "Region cannot be null or blank")
+
+            this.region = region
+            this.regionSet = true
+
+            return this
+        }
+
+        Builder city(String city) {
+            ParamValidation.requireNonBlank(city, "City cannot be null or blank")
+
+            this.city = city
+            this.citySet = true
+
+            return this
+        }
+
+        Builder neighborhood(String neighborhood) {
+            ParamValidation.requireNonBlank(neighborhood, "Neighborhood cannot be null or blank")
+
+            this.neighborhood = neighborhood
+            this.neighborhoodSet = true
+
+            return this
+        }
+
+        Builder street(String street) {
+            ParamValidation.requireNonBlank(street, "Street cannot be null or blank")
+
+            this.street = street
+            this.streetSet = true
+
+            return this
+        }
+
+        Builder number(String number) {
+            ParamValidation.requireNonBlank(number, "Number cannot be null or blank")
+
+            this.number = number
+            this.numberSet = true
+
+            return this
+        }
+
+        Builder zipCode(String zipCode) {
+            ParamValidation.requireNonBlank(zipCode, "Zip code cannot be null or blank")
+
+            this.zipCode = zipCode
+            this.zipCodeSet = true
+
+            return this
+        }
+
+        AddressDTO build() {
+            validateFields()
+            return new AddressDTO(this)
+        }
+
+        private validateFields() {
+            if (!countrySet) throw new FieldNotSetException("Country must be set")
+            if (!regionSet) throw new FieldNotSetException("Region must be set")
+            if (!citySet) throw new FieldNotSetException("City must be set")
+            if (!neighborhoodSet) throw new FieldNotSetException("Neighborhood must be set")
+            if (!streetSet) throw new FieldNotSetException("Street must be set")
+            if (!numberSet) throw new FieldNotSetException("Number must be set")
+            if (!zipCodeSet) throw new FieldNotSetException("Zip code must be set")
+        }
     }
 }
