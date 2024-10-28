@@ -1,21 +1,19 @@
-package main.models.entities.address
+package main.models.dtos.request
 
 import main.util.exception.ParamValidation
 import main.util.exception.custom.FieldNotSetException
 
-class Address {
+class AddressDTO {
 
-    int id
-    String country
-    String region
-    String city
-    String neighborhood
-    String street
-    String number
-    String zipCode
+    final String country
+    final String region
+    final String city
+    final String neighborhood
+    final String street
+    final String number
+    final String zipCode
 
-    private Address(Builder builder) {
-        this.id = builder.id
+    private AddressDTO(Builder builder) {
         this.country = builder.country
         this.region = builder.region
         this.city = builder.city
@@ -25,42 +23,8 @@ class Address {
         this.zipCode = builder.zipCode
     }
 
-    @Override
-    boolean equals(o) {
-        if (this.is(o)) return true
-        if (o == null || getClass() != o.class) return false
-
-        Address address = (Address) o
-
-        if (id != address.id) return false
-        if (city != address.city) return false
-        if (country != address.country) return false
-        if (neighborhood != address.neighborhood) return false
-        if (number != address.number) return false
-        if (region != address.region) return false
-        if (street != address.street) return false
-        if (zipCode != address.zipCode) return false
-
-        return true
-    }
-
-    @Override
-    int hashCode() {
-        int result
-        result = id
-        result = 31 * result + (country != null ? country.hashCode() : 0)
-        result = 31 * result + (region != null ? region.hashCode() : 0)
-        result = 31 * result + (city != null ? city.hashCode() : 0)
-        result = 31 * result + (neighborhood != null ? neighborhood.hashCode() : 0)
-        result = 31 * result + (street != null ? street.hashCode() : 0)
-        result = 31 * result + (number != null ? number.hashCode() : 0)
-        result = 31 * result + (zipCode != null ? zipCode.hashCode() : 0)
-        return result
-    }
-
     static class Builder {
 
-        int id
         String country
         String region
         String city
@@ -69,7 +33,6 @@ class Address {
         String number
         String zipCode
 
-        private boolean idSet = false
         private boolean countrySet = false
         private boolean regionSet = false
         private boolean citySet = false
@@ -77,15 +40,6 @@ class Address {
         private boolean streetSet = false
         private boolean numberSet = false
         private boolean zipCodeSet = false
-
-        Builder id(int id) {
-            ParamValidation.requirePositive(id, "ID cannot be negative")
-
-            this.id = id
-            this.idSet = true
-
-            return this
-        }
 
         Builder country(String country) {
             ParamValidation.requireNonBlank(country, "Country cannot be null or blank")
@@ -150,13 +104,12 @@ class Address {
             return this
         }
 
-        Address build() {
+        AddressDTO build() {
             validateFields()
-            return new Address(this)
+            return new AddressDTO(this)
         }
 
         private validateFields() {
-            if (!idSet) throw new FieldNotSetException("ID must be set")
             if (!countrySet) throw new FieldNotSetException("Country must be set")
             if (!regionSet) throw new FieldNotSetException("Region must be set")
             if (!citySet) throw new FieldNotSetException("City must be set")
