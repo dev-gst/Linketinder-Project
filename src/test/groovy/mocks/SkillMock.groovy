@@ -11,11 +11,15 @@ class SkillMock extends Specification {
 
         skill.id >> n
         skill.name >> "Skill $n"
+
+        return skill
     }
 
-    SkillDTO createSkillDTOMock() {
+    SkillDTO createSkillDTOMock(int n) {
         SkillDTO skillDTO = Mock(SkillDTO)
 
-        skillDTO.getName() >> "Skill"
+        skillDTO.getName() >> "Skill $n"
+
+        return skillDTO
     }
 }
