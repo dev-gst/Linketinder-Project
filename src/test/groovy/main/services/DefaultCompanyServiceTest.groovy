@@ -4,7 +4,7 @@ import main.models.dtos.request.company.CompanyDTO
 import main.models.entities.Address
 import main.models.entities.company.Company
 import main.models.entities.jobOpening.JobOpening
-import main.repositories.CompanyDAO
+import main.repositories.interfaces.CompanyDAO
 import main.util.exception.custom.EntityNotFoundException
 import mocks.CompanyMock
 import spock.lang.Specification
@@ -16,7 +16,6 @@ class DefaultCompanyServiceTest extends Specification {
     CompanyDTO companyDTOMock1
     CompanyDTO companyDTOMock2
     CompanyDAO companyDAOMock
-    DefaultAddressService addressServiceMock
     DefaultCompanyService companyService
 
     void setup() {
@@ -29,9 +28,8 @@ class DefaultCompanyServiceTest extends Specification {
         companyDTOMock2 = companyMockBuilder.createCompanyDTOMock(2)
 
         companyDAOMock = Mock(CompanyDAO)
-        addressServiceMock = Mock(DefaultAddressService)
 
-        companyService = new DefaultCompanyService(companyDAOMock, addressServiceMock)
+        companyService = new DefaultCompanyService(companyDAOMock)
     }
 
 
@@ -162,8 +160,7 @@ class DefaultCompanyServiceTest extends Specification {
     def "save returns newly saved company id"() {
         given:
         companyDAOMock.getByField("email", "joe1@email.com") >> new LinkedHashSet<>()
-        addressServiceMock.save(companyDTOMock1.companyDetailsDTO.addressDTO) >> 1
-        companyDAOMock.save(companyDTOMock1, 1) >> 1
+        companyDAOMock.save(companyDTOMock1) >> 1
 
         when:
         int result = companyService.save(companyDTOMock1)
@@ -197,12 +194,10 @@ class DefaultCompanyServiceTest extends Specification {
     def "save all returns newly saved companies ids"() {
         given:
         companyDAOMock.getByField("email", "joe1@email.com") >> new LinkedHashSet<>()
-        addressServiceMock.save(companyDTOMock1.companyDetailsDTO.addressDTO) >> 1
-        companyDAOMock.save(companyDTOMock1, 1) >> 1
+        companyDAOMock.save(companyDTOMock1) >> 1
 
         companyDAOMock.getByField("email", "joe2@email.com") >> new LinkedHashSet<>()
-        addressServiceMock.save(companyDTOMock2.companyDetailsDTO.addressDTO) >> 2
-        companyDAOMock.save(companyDTOMock2, 2) >> 2
+        companyDAOMock.save(companyDTOMock2) >> 2
 
         Set<CompanyDTO> companyDTOS = new LinkedHashSet<>()
         companyDTOS.add(companyDTOMock1)
@@ -223,12 +218,7 @@ class DefaultCompanyServiceTest extends Specification {
         foundAddresses.add(companyMock1.companyDetails.address)
 
         companyDAOMock.getById(1) >> companyMock1
-        addressServiceMock.getByEntityId(1, Company.class) >> foundAddresses
-        addressServiceMock.updateById(
-                companyMock1.companyDetails.address.id, companyDTOMock1.companyDetailsDTO.addressDTO
-        ) >> companyMock1.companyDetails.address
-
-        companyDAOMock.updateById(companyMock1.id, companyDTOMock1, companyMock1.companyDetails.address.id) >> companyMock1
+        companyDAOMock.update(companyMock1.id, companyDTOMock1) >> companyMock1
 
         when:
         Company result = companyService.updateById(1, companyDTOMock1)
@@ -240,9 +230,7 @@ class DefaultCompanyServiceTest extends Specification {
     def "update by id returns updated company with address not found"() {
         given:
         companyDAOMock.getById(1) >> companyMock1
-        addressServiceMock.getByEntityId(1, Company.class) >> new LinkedHashSet<>()
-        addressServiceMock.save(companyDTOMock1.companyDetailsDTO.addressDTO) >> 1
-        companyDAOMock.updateById(1, companyDTOMock1, 1) >> companyMock1
+        companyDAOMock.update(1, companyDTOMock1) >> companyMock1
 
         when:
         Company result = companyService.updateById(1, companyDTOMock1)
@@ -283,7 +271,7 @@ class DefaultCompanyServiceTest extends Specification {
         companyService.deleteById(1)
 
         then:
-        1 * companyDAOMock.deleteById(1)
+        1 * companyDAOMock.delete(1)
     }
 
     def "delete by id throws exception when id is negative"() {

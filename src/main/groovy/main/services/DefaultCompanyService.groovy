@@ -1,11 +1,9 @@
 package main.services
 
 import main.models.dtos.request.company.CompanyDTO
-import main.models.entities.Address
 import main.models.entities.company.Company
 import main.models.entities.jobOpening.JobOpening
-import main.repositories.CompanyDAO
-import main.services.interfaces.AddressService
+import main.repositories.interfaces.CompanyDAO
 import main.services.interfaces.CompanyService
 import main.util.exception.ParamValidation
 import main.util.exception.custom.EntityNotFoundException
@@ -17,14 +15,10 @@ class DefaultCompanyService implements CompanyService {
 
     CompanyDAO companyDAO
 
-    AddressService addressService
-
-    DefaultCompanyService(CompanyDAO companyDAO, AddressService addressService) {
+    DefaultCompanyService(CompanyDAO companyDAO) {
         ParamValidation.requireNonNull(companyDAO, "companyDAO cannot be null")
-        ParamValidation.requireNonNull(addressService, "addressService cannot be null")
 
         this.companyDAO = companyDAO
-        this.addressService = addressService
     }
 
     @Override
@@ -72,9 +66,7 @@ class DefaultCompanyService implements CompanyService {
             return foundCompany.id
         }
 
-        int addressId = addressService.save(companyDTO.companyDetailsDTO.addressDTO)
-
-        return companyDAO.save(companyDTO, addressId)
+        return companyDAO.save(companyDTO)
     }
 
     @Override
@@ -95,34 +87,14 @@ class DefaultCompanyService implements CompanyService {
         ParamValidation.requireNonNull(companyDTO, "companyDTO cannot be null")
         if (getById(id) == null) throw new EntityNotFoundException("Company with ID ${id} not found")
 
-        Set<Address> foundAddresses = addressService.getByEntityId(id, Company.class)
-        if (foundAddresses == null) throw new NullCollectionException("foundAddresses cannot be null")
 
-        Address address = foundAddresses.isEmpty() ? null : foundAddresses[0]
-        if (address == null) {
-
-            return updateWhenAddressIsNull(id, companyDTO)
-        }
-
-        return updateWhenAddressIsNotNull(id, companyDTO, address)
-    }
-
-    private Company updateWhenAddressIsNull(int id, CompanyDTO companyDTO) {
-        int addressId = addressService.save(companyDTO.companyDetailsDTO.addressDTO)
-
-        return companyDAO.updateById(id, companyDTO, addressId)
-    }
-
-    private Company updateWhenAddressIsNotNull(int id, CompanyDTO companyDTO, Address address) {
-        addressService.updateById(address.id, companyDTO.companyDetailsDTO.addressDTO)
-
-        return companyDAO.updateById(id, companyDTO, address.id)
+        return companyDAO.update(id, companyDTO)
     }
 
     @Override
     void deleteById(int id) {
         ParamValidation.requirePositive(id, "id cannot be negative")
 
-        companyDAO.deleteById(id)
+        companyDAO.delete(id)
     }
 }
