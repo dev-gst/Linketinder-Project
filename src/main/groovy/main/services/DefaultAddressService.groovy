@@ -36,9 +36,9 @@ class DefaultAddressService implements AddressService,
 
         Address address = getById(id)
         AnonAddressDTO anonAddressDTO = new AnonAddressDTO(
-                address.getCountry(),
-                address.getRegion(),
-                address.getCity()
+                address.country,
+                address.region,
+                address.city
         )
 
         return anonAddressDTO
@@ -116,7 +116,7 @@ class DefaultAddressService implements AddressService,
         ParamValidation.requirePositive(id, "Address ID must be greater than 0")
         ParamValidation.requireNonNull(addressDTO, "AddressDTO cannot be null")
 
-        Address address = addressDAO.updateById(id, addressDTO)
+        Address address = addressDAO.update(id, addressDTO)
         if (address == null) throw new EntityNotFoundException("Address with ID ${id} not found")
 
         return address
