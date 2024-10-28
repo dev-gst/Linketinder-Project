@@ -1,27 +1,63 @@
 package main.entities.address
 
 import main.models.entities.address.Address
-import main.models.entities.address.DetailedAddress
+import main.util.exception.custom.FieldNotSetException
 import spock.lang.Specification
 
 class AddressTest extends Specification {
 
     def "Address should be created with all fields"() {
         given:
-        def detailedAddress = new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345")
-        def address = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress)
+        Address address = new Address.Builder()
+                .id(1)
+                .country("Brazil")
+                .region("São Paulo")
+                .city("São Paulo")
+                .neighborhood("Bairro")
+                .street("Rua nenhuma")
+                .number("0")
+                .zipCode("12345")
+                .build()
 
         expect:
         address.id == 1
         address.country == "Brazil"
         address.region == "São Paulo"
         address.city == "São Paulo"
-        address.detailedAddress == detailedAddress
+        address.neighborhood == "Bairro"
+        address.street == "Rua nenhuma"
+        address.number == "0"
+        address.zipCode == "12345"
+    }
+
+    def "Address should not be created without field"() {
+        when:
+        new Address.Builder()
+                .id(1)
+                .region("São Paulo")
+                .city("São Paulo")
+                .neighborhood("Bairro")
+                .street("Rua nenhuma")
+                .number("0")
+                .zipCode("12345")
+                .build()
+
+        then:
+        thrown(FieldNotSetException)
     }
 
     def "Address should not be created with null country"() {
         when:
-        new Address(1, null, "São Paulo", "São Paulo", new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345"))
+        new Address.Builder()
+                .id(1)
+                .country(null)
+                .region("São Paulo")
+                .city("São Paulo")
+                .neighborhood("Bairro")
+                .street("Rua nenhuma")
+                .number("0")
+                .zipCode("12345")
+                .build()
 
         then:
         thrown(IllegalArgumentException)
@@ -29,7 +65,16 @@ class AddressTest extends Specification {
 
     def "Address should not be created with null region"() {
         when:
-        new Address(1, "Brazil", null, "São Paulo", new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345"))
+        new Address.Builder()
+                .id(1)
+                .country("Brazil")
+                .region(null)
+                .city("São Paulo")
+                .neighborhood("Bairro")
+                .street("Rua nenhuma")
+                .number("0")
+                .zipCode("12345")
+                .build()
 
         then:
         thrown(IllegalArgumentException)
@@ -37,39 +82,84 @@ class AddressTest extends Specification {
 
     def "Address should not be created with null city"() {
         when:
-        new Address(1, "Brazil", "São Paulo", null, new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345"))
+        new Address.Builder()
+                .id(1)
+                .country("Brazil")
+                .region("São Paulo")
+                .city(null)
+                .neighborhood("Bairro")
+                .street("Rua nenhuma")
+                .number("0")
+                .zipCode("12345")
+                .build()
 
         then:
         thrown(IllegalArgumentException)
     }
 
-    def "Address should not be created with null detailed address"() {
+    def "Address should not be created with null neighborhood"() {
         when:
-        new Address(1, "Brazil", "São Paulo", "São Paulo", null)
+        new Address.Builder()
+                .id(1)
+                .country("Brazil")
+                .region("São Paulo")
+                .city("São Paulo")
+                .neighborhood(null)
+                .street("Rua nenhuma")
+                .number("0")
+                .zipCode("12345")
+                .build()
 
         then:
         thrown(IllegalArgumentException)
     }
 
-    def "Address should not be created with blank country"() {
+    def "Address should not be created with null street"() {
         when:
-        new Address(1, "", "São Paulo", "São Paulo", new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345"))
+        new Address.Builder()
+                .id(1)
+                .country("Brazil")
+                .region("São Paulo")
+                .city("São Paulo")
+                .neighborhood("Bairro")
+                .street(null)
+                .number("0")
+                .zipCode("12345")
+                .build()
 
         then:
         thrown(IllegalArgumentException)
     }
 
-    def "Address should not be created with blank region"() {
+    def "Address should not be created with null number"() {
         when:
-        new Address(1, "Brazil", "", "São Paulo", new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345"))
+        new Address.Builder()
+                .id(1)
+                .country("Brazil")
+                .region("São Paulo")
+                .city("São Paulo")
+                .neighborhood("Bairro")
+                .street("Rua nenhuma")
+                .number(null)
+                .zipCode("12345")
+                .build()
 
         then:
         thrown(IllegalArgumentException)
     }
 
-    def "Address should not be created with blank city"() {
+    def "Address should not be created with null zip code"() {
         when:
-        new Address(1, "Brazil", "São Paulo", "", new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345"))
+        new Address.Builder()
+                .id(1)
+                .country("Brazil")
+                .region("São Paulo")
+                .city("São Paulo")
+                .neighborhood("Bairro")
+                .street("Rua nenhuma")
+                .number("0")
+                .zipCode(null)
+                .build()
 
         then:
         thrown(IllegalArgumentException)
@@ -77,9 +167,27 @@ class AddressTest extends Specification {
 
     def "Address should be equal to another Address with the same fields"() {
         given:
-        def detailedAddress = new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345")
-        def address1 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress)
-        def address2 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress)
+        Address address1 = new Address.Builder()
+                .id(1)
+                .country("Brazil")
+                .region("São Paulo")
+                .city("São Paulo")
+                .neighborhood("Bairro")
+                .street("Rua nenhuma")
+                .number("0")
+                .zipCode("12345")
+                .build()
+
+        Address address2 = new Address.Builder()
+                .id(1)
+                .country("Brazil")
+                .region("São Paulo")
+                .city("São Paulo")
+                .neighborhood("Bairro")
+                .street("Rua nenhuma")
+                .number("0")
+                .zipCode("12345")
+                .build()
 
         expect:
         address1 == address2
@@ -87,30 +195,56 @@ class AddressTest extends Specification {
 
     def "Address should not be equal to another Address with different field"() {
         given:
-        def detailedAddress = new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345")
-        def address1 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress)
-        def address2 = new Address(2, "Brazil", "São Paulo", "São Paulo", detailedAddress) // Different id
+        Address address1 = new Address.Builder()
+                .id(1)
+                .country("Brazil")
+                .region("São Paulo")
+                .city("São Paulo")
+                .neighborhood("Bairro")
+                .street("Rua nenhuma")
+                .number("0")
+                .zipCode("12345")
+                .build()
+
+        Address address2 = new Address.Builder()
+                .id(2)
+                .country("Brazil")
+                .region("São Paulo")
+                .city("São Paulo")
+                .neighborhood("Bairro")
+                .street("Rua nenhuma")
+                .number("0")
+                .zipCode("12345")
+                .build()
 
         expect:
         address1 != address2
     }
 
-    def "Address should not be equal to another Address with different detailed address"() {
-        given:
-        def detailedAddress1 = new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345")
-        def detailedAddress2 = new DetailedAddress("Bairro2", "Rua nenhuma", "0", "12345") // Different neighborhood
-        def address1 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress1)
-        def address2 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress2)
-
-        expect:
-        address1 != address2
-    }
 
     def "Address should have the same hash code as another Address with the same fields"() {
         given:
-        def detailedAddress = new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345")
-        def address1 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress)
-        def address2 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress)
+        Address address1 = new Address.Builder()
+                .id(1)
+                .country("Brazil")
+                .region("São Paulo")
+                .city("São Paulo")
+                .neighborhood("Bairro")
+                .street("Rua nenhuma")
+                .number("0")
+                .zipCode("12345")
+                .build()
+
+        Address address2 = new Address.Builder()
+                .id(1)
+                .country("Brazil")
+                .region("São Paulo")
+                .city("São Paulo")
+                .neighborhood("Bairro")
+                .street("Rua nenhuma")
+                .number("0")
+                .zipCode("12345")
+                .build()
 
         expect:
         address1.hashCode() == address2.hashCode()
@@ -118,9 +252,27 @@ class AddressTest extends Specification {
 
     def "Address should not have the same hash code as another Address with different fields"() {
         given:
-        def detailedAddress = new DetailedAddress("Bairro", "Rua nenhuma", "0", "12345")
-        def address1 = new Address(1, "Brazil", "São Paulo", "São Paulo", detailedAddress)
-        def address2 = new Address(2, "Brazil", "São Paulo", "São Paulo", detailedAddress) // Different id
+        Address address1 = new Address.Builder()
+                .id(1)
+                .country("Brazil")
+                .region("São Paulo")
+                .city("São Paulo")
+                .neighborhood("Bairro")
+                .street("Rua nenhuma")
+                .number("0")
+                .zipCode("12345")
+                .build()
+
+        Address address2 = new Address.Builder()
+                .id(2)
+                .country("Brazil")
+                .region("São Paulo")
+                .city("São Paulo")
+                .neighborhood("Bairro")
+                .street("Rua nenhuma")
+                .number("0")
+                .zipCode("12345")
+                .build()
 
         expect:
         address1.hashCode() != address2.hashCode()
