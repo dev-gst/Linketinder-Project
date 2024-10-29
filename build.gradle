@@ -11,14 +11,13 @@ repositories {
 }
 
 ext {
-    groovy = '4.0.22'
-    junitVersion = '5.11.0-M2'
-    junitSuiteAPI = '1.11.0-M2'
-    mockitoCore = '5.12.0'
-    postgresql = '42.7.4'
     flywayCore = '10.19.0'
     flywayDatabasePostgresql = '10.19.0'
+    groovy = '4.0.22'
+    mockitoCore = '5.12.0'
+    postgresql = '42.7.4'
     snakeYaml = '2.3'
+    spockVersion = '2.4-M4-groovy-4.0'
 }
 
 dependencies {
@@ -29,44 +28,14 @@ dependencies {
 
     runtimeOnly "org.flywaydb:flyway-database-postgresql:$flywayDatabasePostgresql"
 
-    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
-    testImplementation "org.junit.platform:junit-platform-suite-api:$junitSuiteAPI"
     testImplementation "org.mockito:mockito-core:$mockitoCore"
-
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
-}
-
-sourceSets {
-    main {
-        groovy {}
-    }
-    test {
-        groovy {}
-    }
-}
-
-// SECURITY: Do not share the jar as it includes the application.yml file
-artifacts {
-    jar {
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-        manifest {
-            attributes(
-                    'Main-Class': 'Linketinder/Main'
-            )
-        }
-
-        from {
-            configurations.runtimeClasspath.collect {
-                it.isDirectory() ? it : zipTree(it)
-            }
-        }
-    }
+    testImplementation "org.spockframework:spock-core:$spockVersion"
 }
 
 tasks.register('run', JavaExec) {
     group = 'Application'
     description = 'Run the application'
-    mainClass = 'Linketinder.Main'
+    mainClass = 'main.Main'
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
 }
@@ -74,10 +43,13 @@ tasks.register('run', JavaExec) {
 tasks.register('migrate', JavaExec) {
     group = 'Flyway'
     description = 'Migrate the database'
-    mainClass = 'Linketinder.database.FlywayMigration'
+    mainClass = 'main.database.FlywayMigration'
     classpath = sourceSets.main.runtimeClasspath
 }
 
 test {
     useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
 }

@@ -1,9 +1,0 @@
-db:
-  url: jdbc:postgresql://localhost:5432/yourDatabase
-  user: yourUsername
-  password: yourPassword
-  driver: org.postgresql.Driver
-  schemas: public
-  locations: classpath:db/migrations
-
-timezone: GMT+3
