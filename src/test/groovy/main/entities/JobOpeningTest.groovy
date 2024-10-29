@@ -17,12 +17,12 @@ class JobOpeningTest extends Specification {
                 .setAddressId(Optional.of(1))
                 .build()
 
-        then:
+        expect:
         jobOpening != null
     }
 
     def "job opening constructor throws exception when id is negative"() {
-        given:
+        when:
         new JobOpening.Builder()
                 .setId(-1)
                 .setName("name")
@@ -32,7 +32,7 @@ class JobOpeningTest extends Specification {
                 .setCompanyId(1)
                 .setAddressId(Optional.of(1))
 
-        expect:
+        then:
         thrown(IllegalArgumentException)
     }
 
@@ -52,7 +52,7 @@ class JobOpeningTest extends Specification {
     }
 
     def "job opening constructor throws exception when companyId is negative"() {
-        given:
+        when:
         new JobOpening.Builder()
                 .setId(1)
                 .setName("name")
@@ -62,7 +62,7 @@ class JobOpeningTest extends Specification {
                 .setCompanyId(-1)
                 .setAddressId(Optional.of(1))
 
-        expect:
+        then:
         thrown(IllegalArgumentException)
     }
 
@@ -115,7 +115,7 @@ class JobOpeningTest extends Specification {
                 .build()
 
         expect:
-        jobOpening1 == jobOpening2
+        jobOpening1 != jobOpening2
     }
 
     def "job opening hashcode returns same value when objects are equal"() {
@@ -157,7 +157,7 @@ class JobOpeningTest extends Specification {
                 .build()
 
         JobOpening jobOpening2 = new JobOpening.Builder()
-                .setId(1)
+                .setId(2)
                 .setName("name")
                 .setDescription("description")
                 .setIsOpen(true)
