@@ -62,4 +62,4 @@ node_modules/
 dist/
 
 ### Application Files ###
-src/main/resources/application.yml
+src/main/resources/application.yaml
