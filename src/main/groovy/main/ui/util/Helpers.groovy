@@ -1,7 +1,7 @@
 package main.ui.util
 
-import main.models.DTOs.AddressDTO
-import main.models.DTOs.SkillDTO
+import main.models.dtos.request.AddressDTO
+import main.models.dtos.request.SkillDTO
 
 import java.time.Instant
 import java.time.LocalDate
@@ -35,7 +35,7 @@ class Helpers {
                     throw new IllegalArgumentException("Field cannot be empty")
                 }
             } catch (NoSuchElementException | IllegalStateException | IllegalArgumentException ignored) {
-                println "Invalid input, try again!"
+                println "Invalid request, try again!"
             }
         }
     }
@@ -49,14 +49,13 @@ class Helpers {
 
                 return instant
             } catch (DateTimeParseException | NoSuchElementException | IllegalStateException ignored) {
-                println "Invalid input, try again!"
+                println "Invalid request, try again!"
             }
         }
     }
 
     static AddressDTO createAddress() {
         Scanner scanner = new Scanner(System.in)
-        AddressDTO addressDTO = new AddressDTO()
 
         print "Digite o país: "
         String country = getStringFieldFromUsr(scanner)
@@ -79,13 +78,15 @@ class Helpers {
         print "Digite o CEP: "
         String zipCode = getStringFieldFromUsr(scanner)
 
-        addressDTO.country = country
-        addressDTO.region = region
-        addressDTO.city = city
-        addressDTO.neighborhood = neighborhood
-        addressDTO.street = street
-        addressDTO.number = number
-        addressDTO.zipCode = zipCode
+        AddressDTO addressDTO = new AddressDTO.Builder()
+                .country(country)
+                .region(region)
+                .city(city)
+                .neighborhood(neighborhood)
+                .street(street)
+                .number(number)
+                .zipCode(zipCode)
+                .build()
 
         return addressDTO
     }
@@ -107,8 +108,9 @@ class Helpers {
                 break
             }
 
-            SkillDTO skillDTO = new SkillDTO()
-            skillDTO.name = skill
+            SkillDTO skillDTO = new SkillDTO.Builder()
+                    .name(skill)
+                    .build()
 
             skills.add(skillDTO)
         }
@@ -123,7 +125,7 @@ class Helpers {
                 return field.equalsIgnoreCase("s")
 
             } catch (NoSuchElementException | IllegalStateException | IllegalArgumentException ignored) {
-                println "Invalid input, try again!"
+                println "Invalid request, try again!"
             }
         }
     }
@@ -134,7 +136,7 @@ class Helpers {
                 int field = scanner.nextInt()
                 return field
             } catch (NoSuchElementException | IllegalStateException | NumberFormatException ignored) {
-                println "Invalid input, try again!"
+                println "Invalid request, try again!"
             }
         }
     }

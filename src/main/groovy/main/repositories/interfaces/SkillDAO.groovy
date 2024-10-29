@@ -8,4 +8,6 @@ interface SkillDAO extends DAO<Skill, SkillDTO> {
     Set<Skill> getByCandidateId(int candidateId)
 
     Set<Skill> getByJobOpeningId(int jobOpeningId)
+
+    int saveCandidateSkill(int candidateId, int skillId)
 }

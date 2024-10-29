@@ -81,5 +81,12 @@ class DefaultCandidateService implements CandidateService {
 
         candidateDAO.delete(id)
     }
+
+    Candidate authenticate(String email, String password) {
+        ParamValidation.requireNonNull(email, "email must not be null")
+        ParamValidation.requireNonNull(password, "password must not be null")
+
+        return candidateDAO.authenticate(email, password)
+    }
 }
 

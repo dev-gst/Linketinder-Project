@@ -139,4 +139,15 @@ class DefaultSkillDAO implements SkillDAO {
 
         stmt.execute()
     }
+
+    @Override
+    int saveCandidateSkill(int candidateId, int skillId) {
+        String query = "INSERT INTO candidate_skills (candidate_id, skill_id) VALUES (?, ?)"
+
+        PreparedStatement stmt = conn.prepareStatement(query)
+        stmt.setInt(1, candidateId)
+        stmt.setInt(2, skillId)
+
+        return stmt.executeUpdate()
+    }
 }

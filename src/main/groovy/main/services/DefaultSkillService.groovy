@@ -123,4 +123,12 @@ class DefaultSkillService implements SkillService, AnonService<AnonSkillDTO> {
 
         skillDAO.delete(id)
     }
+
+    @Override
+    int saveCandidateSkill(int candidateId, int skillId) {
+        ParamValidation.requirePositive(candidateId, "Candidate ID must be greater than 0")
+        ParamValidation.requirePositive(skillId, "Skill ID must be greater than 0")
+
+        return skillDAO.saveCandidateSkill(candidateId, skillId)
+    }
 }

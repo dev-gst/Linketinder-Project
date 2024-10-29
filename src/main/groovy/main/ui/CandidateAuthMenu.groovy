@@ -1,27 +1,38 @@
 package main.ui
 
-import main.models.DTOs.AddressDTO
-import main.models.DTOs.CandidateDTO
-import main.models.DTOs.SkillDTO
+import main.models.dtos.request.AddressDTO
+import main.models.dtos.request.CandidateDTO
+import main.models.dtos.request.SkillDTO
+import main.models.dtos.request.login.LoginDetailsDTO
 import main.models.entities.Candidate
-import main.services.CandidateService
-import main.services.JobOpeningService
+import main.services.interfaces.AddressService
+import main.services.interfaces.CandidateService
+import main.services.interfaces.JobOpeningService
+import main.services.interfaces.SkillService
 import main.ui.util.Helpers
 
 import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 
 class CandidateAuthMenu {
     private static final int MENU_ENTRIES = 3
 
     private final CandidateService candidateService
     private final JobOpeningService jobOpeningService
+    private final AddressService addressService
+    private final SkillService skillService
 
     CandidateAuthMenu(
             CandidateService candidateService,
-            JobOpeningService jobOpeningService
+            JobOpeningService jobOpeningService,
+            AddressService addressService,
+            SkillService skillService
     ) {
         this.candidateService = candidateService
         this.jobOpeningService = jobOpeningService
+        this.addressService = addressService
+        this.skillService = skillService
     }
 
     void start() {
@@ -47,7 +58,6 @@ class CandidateAuthMenu {
 
     private void registerCandidate() {
         Scanner scanner = new Scanner(System.in)
-        CandidateDTO candidateDTO = new CandidateDTO()
 
         print "Insira seu primeiro nome: "
         String firstName = Helpers.getStringFieldFromUsr(scanner)
@@ -75,17 +85,23 @@ class CandidateAuthMenu {
 
         AddressDTO addressDTO = Helpers.createAddress()
         Set<SkillDTO> skillDTOList = Helpers.gatherSkills()
+        CandidateDTO candidateDTO = new CandidateDTO.Builder()
+                .firstName(firstName)
+                .lastName(lastName)
+                .loginDetailsDTO(new LoginDetailsDTO(email, password))
+                .description(description)
+                .birthDate(LocalDate.ofInstant(birthDate, ZoneId.systemDefault()))
+                .cpf(cpf)
+                .education(education)
+                .addressId(addressService.save(addressDTO))
+                .build()
 
-        candidateDTO.firstName = firstName
-        candidateDTO.lastName = lastName
-        candidateDTO.email = email
-        candidateDTO.password = password
-        candidateDTO.description = description
-        candidateDTO.birthDate = birthDate
-        candidateDTO.cpf = cpf
-        candidateDTO.education = education
+        int CandidateId = candidateService.save(candidateDTO)
+        Set<Integer> skillIds = skillService.saveAll(skillDTOList)
 
-        candidateService.save(candidateDTO, addressDTO, skillDTOList)
+        for (int skillId : skillIds) {
+            skillService.saveCandidateSkill(CandidateId, skillId)
+        }
 
         println "Candidato registrado com sucesso!"
     }
@@ -108,6 +124,8 @@ class CandidateAuthMenu {
             CandidateMenu candidateMenu = new CandidateMenu(
                     candidateService,
                     jobOpeningService,
+                    addressService,
+                    skillService,
                     candidate
             )
 

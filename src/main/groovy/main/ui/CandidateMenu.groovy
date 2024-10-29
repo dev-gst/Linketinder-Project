@@ -1,30 +1,41 @@
 package main.ui
 
-import main.models.DTOs.AddressDTO
-import main.models.DTOs.CandidateDTO
-import main.models.DTOs.SkillDTO
+import main.models.dtos.request.AddressDTO
+import main.models.dtos.request.CandidateDTO
+import main.models.dtos.request.SkillDTO
+import main.models.dtos.request.login.LoginDetailsDTO
 import main.models.entities.Candidate
 import main.models.entities.JobOpening
-import main.services.CandidateService
-import main.services.JobOpeningService
+import main.services.interfaces.AddressService
+import main.services.interfaces.CandidateService
+import main.services.interfaces.JobOpeningService
+import main.services.interfaces.SkillService
 import main.ui.util.Helpers
 
 import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 
 class CandidateMenu {
     private static final int MENU_ENTRIES = 4
 
     private final CandidateService candidateService
     private final JobOpeningService jobOpeningService
+    private final AddressService addressService
+    private final SkillService skillService
     private Candidate candidate
 
     CandidateMenu(
             CandidateService candidateService,
             JobOpeningService jobOpeningService,
+            AddressService addressService,
+            SkillService skillService,
             Candidate candidate
     ) {
         this.candidateService = candidateService
         this.jobOpeningService = jobOpeningService
+        this.addressService = addressService
+        this.skillService = skillService
         this.candidate = candidate
     }
 
@@ -64,7 +75,6 @@ class CandidateMenu {
                 println "Descrição: ${jobOpening.description}"
                 println "Remoto: ${jobOpening.isRemote}"
                 println "Aberta: ${jobOpening.isOpen}"
-                println "Endereço: ${jobOpening.address ?: 'Não se aplica'}"
                 println()
             }
         }
@@ -81,7 +91,7 @@ class CandidateMenu {
         print "Atualize o sobrenome (${candidate.lastName}): "
         String lastName = Helpers.getStringFieldFromUsr(scanner)
 
-        print "Atualize o email (${candidate.email}): "
+        print "Atualize o email (${candidate.loginDetails.email}): "
         String email = Helpers.getStringFieldFromUsr(scanner)
 
         println "Atualize a senha: "
@@ -102,18 +112,26 @@ class CandidateMenu {
         AddressDTO addressDTO = Helpers.createAddress()
         Set<SkillDTO> skillDTOSet = Helpers.gatherSkills()
 
-        CandidateDTO candidateDTO = new CandidateDTO()
-        candidateDTO.firstName = firstName
-        candidateDTO.lastName = lastName
-        candidateDTO.email = email
-        candidateDTO.password = password
-        candidateDTO.description = description
-        candidateDTO.birthDate = birthDate
-        candidateDTO.cpf = cpf
-        candidateDTO.education = education
+        int addressId = addressService.save(addressDTO)
 
-        candidateService.update(candidate.id, candidateDTO, addressDTO, skillDTOSet)
-        candidate = candidateService.getById(candidate.id)
+        CandidateDTO candidateDTO = new CandidateDTO.Builder()
+                .firstName(firstName)
+                .lastName(lastName)
+                .loginDetailsDTO(new LoginDetailsDTO(email, password))
+                .description(description)
+                .birthDate(LocalDate.ofInstant(birthDate, ZoneId.systemDefault()))
+                .cpf(cpf)
+                .education(education)
+                .addressId(addressId)
+                .build()
+
+        Set<Integer> skills = skillService.saveAll(skillDTOSet)
+        for (Integer skillId : skills) {
+            skillService.saveCandidateSkill(candidate.id, skillId)
+        }
+
+        candidate = candidateService.updateById(candidate.id, candidateDTO)
+
         println "Informações atualizadas com sucesso!"
     }
 
@@ -124,7 +142,7 @@ class CandidateMenu {
         String confirmation = Helpers.getStringFieldFromUsr(scanner).trim().toLowerCase()
 
         if (confirmation == 's') {
-            candidateService.delete(candidate.id)
+            candidateService.deleteById(candidate.id)
             println "Conta deletada com sucesso."
 
             return true
