@@ -1,15 +1,15 @@
 package main.ui
 
-import main.models.DTOs.AddressDTO
-import main.models.DTOs.CompanyDTO
-import main.models.DTOs.JobOpeningDTO
-import main.models.DTOs.SkillDTO
+import main.models.dtos.request.AddressDTO
+import main.models.dtos.request.CompanyDTO
+import main.models.dtos.request.JobOpeningDTO
+import main.models.dtos.request.SkillDTO
+import main.models.dtos.request.login.LoginDetailsDTO
 import main.models.entities.Candidate
 import main.models.entities.Company
 import main.models.entities.JobOpening
-import main.services.CandidateService
-import main.services.CompanyService
-import main.services.JobOpeningService
+import main.models.entities.Skill
+import main.services.interfaces.*
 import main.ui.util.Helpers
 
 class CompanyMenu {
@@ -18,17 +18,24 @@ class CompanyMenu {
     private final CompanyService companyService
     private final JobOpeningService jobOpeningService
     private final CandidateService candidateService
+    private final AddressService addressService
+    private final SkillService skillService
+
     private Company company
 
     CompanyMenu(
             CompanyService companyService,
             JobOpeningService jobOpeningService,
             CandidateService candidateService,
+            AddressService addressService,
+            SkillService skillService,
             Company company
     ) {
         this.companyService = companyService
         this.jobOpeningService = jobOpeningService
         this.candidateService = candidateService
+        this.addressService = addressService
+        this.skillService = skillService
         this.company = company
     }
 
@@ -80,7 +87,6 @@ class CompanyMenu {
 
     private void updateProfile() {
         Scanner scanner = new Scanner(System.in)
-        CompanyDTO companyDTO = new CompanyDTO()
 
         print "Insira o novo nome da empresa: "
         String name = Helpers.getStringFieldFromUsr(scanner)
@@ -98,22 +104,23 @@ class CompanyMenu {
         String cnpj = Helpers.getStringFieldFromUsr(scanner)
 
         AddressDTO addressDTO = Helpers.createAddress()
+        int addressId = addressService.save(addressDTO)
 
-        companyDTO.name = name
-        companyDTO.email = email
-        companyDTO.password = password
-        companyDTO.description = description
-        companyDTO.cnpj = cnpj
+        CompanyDTO companyDTO = new CompanyDTO.Builder()
+                .setName(name)
+                .setLoginDetailsDTO(new LoginDetailsDTO(email, password))
+                .setDescription(description)
+                .setCnpj(cnpj)
+                .setAddressId(addressId)
+                .build()
 
-        companyService.update(company.id, companyDTO, addressDTO)
-        company = companyService.getById(company.id)
+        company = companyService.updateById(company.id, companyDTO)
 
         println "Perfil atualizado com sucesso!"
     }
 
     private void createJobOpening() {
         Scanner scanner = new Scanner(System.in)
-        JobOpeningDTO jobOpeningDTO = new JobOpeningDTO()
 
         print "Insira o nome da vaga: "
         String name = Helpers.getStringFieldFromUsr(scanner)
@@ -125,19 +132,38 @@ class CompanyMenu {
         boolean isRemote = Helpers.getBooleanFromUsr(scanner)
         println "Sua resposta foi ${isRemote ? 'Sim' : 'Não'}"
 
-        AddressDTO addressDTO = null
-        if (!isRemote) {
-           addressDTO = Helpers.createAddress()
-        }
-
         Set<SkillDTO> skillDTOSet = Helpers.gatherSkills()
 
-        jobOpeningDTO.name = name
-        jobOpeningDTO.description = description
-        jobOpeningDTO.isOpen = true
-        jobOpeningDTO.isRemote = company.id
+        JobOpeningDTO jobOpeningDTO
+        if (!isRemote) {
+            AddressDTO addressDTO = Helpers.createAddress()
+            int addressId = addressService.save(addressDTO)
 
-        jobOpeningService.save(jobOpeningDTO, company.id, addressDTO, skillDTOSet)
+            jobOpeningDTO = new JobOpeningDTO.Builder()
+                    .setName(name)
+                    .setDescription(description)
+                    .setIsOpen(true)
+                    .setIsRemote(isRemote)
+                    .setCompanyId(company.id)
+                    .setAddressId(Optional.of(addressId))
+                    .build()
+        } else {
+            jobOpeningDTO = new JobOpeningDTO.Builder()
+                    .setName(name)
+                    .setDescription(description)
+                    .setIsOpen(true)
+                    .setIsRemote(isRemote)
+                    .setCompanyId(company.id)
+                    .setAddressId(Optional.of(null))
+                    .build()
+        }
+
+        int jobOpeningId = jobOpeningService.save(jobOpeningDTO)
+        Set<Integer> skillIds = skillService.saveAll(skillDTOSet)
+
+        for (int skillId : skillIds) {
+            skillService.saveJobOpeningSkill(jobOpeningId, skillId)
+        }
 
         println "Vaga criada com sucesso!"
     }
@@ -149,12 +175,11 @@ class CompanyMenu {
         int jobOpeningId = Helpers.getIntFromUsr(scanner)
 
         JobOpening existingJobOpening = jobOpeningService.getById(jobOpeningId)
-        if (existingJobOpening == null || existingJobOpening.company.id != company.id) {
+        Company existingCompany = companyService.getByEntityId(existingJobOpening.id, JobOpening.class)[0]
+        if (existingJobOpening == null || existingCompany.id != company.id) {
             println "Vaga não encontrada ou não pertence à empresa."
             return
         }
-
-        JobOpeningDTO jobOpeningDTO = new JobOpeningDTO()
 
         println()
         print "Insira o novo nome da vaga (atual: ${existingJobOpening.name}): "
@@ -165,26 +190,44 @@ class CompanyMenu {
 
         print "A vaga é remota? (atual: ${existingJobOpening.isRemote ? 'Sim' : 'Não'}) (s/n): "
         boolean isRemote = Helpers.getBooleanFromUsr(scanner)
-
-        AddressDTO addressDTO = null
-        if (!isRemote) {
-            addressDTO = Helpers.createAddress()
-        }
-
         Set<SkillDTO> skillDTOSet = Helpers.gatherSkills()
 
-        jobOpeningDTO.name = name
-        jobOpeningDTO.description = description
-        jobOpeningDTO.isOpen = existingJobOpening.isOpen
-        jobOpeningDTO.isRemote = isRemote
+        JobOpeningDTO jobOpeningDTO
+        if (!isRemote) {
+            AddressDTO addressDTO = Helpers.createAddress()
+            int addressId = addressService.save(addressDTO)
 
-        jobOpeningService.update(jobOpeningId, jobOpeningDTO, company.id, addressDTO, skillDTOSet)
+            jobOpeningDTO = new JobOpeningDTO.Builder()
+                    .setName(name)
+                    .setDescription(description)
+                    .setIsOpen(true)
+                    .setIsRemote(isRemote)
+                    .setCompanyId(company.id)
+                    .setAddressId(Optional.of(addressId))
+                    .build()
+        } else {
+            jobOpeningDTO = new JobOpeningDTO.Builder()
+                    .setName(name)
+                    .setDescription(description)
+                    .setIsOpen(true)
+                    .setIsRemote(isRemote)
+                    .setCompanyId(company.id)
+                    .setAddressId(Optional.of(null))
+                    .build()
+        }
+
+        jobOpeningService.updateById(jobOpeningId, jobOpeningDTO).id
+        Set<Integer> skillIds = skillService.saveAll(skillDTOSet)
+
+        for (int skillId : skillIds) {
+            skillService.saveJobOpeningSkill(jobOpeningId, skillId)
+        }
 
         println "Vaga atualizada com sucesso!"
     }
 
     private void printJobOpenings() {
-        List<JobOpening> jobOpenings = jobOpeningService.getByCompanyId(company.id)
+        List<JobOpening> jobOpenings = jobOpeningService.getByEntityId(company.id, Company.class)
         println "***** Vagas da Empresa *****"
         jobOpenings.each { jobOpening ->
             println "ID: ${jobOpening.id}"
@@ -192,17 +235,18 @@ class CompanyMenu {
             println "Descrição: ${jobOpening.description}"
             println "Remota: ${jobOpening.isRemote ? 'Sim' : 'Não'}"
             println "Aberta: ${jobOpening.isOpen ? 'Sim' : 'Não'}"
-            println "Endereço: ${jobOpening.address ?: 'Não se aplica'}"
             println "-----------------------------"
         }
     }
 
     private void printCandidates() {
-        List<Candidate> candidates = candidateService.getAll()
+        Set<Candidate> candidates = candidateService.getAll()
+
         println "***** Candidatos *****"
         candidates.each { candidate ->
+            Set<Skill> candidateSkills = skillService.getByEntityId(candidate.id, Candidate.class)
             println "Descrição: ${candidate.description}"
-            println "Skills: ${candidate.skills.collect { it.name }}"
+            println "Skills: ${candidateSkills}"
             println "Formação: ${candidate.education}"
             println "-----------------------------"
         }
@@ -218,7 +262,7 @@ class CompanyMenu {
             return
         }
 
-        companyService.delete(company.id)
+        companyService.deleteById(company.id)
         println "Perfil deletado com sucesso!"
     }
 

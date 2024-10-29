@@ -1,11 +1,10 @@
 package main.ui
 
-import main.models.DTOs.AddressDTO
-import main.models.DTOs.CompanyDTO
+import main.models.dtos.request.AddressDTO
+import main.models.dtos.request.CompanyDTO
+import main.models.dtos.request.login.LoginDetailsDTO
 import main.models.entities.Company
-import main.services.CandidateService
-import main.services.CompanyService
-import main.services.JobOpeningService
+import main.services.interfaces.*
 import main.ui.util.Helpers
 
 class CompanyAuthMenu {
@@ -14,15 +13,21 @@ class CompanyAuthMenu {
     private final CompanyService companyService
     private final CandidateService candidateService
     private final JobOpeningService jobOpeningService
+    private final AddressService addressService
+    private final SkillService skillService
 
     CompanyAuthMenu(
             CompanyService companyService,
             JobOpeningService jobOpeningService,
-            CandidateService candidateService
+            CandidateService candidateService,
+            AddressService addressService,
+            SkillService skillService
     ) {
         this.companyService = companyService
         this.jobOpeningService = jobOpeningService
         this.candidateService = candidateService
+        this.addressService = addressService
+        this.skillService = skillService
     }
 
     void start() {
@@ -48,7 +53,6 @@ class CompanyAuthMenu {
 
     private void registerCompany() {
         Scanner scanner = new Scanner(System.in)
-        CompanyDTO companyDTO = new CompanyDTO()
 
         print "Insira o nome da empresa: "
         String name = Helpers.getStringFieldFromUsr(scanner)
@@ -66,14 +70,17 @@ class CompanyAuthMenu {
         String cnpj = Helpers.getStringFieldFromUsr(scanner)
 
         AddressDTO addressDTO = Helpers.createAddress()
+        int addressId = addressService.save(addressDTO)
 
-        companyDTO.name = name
-        companyDTO.email = email
-        companyDTO.password = password
-        companyDTO.description = description
-        companyDTO.cnpj = cnpj
+        CompanyDTO companyDTO = new CompanyDTO.Builder()
+                .setName(name)
+                .setLoginDetailsDTO(new LoginDetailsDTO(email, password))
+                .setDescription(description)
+                .setCnpj(cnpj)
+                .setAddressId(addressId)
+                .build()
 
-        companyService.save(companyDTO, addressDTO)
+        companyService.save(companyDTO)
 
         println "Empresa registrada com sucesso!"
     }
@@ -97,6 +104,8 @@ class CompanyAuthMenu {
                     companyService,
                     jobOpeningService,
                     candidateService,
+                    addressService,
+                    skillService,
                     company
             )
 

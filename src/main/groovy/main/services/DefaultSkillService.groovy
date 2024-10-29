@@ -131,4 +131,12 @@ class DefaultSkillService implements SkillService, AnonService<AnonSkillDTO> {
 
         return skillDAO.saveCandidateSkill(candidateId, skillId)
     }
+
+    @Override
+    int saveJobOpeningSkill(int jobOpeningId, int skillId) {
+        ParamValidation.requirePositive(jobOpeningId, "Job Opening ID must be greater than 0")
+        ParamValidation.requirePositive(skillId, "Skill ID must be greater than 0")
+
+        return skillDAO.saveJobOpeningSkill(jobOpeningId, skillId)
+    }
 }

@@ -1,9 +1,6 @@
 package main.ui
 
-import main.services.CandidateService
-import main.services.CompanyService
-import main.services.JobOpeningService
-import main.services.SkillService
+import main.services.interfaces.*
 import main.ui.util.Helpers
 
 class MainMenu {
@@ -12,17 +9,20 @@ class MainMenu {
     final CandidateService candidateService
     final CompanyService companyService
     final JobOpeningService jobOpeningService
+    final AddressService addressService
     final SkillService skillService
 
     MainMenu(
             CompanyService companyService,
             CandidateService candidateService,
             JobOpeningService jobOpeningService,
+            AddressService addressService,
             SkillService skillService
     ) {
         this.candidateService = candidateService
         this.companyService = companyService
         this.jobOpeningService = jobOpeningService
+        this.addressService = addressService
         this.skillService = skillService
     }
 
@@ -36,12 +36,18 @@ class MainMenu {
         switch (choice) {
             case 1:
                 CandidateAuthMenu candidateAuthMenu =
-                        new CandidateAuthMenu(candidateService, jobOpeningService)
+                        new CandidateAuthMenu(candidateService, jobOpeningService, addressService, skillService)
 
                 candidateAuthMenu.start()
                 break
             case 2:
-                CompanyAuthMenu companyAuthMenu = new CompanyAuthMenu(companyService, jobOpeningService, candidateService)
+                CompanyAuthMenu companyAuthMenu = new CompanyAuthMenu(
+                        companyService,
+                        jobOpeningService,
+                        candidateService,
+                        addressService,
+                        skillService
+                )
                 companyAuthMenu.start()
                 break
             case MENU_ENTRIES:
