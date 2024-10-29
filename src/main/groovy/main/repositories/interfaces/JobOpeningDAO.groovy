@@ -1,7 +1,7 @@
 package main.repositories.interfaces
 
-import main.models.dtos.request.jobOpenings.JobOpeningDTO
-import main.models.entities.jobOpening.JobOpening
+import main.models.dtos.request.JobOpeningDTO
+import main.models.entities.JobOpening
 
 interface JobOpeningDAO extends DAO<JobOpening, JobOpeningDTO> {
 

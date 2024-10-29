@@ -3,8 +3,8 @@ package main.services
 import main.models.dtos.anonresponse.AnonSkillDTO
 import main.models.dtos.request.SkillDTO
 import main.models.entities.Candidate
+import main.models.entities.JobOpening
 import main.models.entities.Skill
-import main.models.entities.jobOpening.JobOpening
 import main.repositories.interfaces.SkillDAO
 import main.services.interfaces.AnonService
 import main.services.interfaces.SkillService

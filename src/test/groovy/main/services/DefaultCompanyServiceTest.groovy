@@ -2,7 +2,7 @@ package main.services
 
 import main.models.dtos.request.CompanyDTO
 import main.models.entities.Company
-import main.models.entities.jobOpening.JobOpening
+import main.models.entities.JobOpening
 import main.repositories.interfaces.CompanyDAO
 import main.util.exception.custom.EntityNotFoundException
 import mocks.CompanyMock

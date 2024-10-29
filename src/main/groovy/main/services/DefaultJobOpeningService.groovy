@@ -1,8 +1,8 @@
 package main.services
 
-import main.models.dtos.request.jobOpenings.JobOpeningDTO
+import main.models.dtos.request.JobOpeningDTO
 import main.models.entities.Company
-import main.models.entities.jobOpening.JobOpening
+import main.models.entities.JobOpening
 import main.repositories.interfaces.JobOpeningDAO
 import main.services.interfaces.JobOpeningService
 import main.util.exception.ParamValidation

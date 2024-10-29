@@ -5,7 +5,7 @@ import main.models.dtos.request.AddressDTO
 import main.models.entities.Address
 import main.models.entities.Candidate
 import main.models.entities.Company
-import main.models.entities.jobOpening.JobOpening
+import main.models.entities.JobOpening
 import main.repositories.interfaces.AddressDAO
 import main.util.exception.custom.EntityNotFoundException
 import mocks.AddressMock
