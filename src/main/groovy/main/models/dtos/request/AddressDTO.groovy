@@ -23,6 +23,34 @@ class AddressDTO {
         this.zipCode = builder.zipCode
     }
 
+    String getCountry() {
+        return country
+    }
+
+    String getRegion() {
+        return region
+    }
+
+    String getCity() {
+        return city
+    }
+
+    String getNeighborhood() {
+        return neighborhood
+    }
+
+    String getStreet() {
+        return street
+    }
+
+    String getNumber() {
+        return number
+    }
+
+    String getZipCode() {
+        return zipCode
+    }
+
     static class Builder {
 
         String country

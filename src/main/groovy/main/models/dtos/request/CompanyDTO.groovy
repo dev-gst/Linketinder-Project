@@ -7,29 +7,49 @@ import main.util.exception.custom.FieldNotSetException
 class CompanyDTO {
 
     final String name
-    final LoginDetailsDTO loginDetails
+    final LoginDetailsDTO loginDetailsDTO
     final String description
     final String cnpj
     final int addressId
 
     private CompanyDTO(Builder builder) {
         name = builder.name
-        loginDetails = builder.loginDetails
+        loginDetailsDTO = builder.loginDetailsDTO
         description = builder.description
         cnpj = builder.cnpj
         addressId = builder.addressId
     }
 
+    String getName() {
+        return name
+    }
+
+    LoginDetailsDTO getLoginDetailsDTO() {
+        return loginDetailsDTO
+    }
+
+    String getDescription() {
+        return description
+    }
+
+    String getCnpj() {
+        return cnpj
+    }
+
+    int getAddressId() {
+        return addressId
+    }
+
     static class Builder {
 
         String name
-        LoginDetailsDTO loginDetails
+        LoginDetailsDTO loginDetailsDTO
         String description
         String cnpj
         int addressId
 
         boolean nameSet = false
-        boolean loginDetailsSet = false
+        boolean loginDetailsDTOSet = false
         boolean descriptionSet = false
         boolean cnpjSet = false
         boolean addressIdSet = false
@@ -43,11 +63,11 @@ class CompanyDTO {
             return this
         }
 
-        Builder setLoginDetails(LoginDetailsDTO loginDetails) {
-            ParamValidation.requireNonNull(loginDetails, "Login details cannot be null")
+        Builder setLoginDetailsDTO(LoginDetailsDTO loginDetailsDTO) {
+            ParamValidation.requireNonNull(loginDetailsDTO, "Login details cannot be null")
 
-            this.loginDetails = loginDetails
-            loginDetailsSet = true
+            this.loginDetailsDTO = loginDetailsDTO
+            loginDetailsDTOSet = true
 
             return this
         }
@@ -87,7 +107,7 @@ class CompanyDTO {
 
         private void validate() {
             if (!nameSet) throw new FieldNotSetException("Name must be set")
-            if (!loginDetailsSet) throw new FieldNotSetException("Login details must be set")
+            if (!loginDetailsDTOSet) throw new FieldNotSetException("Login details must be set")
             if (!descriptionSet) throw new FieldNotSetException("Description must be set")
             if (!cnpjSet) throw new FieldNotSetException("CNPJ must be set")
             if (!addressIdSet) throw new FieldNotSetException("Address ID must be set")

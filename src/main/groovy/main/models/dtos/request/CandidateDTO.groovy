@@ -30,6 +30,38 @@ class CandidateDTO {
         this.addressId = builder.addressId
     }
 
+    String getFirstName() {
+        return firstName
+    }
+
+    String getLastName() {
+        return lastName
+    }
+
+    LoginDetailsDTO getLoginDetailsDTO() {
+        return loginDetailsDTO
+    }
+
+    String getCpf() {
+        return cpf
+    }
+
+    Instant getBirthDate() {
+        return birthDate
+    }
+
+    String getDescription() {
+        return description
+    }
+
+    String getEducation() {
+        return education
+    }
+
+    int getAddressId() {
+        return addressId
+    }
+
     static class Builder {
         String firstName
         String lastName
