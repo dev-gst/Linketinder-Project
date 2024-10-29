@@ -4,7 +4,7 @@ import main.models.dtos.anonresponse.AnonAddressDTO
 import main.models.dtos.request.AddressDTO
 import main.models.entities.Address
 import main.models.entities.Candidate
-import main.models.entities.company.Company
+import main.models.entities.Company
 import main.models.entities.jobOpening.JobOpening
 import main.repositories.interfaces.AddressDAO
 import main.services.interfaces.AddressService

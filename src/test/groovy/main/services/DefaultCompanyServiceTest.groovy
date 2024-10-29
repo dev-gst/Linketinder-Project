@@ -1,8 +1,7 @@
 package main.services
 
-import main.models.dtos.request.company.CompanyDTO
-import main.models.entities.Address
-import main.models.entities.company.Company
+import main.models.dtos.request.CompanyDTO
+import main.models.entities.Company
 import main.models.entities.jobOpening.JobOpening
 import main.repositories.interfaces.CompanyDAO
 import main.util.exception.custom.EntityNotFoundException
@@ -31,7 +30,6 @@ class DefaultCompanyServiceTest extends Specification {
 
         companyService = new DefaultCompanyService(companyDAOMock)
     }
-
 
     def "get by id returns correct company"() {
         given:
@@ -214,9 +212,6 @@ class DefaultCompanyServiceTest extends Specification {
 
     def "update by id returns updated company"() {
         given:
-        Set<Address> foundAddresses = new LinkedHashSet<>()
-        foundAddresses.add(companyMock1.companyDetails.address)
-
         companyDAOMock.getById(1) >> companyMock1
         companyDAOMock.update(companyMock1.id, companyDTOMock1) >> companyMock1
 

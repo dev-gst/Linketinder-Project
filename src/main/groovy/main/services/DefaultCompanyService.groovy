@@ -1,7 +1,7 @@
 package main.services
 
-import main.models.dtos.request.company.CompanyDTO
-import main.models.entities.company.Company
+import main.models.dtos.request.CompanyDTO
+import main.models.entities.Company
 import main.models.entities.jobOpening.JobOpening
 import main.repositories.interfaces.CompanyDAO
 import main.services.interfaces.CompanyService
@@ -58,7 +58,7 @@ class DefaultCompanyService implements CompanyService {
     int save(CompanyDTO companyDTO) {
         ParamValidation.requireNonNull(companyDTO, "companyDTO cannot be null")
 
-        Set<Company> foundCompanies = getByField(EMAIL_FIELD, companyDTO.loginDetails.email)
+        Set<Company> foundCompanies = getByField(EMAIL_FIELD, companyDTO.loginDetailsDTO.email)
         if (foundCompanies == null) throw new NullCollectionException("foundCompanies cannot be null")
 
         Company foundCompany = foundCompanies.isEmpty() ? null : foundCompanies[0]

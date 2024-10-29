@@ -10,7 +10,7 @@ class CompanyMock extends Specification {
         CompanyDTO companyDTO = Mock(CompanyDTO)
 
         companyDTO.name >> "Company $n"
-        companyDTO.loginDetails >> new LoginDetailsMock().createLoginDetailsDTOMock(n)
+        companyDTO.loginDetailsDTO >> new LoginDetailsMock().createLoginDetailsDTOMock(n)
         companyDTO.description >> "Company description $n"
         companyDTO.cnpj >> "12345678901234 $n"
         companyDTO.addressId >> n
