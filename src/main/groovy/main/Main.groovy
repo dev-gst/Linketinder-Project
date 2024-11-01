@@ -20,7 +20,7 @@ class Main {
         ConfigLoader configLoader = new ConfigLoader(yamlParser)
         Env env = new Env(configLoader)
 
-        DBConnectionManager dbConnectionManager = new DBConnectionManager(env)
+        DBConnectionManager dbConnectionManager = DBConnectionManager.getInstance(env)
         Connection connection = dbConnectionManager.getConnection()
 
         AddressDAO addressDAO = new DefaultAddressDAO(connection)
