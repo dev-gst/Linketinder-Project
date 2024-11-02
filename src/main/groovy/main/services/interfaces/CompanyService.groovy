@@ -5,4 +5,5 @@ import main.models.entities.Company
 
 interface CompanyService extends SearchableService<Company, CompanyDTO> {
 
+    Company authenticate(String email, String password)
 }
