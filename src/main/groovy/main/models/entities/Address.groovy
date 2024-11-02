@@ -58,6 +58,11 @@ class Address {
         return result
     }
 
+    @Override
+    String toString() {
+        return "$street, $number - $neighborhood, $city, $region, $country, $zipCode"
+    }
+
     static class Builder {
 
         int id

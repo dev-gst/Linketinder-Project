@@ -32,6 +32,8 @@ class AddressMock extends Specification {
         address.number >> "$n"
         address.zipCode >> "12345-678$n"
 
+        address.toString() >> "${address.street}, ${address.number} - ${address.neighborhood}, ${address.city}, ${address.region}, ${address.country}, ${address.zipCode}"
+
         return address
     }
 }
