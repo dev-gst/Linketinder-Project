@@ -9,6 +9,7 @@ import main.services.interfaces.CandidateService
 import main.services.interfaces.SkillService
 import main.ui.helpers.UserInfoCollector
 import main.ui.interfaces.MenuCommand
+import main.ui.interfaces.MenuState
 import main.util.exception.ParamValidation
 
 class UpdateCandidateEntry implements MenuCommand {
@@ -44,6 +45,11 @@ class UpdateCandidateEntry implements MenuCommand {
     @Override
     String getEntryName() {
         return "Atualizar perfil"
+    }
+
+    @Override
+    MenuState getNextMenuState(MenuState currentState) {
+        return currentState
     }
 
     private void updateProfile() {

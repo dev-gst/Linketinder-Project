@@ -8,6 +8,7 @@ import main.services.interfaces.CandidateService
 import main.services.interfaces.SkillService
 import main.ui.helpers.UserInfoCollector
 import main.ui.interfaces.MenuCommand
+import main.ui.interfaces.MenuState
 import main.util.exception.ParamValidation
 
 class RegisterCandidateEntry implements MenuCommand {
@@ -38,6 +39,11 @@ class RegisterCandidateEntry implements MenuCommand {
     @Override
     String getEntryName() {
         return "Cadastrar perfil"
+    }
+
+    @Override
+    MenuState getNextMenuState(MenuState currentState) {
+        return currentState
     }
 
     private registerProfile() {

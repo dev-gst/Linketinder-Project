@@ -5,6 +5,7 @@ import main.models.entities.Candidate
 import main.services.interfaces.AddressService
 import main.services.interfaces.SkillService
 import main.ui.interfaces.MenuCommand
+import main.ui.interfaces.MenuState
 import main.util.exception.ParamValidation
 
 import java.time.LocalDate
@@ -35,6 +36,11 @@ class ViewCandidateEntry implements MenuCommand {
     @Override
     String getEntryName() {
         return "Visualizar perfil"
+    }
+
+    @Override
+    MenuState getNextMenuState(MenuState currentState) {
+        return currentState
     }
 
     private void displayCandidateProfile() {

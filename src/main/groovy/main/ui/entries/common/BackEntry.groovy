@@ -1,6 +1,7 @@
 package main.ui.entries.common
 
 import main.ui.interfaces.MenuCommand
+import main.ui.interfaces.MenuState
 
 class BackEntry implements MenuCommand {
 
@@ -12,5 +13,10 @@ class BackEntry implements MenuCommand {
     @Override
     String getEntryName() {
         return "Voltar"
+    }
+
+    @Override
+    MenuState getNextMenuState(MenuState ignored) {
+        return null
     }
 }

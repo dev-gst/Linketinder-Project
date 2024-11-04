@@ -5,6 +5,7 @@ import main.models.entities.JobOpening
 import main.services.interfaces.AddressService
 import main.services.interfaces.JobOpeningService
 import main.ui.interfaces.MenuCommand
+import main.ui.interfaces.MenuState
 import main.util.exception.ParamValidation
 
 class ViewJobOpenings implements MenuCommand {
@@ -28,6 +29,11 @@ class ViewJobOpenings implements MenuCommand {
     @Override
     String getEntryName() {
         return "Visualizar vagas"
+    }
+
+    @Override
+    MenuState getNextMenuState(MenuState currentState) {
+        return currentState
     }
 
     private checkForJobOpenings() {
