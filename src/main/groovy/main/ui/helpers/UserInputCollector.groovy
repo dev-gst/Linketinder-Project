@@ -14,9 +14,15 @@ class UserInputCollector {
         println "Digite uma opção entre 1 e ${limit}: "
 
         int usrInput
-        do {
+        while (true) {
             usrInput = getChoiceLogic(scanner)
-        } while (usrInput <= 0 || usrInput > limit)
+            if (usrInput <= 0 || usrInput > limit) {
+                println "Opção inválida. Tente novamente."
+                continue
+            }
+
+            break
+        }
 
         return usrInput
     }
