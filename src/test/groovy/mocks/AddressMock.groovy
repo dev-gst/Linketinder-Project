@@ -17,6 +17,9 @@ class AddressMock extends Specification {
         addressDTO.number >> "$n"
         addressDTO.zipCode >> "12345-678$n"
 
+        addressDTO.toString() >> "${addressDTO.street}, ${addressDTO.number} - ${addressDTO.neighborhood}," +
+                " ${addressDTO.city}, ${addressDTO.region}, ${addressDTO.country}, ${addressDTO.zipCode}"
+
         return addressDTO
     }
 
@@ -32,7 +35,8 @@ class AddressMock extends Specification {
         address.number >> "$n"
         address.zipCode >> "12345-678$n"
 
-        address.toString() >> "${address.street}, ${address.number} - ${address.neighborhood}, ${address.city}, ${address.region}, ${address.country}, ${address.zipCode}"
+        address.toString() >> "${address.street}, ${address.number} - ${address.neighborhood}," +
+                " ${address.city}, ${address.region}, ${address.country}, ${address.zipCode}"
 
         return address
     }
