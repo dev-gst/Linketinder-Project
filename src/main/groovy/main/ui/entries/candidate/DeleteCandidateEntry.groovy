@@ -4,11 +4,13 @@ import main.models.entities.Candidate
 import main.services.interfaces.CandidateService
 import main.ui.helpers.UserInputCollector
 import main.ui.interfaces.MenuCommand
+import main.ui.interfaces.MenuState
 import main.util.exception.ParamValidation
 
 class DeleteCandidateEntry implements MenuCommand {
 
     CandidateService candidateService
+    boolean confirmation
 
     Candidate candidate
 
@@ -33,9 +35,18 @@ class DeleteCandidateEntry implements MenuCommand {
         return "Deletar conta"
     }
 
+    @Override
+    MenuState getNextMenuState(MenuState currentState) {
+        if (confirmation) {
+            return null
+        }
+
+        return currentState
+    }
+
     private void deleteCandidateProfile() {
         println "Tem certeza que deseja deletar sua conta? (s/N)"
-        boolean confirmation = UserInputCollector.getBoolean(new Scanner(System.in))
+        confirmation = UserInputCollector.getBoolean(new Scanner(System.in))
 
         if (confirmation) {
             candidateService.deleteById(candidate.id)
