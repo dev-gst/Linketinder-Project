@@ -2,7 +2,7 @@ package main.ui.helpers
 
 import main.models.entities.Candidate
 
-import java.time.Instant
+import java.time.LocalDate
 
 import static main.ui.helpers.UserInputCollector.*
 
@@ -94,7 +94,7 @@ class UserInfoCollector {
         String description = getString(scanner)
 
         print "Insira sua data de nascimento(YYYY-MM-DD): "
-        Instant birthDate = getInstant(scanner)
+        LocalDate birthDate = getLocalDate(scanner)
 
         print "Insira seu CPF: "
         String cpf = getString(scanner)
@@ -149,9 +149,9 @@ class UserInfoCollector {
         }
 
         print "Deseja atualizar sua data de nascimento (${candidate.birthDate}) (s/N)? "
-        Instant birthDate = null
+        LocalDate birthDate = null
         if (getBoolean(scanner)) {
-            birthDate = getInstant(scanner)
+            birthDate = getLocalDate(scanner)
         }
 
         print "Deseja atualizar o CPF (${candidate.cpf}) (s/N)? "

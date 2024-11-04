@@ -103,7 +103,7 @@ class UserInfoCollectorTest extends Specification {
                 email      : "john.doe@example.com",
                 password   : "password",
                 cpf        : "12345678900",
-                birthDate  : "2000-01-01T00:00:00Z",
+                birthDate: "2000-01-01",
                 description: "BIO",
                 education  : "Bachelor"
         ]
@@ -124,7 +124,7 @@ class UserInfoCollectorTest extends Specification {
                 email      : "jane.doe@example.com",
                 password   : "newpassword",
                 cpf        : "98765432100",
-                birthDate  : "1990-01-01T00:00:00Z",
+                birthDate: "1990-01-01",
                 description: "New BIO",
                 education  : "Master"
         ]
