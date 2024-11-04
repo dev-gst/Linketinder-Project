@@ -3,6 +3,8 @@ package main.ui.entries.candidate
 import main.models.entities.Address
 import main.models.entities.Candidate
 import main.models.entities.Skill
+import main.services.interfaces.AddressService
+import main.services.interfaces.SkillService
 import mocks.AddressMock
 import mocks.CandidateMock
 import mocks.SkillMock
@@ -13,9 +15,11 @@ import java.time.ZoneId
 
 class ViewCandidateEntryTest extends Specification {
 
-    Candidate candidate
-    Set<Skill> skills
-    Address address
+    Candidate mockedCandidate
+    Address mockedAddress
+    Set<Skill> mockedSkills
+    SkillService mockedSkillService
+    AddressService mockedAddressService
 
     ByteArrayOutputStream testOut
 
@@ -28,26 +32,30 @@ class ViewCandidateEntryTest extends Specification {
         Skill skill1 = new SkillMock().createSkillMock(1)
         Skill skill2 = new SkillMock().createSkillMock(2)
 
-        candidate = new CandidateMock().createCandidateMock(1)
-        address = new AddressMock().createAddressMock(1)
-        skills = new LinkedHashSet<>()
-        skills.add(skill1)
-        skills.add(skill2)
+        mockedCandidate = new CandidateMock().createCandidateMock(1)
+        mockedAddress = new AddressMock().createAddressMock(1)
+        mockedSkills = Set.of(skill1, skill2)
 
-        viewCandidateProfile = new ViewCandidateEntry(candidate, skills, address)
+        mockedSkillService = Mock(SkillService.class)
+        mockedAddressService = Mock(AddressService.class)
+
+        viewCandidateProfile = new ViewCandidateEntry(mockedCandidate, mockedSkillService, mockedAddressService)
     }
 
     def "should display candidate profile"() {
         given:
         def output = "Candidate profile\n" +
-                "Name: ${candidate.firstName} ${candidate.lastName}\n" +
-                "Email: ${candidate.loginDetails.email}\n" +
-                "Description: ${candidate.description}\n" +
-                "Birth date: ${LocalDate.ofInstant(candidate.birthDate, ZoneId.systemDefault())}\n" +
-                "CPF: ${candidate.cpf}\n" +
-                "Education: ${candidate.education}\n" +
-                "Skills: ${skills}\n" +
-                "Address: ${address}\n"
+                "Name: ${mockedCandidate.firstName} ${mockedCandidate.lastName}\n" +
+                "Email: ${mockedCandidate.loginDetails.email}\n" +
+                "Description: ${mockedCandidate.description}\n" +
+                "Birth date: ${LocalDate.ofInstant(mockedCandidate.birthDate, ZoneId.systemDefault())}\n" +
+                "CPF: ${mockedCandidate.cpf}\n" +
+                "Education: ${mockedCandidate.education}\n" +
+                "Skills: ${mockedSkills.toString()}\n" +
+                "Address: ${mockedAddress.toString()}\n"
+
+        mockedSkillService.getByEntityId(mockedCandidate.id, Candidate.class) >> mockedSkills
+        mockedAddressService.getByEntityId(mockedCandidate.id, Candidate.class) >> Set.of(mockedAddress)
 
         when:
         viewCandidateProfile.execute()
@@ -58,7 +66,7 @@ class ViewCandidateEntryTest extends Specification {
 
     def "should throw exception when candidate is null"() {
         when:
-        new ViewCandidateEntry(null, skills, address)
+        new ViewCandidateEntry(null, mockedSkillService, mockedAddressService)
 
         then:
         thrown(IllegalArgumentException)
@@ -66,7 +74,7 @@ class ViewCandidateEntryTest extends Specification {
 
     def "should throw exception when skills is null"() {
         when:
-        new ViewCandidateEntry(candidate, null, address)
+        new ViewCandidateEntry(mockedCandidate, null, mockedAddressService)
 
         then:
         thrown(IllegalArgumentException)
@@ -74,7 +82,7 @@ class ViewCandidateEntryTest extends Specification {
 
     def "should throw exception when address is null"() {
         when:
-        new ViewCandidateEntry(candidate, skills, null)
+        new ViewCandidateEntry(mockedCandidate, mockedSkillService, null)
 
         then:
         thrown(IllegalArgumentException)
