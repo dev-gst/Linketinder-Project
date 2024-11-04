@@ -66,6 +66,17 @@ class UserInputCollector {
         }
     }
 
+    static LocalDate getLocalDate(Scanner scanner) {
+        while (true) {
+            try {
+                String field = scanner.nextLine()
+                return LocalDate.parse(field)
+            } catch (Exception ignored) {
+                println "Entrada inválida, tente novamente!"
+            }
+        }
+    }
+
     static boolean getBoolean(Scanner scanner) {
         while (true) {
             try {

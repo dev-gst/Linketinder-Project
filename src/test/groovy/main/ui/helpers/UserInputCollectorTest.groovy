@@ -3,6 +3,7 @@ package main.ui.helpers
 import spock.lang.Specification
 
 import java.time.Instant
+import java.time.LocalDate
 
 class UserInputCollectorTest extends Specification {
 
@@ -81,6 +82,28 @@ class UserInputCollectorTest extends Specification {
 
         then:
         result == Instant.parse("2023-10-10T00:00:00Z")
+    }
+
+    def "getLocalDate returns local date"() {
+        given:
+        Scanner scanner = new Scanner("2023-10-10\n")
+
+        when:
+        LocalDate result = UserInputCollector.getLocalDate(scanner)
+
+        then:
+        result == LocalDate.parse("2023-10-10")
+    }
+
+    def "getLocalDate invalid input prompts again"() {
+        given:
+        Scanner scanner = new Scanner("invalid\n2023-10-10\n")
+
+        when:
+        LocalDate result = UserInputCollector.getLocalDate(scanner)
+
+        then:
+        result == LocalDate.parse("2023-10-10")
     }
 
     def "getBoolean valid input returns boolean"() {
