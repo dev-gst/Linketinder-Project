@@ -51,6 +51,18 @@ class AddressDTO {
         return zipCode
     }
 
+    static AddressDTO of(Map<String, String> addressInfo) {
+        return new Builder()
+                .country(addressInfo.get("country"))
+                .region(addressInfo.get("region"))
+                .city(addressInfo.get("city"))
+                .neighborhood(addressInfo.get("neighborhood"))
+                .street(addressInfo.get("street"))
+                .number(addressInfo.get("number"))
+                .zipCode(addressInfo.get("zipCode"))
+                .build()
+    }
+
     static class Builder {
 
         String country
