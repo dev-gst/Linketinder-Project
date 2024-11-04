@@ -139,4 +139,34 @@ class DefaultSkillService implements SkillService, AnonService<AnonSkillDTO> {
 
         return skillDAO.saveJobOpeningSkill(jobOpeningId, skillId)
     }
+
+    @Override
+    void deleteCandidateSkill(int candidateId, int skillId) {
+        ParamValidation.requirePositive(candidateId, "Candidate ID must be greater than 0")
+        ParamValidation.requirePositive(skillId, "Skill ID must be greater than 0")
+
+        skillDAO.deleteCandidateSkill(candidateId, skillId)
+    }
+
+    @Override
+    void deleteAllCandidateSkills(int candidateId) {
+        ParamValidation.requirePositive(candidateId, "Candidate ID must be greater than 0")
+
+        skillDAO.deleteAllCandidateSkills(candidateId)
+    }
+
+    @Override
+    void deleteJobOpeningSkill(int jobOpeningId, int skillId) {
+        ParamValidation.requirePositive(jobOpeningId, "Job Opening ID must be greater than 0")
+        ParamValidation.requirePositive(skillId, "Skill ID must be greater than 0")
+
+        skillDAO.deleteJobOpeningSkill(jobOpeningId, skillId)
+    }
+
+    @Override
+    void deleteAllJobOpeningSkills(int jobOpeningId) {
+        ParamValidation.requirePositive(jobOpeningId, "Job Opening ID must be greater than 0")
+
+        skillDAO.deleteAllJobOpeningSkills(jobOpeningId)
+    }
 }
