@@ -36,7 +36,7 @@ class LoginCandidateEntry implements MenuCommand {
 
     @Override
     MenuState getNextMenuState(MenuState currentState) {
-        if (this.candidate == null) {
+        if (this.candidate != null) {
             return menuFactory.createCandidateMenu(this.candidate)
         }
 
