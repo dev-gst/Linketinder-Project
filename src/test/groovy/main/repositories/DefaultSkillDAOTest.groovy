@@ -130,4 +130,66 @@ class DefaultSkillDAOTest extends Specification {
         then:
         1 * stmt.execute()
     }
+
+    def "delete candidate skill removes skill of candidate"() {
+        given:
+        String query = "DELETE FROM candidate_skills WHERE candidate_id = ? AND skill_id = ?"
+        PreparedStatement stmt = Mock(PreparedStatement)
+        conn.prepareStatement(query) >> stmt
+        stmt.setInt(1, 1) >> _
+        stmt.setInt(2, 1) >> _
+        stmt.executeUpdate() >> _
+
+        when:
+        defaultSkillDAO.deleteCandidateSkill(1, 1)
+
+        then:
+        1 * stmt.executeUpdate()
+    }
+
+    def "delete all candidate skills removes all skills of candidate"() {
+        given:
+        String query = "DELETE FROM candidate_skills WHERE candidate_id = ?"
+        PreparedStatement stmt = Mock(PreparedStatement)
+        conn.prepareStatement(query) >> stmt
+        stmt.setInt(1, 1) >> _
+        stmt.executeUpdate() >> _
+
+        when:
+        defaultSkillDAO.deleteAllCandidateSkills(1)
+
+        then:
+        1 * stmt.executeUpdate()
+    }
+
+    def "delete job opening skill removes skill of job opening"() {
+        given:
+        String query = "DELETE FROM job_opening_skills WHERE job_opening_id = ? AND skill_id = ?"
+        PreparedStatement stmt = Mock(PreparedStatement)
+        conn.prepareStatement(query) >> stmt
+        stmt.setInt(1, 1) >> _
+        stmt.setInt(2, 1) >> _
+        stmt.executeUpdate() >> _
+
+        when:
+        defaultSkillDAO.deleteJobOpeningSkill(1, 1)
+
+        then:
+        1 * stmt.executeUpdate()
+    }
+
+    def "delete all job opening skills removes all skills of job opening"() {
+        given:
+        String query = "DELETE FROM job_opening_skills WHERE job_opening_id = ?"
+        PreparedStatement stmt = Mock(PreparedStatement)
+        conn.prepareStatement(query) >> stmt
+        stmt.setInt(1, 1) >> _
+        stmt.executeUpdate() >> _
+
+        when:
+        defaultSkillDAO.deleteAllJobOpeningSkills(1)
+
+        then:
+        1 * stmt.executeUpdate()
+    }
 }

@@ -11,6 +11,7 @@ class SkillMock extends Specification {
 
         skill.id >> n
         skill.name >> "Skill $n"
+        skill.toString() >> "Skill $n"
 
         return skill
     }
@@ -19,6 +20,7 @@ class SkillMock extends Specification {
         SkillDTO skillDTO = Mock(SkillDTO)
 
         skillDTO.getName() >> "Skill $n"
+        skillDTO.toString() >> "Skill $n"
 
         return skillDTO
     }

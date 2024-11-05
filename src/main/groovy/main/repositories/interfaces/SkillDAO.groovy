@@ -12,4 +12,12 @@ interface SkillDAO extends DAO<Skill, SkillDTO> {
     int saveCandidateSkill(int candidateId, int skillId)
 
     int saveJobOpeningSkill(int jobOpeningId, int skillId)
+
+    void deleteCandidateSkill(int candidateId, int skillId)
+
+    void deleteAllCandidateSkills(int candidateId)
+
+    void deleteJobOpeningSkill(int jobOpeningId, int skillId)
+
+    void deleteAllJobOpeningSkills(int jobOpeningId)
 }

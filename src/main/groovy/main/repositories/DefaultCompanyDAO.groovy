@@ -139,4 +139,19 @@ class DefaultCompanyDAO implements CompanyDAO {
 
         stmt.executeUpdate()
     }
+
+    @Override
+    Company authenticate(String email, String password) {
+        String query = "SELECT * FROM companies WHERE email = ? AND password = ?"
+
+        PreparedStatement stmt = conn.prepareStatement(query)
+        stmt.setString(1, email)
+        stmt.setString(2, password)
+
+        ResultSet rs = stmt.executeQuery()
+
+        return constructCompanies(rs).stream()
+                .findFirst()
+                .orElse(null)
+    }
 }

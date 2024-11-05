@@ -1,66 +1,42 @@
 package main.database
 
+import main.database.interfaces.DBConnection
 import main.util.config.Env
 import spock.lang.Specification
 
 import java.sql.Connection
-import java.sql.DriverManager
 
 class DBConnectionManagerTest extends Specification {
 
-    Connection mockedConnection
-    Env mockedEnv
-    DBConnectionManager dbConnectionManager
+    Env env
+    DBConnection dbConnection
 
-    def setup() {
-        mockedConnection = Mock()
-        GroovyMock(DBDriver, global: true)
-        DBDriver.checkIfDriverIsLoaded(null)
-        GroovyMock(DriverManager, global: true)
-        DriverManager.getConnection("", "", "") >> mockedConnection
-        mockedEnv = Mock(Env)
-        mockedEnv.getDbUrl() >> ""
-        mockedEnv.getDbUser() >> ""
-        mockedEnv.getDbPassword() >> ""
-        dbConnectionManager = new DBConnectionManager(mockedEnv)
+    void setup() {
+        env = Mock(Env.class)
+        dbConnection = Mock(DBConnection.class)
+        GroovyMock(DBConnectionFactory, global: true)
+        DBConnectionFactory.createPostgresConnection(env) >> dbConnection
     }
 
-    def "getConnection returns connection"() {
-        when:
-        Connection connection = dbConnectionManager.getConnection()
+    void "get instance returns a new DBConnectionManager instance"() {
+        given:
+        DBConnectionManager instance = DBConnectionManager.getInstance(env)
 
-        then:
-        connection != null
+        expect:
+        instance != null
     }
 
-    def "getConnection returns same connection"() {
-        when:
-        Connection connection1 = dbConnectionManager.getConnection()
-        Connection connection2 = dbConnectionManager.getConnection()
-
-        then:
-        connection1 == connection2
-    }
-
-    def "closeConnection closes the connection"() {
-        when:
-        dbConnectionManager.getConnection()
-        dbConnectionManager.closeConnection()
-
-        then:
-        1 * mockedConnection.close()
-    }
-
-    def "getConnection returns new connection if closed"() {
-
-        mockedConnection.isClosed() >>> [false, true]
+    void "get connection returns a new connection"() {
+        given:
+        Connection mockedConnection = Mock(Connection.class)
+        DBConnectionManager instance = DBConnectionManager.getInstance(env)
+        dbConnection.getConnection() >> mockedConnection
 
         when:
-        dbConnectionManager.getConnection()
-        dbConnectionManager.closeConnection()
-        dbConnectionManager.getConnection()
+        Connection conn = instance.getConnection()
 
         then:
-        2 * DBDriver.checkIfDriverIsLoaded(null)
+        conn == mockedConnection
+        1 * dbConnection.getConnection() >> mockedConnection
     }
 }

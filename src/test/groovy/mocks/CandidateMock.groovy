@@ -14,7 +14,7 @@ class CandidateMock extends Specification {
         candidate.id >> n
         candidate.firstName >> "Candidate $n"
         candidate.lastName >> "Last Name $n"
-        candidate.loginDetails >> new LoginDetailsMock().createLoginDetailsDTOMock(n)
+        candidate.loginDetails >> new LoginDetailsMock().createLoginDetailsMock(n)
         candidate.birthDate >> LocalDate.parse("1990-01-01")
                 .atStartOfDay().toInstant(ZoneOffset.UTC)
         candidate.description >> "Description $n"

@@ -16,6 +16,10 @@ class SkillDTO {
         return name
     }
 
+    static SkillDTO of(String name) {
+        return new SkillDTO(name)
+    }
+
     static class Builder {
         String name
 

@@ -292,4 +292,138 @@ class DefaultSkillServiceTest extends Specification {
         then:
         thrown(IllegalArgumentException)
     }
+
+    def "save candidate skill should return newly saved candidate skill"() {
+        given:
+        skillDAO.saveCandidateSkill(1, 1) >> 1
+
+        when:
+        int id = skillService.saveCandidateSkill(1, 1)
+
+        then:
+        id == 1
+    }
+
+    def "save candidate skill should throw exception when candidate id is less than 1"() {
+        when:
+        skillService.saveCandidateSkill(0, 1)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "save candidate skill should throw exception when skill id is less than 1"() {
+        when:
+        skillService.saveCandidateSkill(1, 0)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "save job opening skill should return newly saved job opening skill"() {
+        given:
+        skillDAO.saveJobOpeningSkill(1, 1) >> 1
+
+        when:
+        int id = skillService.saveJobOpeningSkill(1, 1)
+
+        then:
+        id == 1
+    }
+
+    def "save job opening skill should throw exception when job opening id is less than 1"() {
+        when:
+        skillService.saveJobOpeningSkill(0, 1)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "save job opening skill should throw exception when skill id is less than 1"() {
+        when:
+        skillService.saveJobOpeningSkill(1, 0)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "delete candidate skill should call skillDAO to data to be deleted"() {
+        when:
+        skillService.deleteCandidateSkill(1, 1)
+
+        then:
+        1 * skillDAO.deleteCandidateSkill(1, 1)
+    }
+
+    def "delete candidate skill should throw exception when candidate id is less than 1"() {
+        when:
+        skillService.deleteCandidateSkill(0, 1)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "delete candidate skill should throw exception when skill id is less than 1"() {
+        when:
+        skillService.deleteCandidateSkill(1, 0)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "delete all candidate skills should call skillDAO to data to be deleted"() {
+        when:
+        skillService.deleteAllCandidateSkills(1)
+
+        then:
+        1 * skillDAO.deleteAllCandidateSkills(1)
+    }
+
+    def "delete all candidate skills should throw exception when candidate id is less than 1"() {
+        when:
+        skillService.deleteAllCandidateSkills(0)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "delete job opening skill should call skillDAO to data to be deleted"() {
+        when:
+        skillService.deleteJobOpeningSkill(1, 1)
+
+        then:
+        1 * skillDAO.deleteJobOpeningSkill(1, 1)
+    }
+
+    def "delete job opening skill should throw exception when job opening id is less than 1"() {
+        when:
+        skillService.deleteJobOpeningSkill(0, 1)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "delete job opening skill should throw exception when skill id is less than 1"() {
+        when:
+        skillService.deleteJobOpeningSkill(1, 0)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
+
+    def "delete all job opening skills should call skillDAO to data to be deleted"() {
+        when:
+        skillService.deleteAllJobOpeningSkills(1)
+
+        then:
+        1 * skillDAO.deleteAllJobOpeningSkills(1)
+    }
+
+    def "delete all job opening skills should throw exception when job opening id is less than 1"() {
+        when:
+        skillService.deleteAllJobOpeningSkills(0)
+
+        then:
+        thrown(IllegalArgumentException)
+    }
 }

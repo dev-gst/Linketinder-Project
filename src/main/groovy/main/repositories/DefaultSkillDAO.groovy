@@ -161,4 +161,46 @@ class DefaultSkillDAO implements SkillDAO {
 
         return stmt.executeUpdate()
     }
+
+    @Override
+    void deleteCandidateSkill(int candidateId, int skillId) {
+        String query = "DELETE FROM candidate_skills WHERE candidate_id = ? AND skill_id = ?"
+
+        PreparedStatement stmt = conn.prepareStatement(query)
+        stmt.setInt(1, candidateId)
+        stmt.setInt(2, skillId)
+
+        stmt.executeUpdate()
+    }
+
+    @Override
+    void deleteAllCandidateSkills(int candidateId) {
+        String query = "DELETE FROM candidate_skills WHERE candidate_id = ?"
+
+        PreparedStatement stmt = conn.prepareStatement(query)
+        stmt.setInt(1, candidateId)
+
+        stmt.executeUpdate()
+    }
+
+    @Override
+    void deleteJobOpeningSkill(int jobOpeningId, int skillId) {
+        String query = "DELETE FROM job_opening_skills WHERE job_opening_id = ? AND skill_id = ?"
+
+        PreparedStatement stmt = conn.prepareStatement(query)
+        stmt.setInt(1, jobOpeningId)
+        stmt.setInt(2, skillId)
+
+        stmt.executeUpdate()
+    }
+
+    @Override
+    void deleteAllJobOpeningSkills(int jobOpeningId) {
+        String query = "DELETE FROM job_opening_skills WHERE job_opening_id = ?"
+
+        PreparedStatement stmt = conn.prepareStatement(query)
+        stmt.setInt(1, jobOpeningId)
+
+        stmt.executeUpdate()
+    }
 }

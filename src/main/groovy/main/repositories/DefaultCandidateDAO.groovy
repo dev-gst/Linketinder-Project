@@ -172,6 +172,7 @@ class DefaultCandidateDAO implements CandidateDAO {
         stmt.executeUpdate()
     }
 
+    @Override
     Candidate authenticate(String email, String password) {
         String query = "SELECT * FROM candidates WHERE email = ? AND password = ?"
 
