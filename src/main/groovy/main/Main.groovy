@@ -1,11 +1,13 @@
 package main
 
+import main.controllers.DefaultMenuController
 import main.database.DBConnectionManager
 import main.repositories.*
 import main.repositories.interfaces.*
 import main.services.*
 import main.services.interfaces.*
-import main.ui.MainMenu
+import main.ui.MenuFactory
+import main.ui.interfaces.MenuState
 import main.util.config.ConfigLoader
 import main.util.config.Env
 import main.util.parser.yaml.SnakeYamlParser
@@ -15,6 +17,7 @@ import org.yaml.snakeyaml.Yaml
 import java.sql.Connection
 
 class Main {
+
     static void main(String[] args) {
         YamlParser yamlParser = new SnakeYamlParser(new Yaml())
         ConfigLoader configLoader = new ConfigLoader(yamlParser)
@@ -35,15 +38,18 @@ class Main {
         CompanyService companyService = new DefaultCompanyService(companyDAO)
         JobOpeningService jobOpeningService = new DefaultJobOpeningService(jobOpeningDAO)
 
-        MainMenu mainMenu = new MainMenu(
-                companyService,
+        MenuFactory menuFactory = new MenuFactory(
                 candidateService,
+                companyService,
                 jobOpeningService,
                 addressService,
-                skillService
+                skillService,
         )
 
-        mainMenu.start()
+        MenuState initialState = menuFactory.createSelectionMenu()
+
+        DefaultMenuController menuController = new DefaultMenuController(initialState)
+        menuController.run()
     }
 }
 
