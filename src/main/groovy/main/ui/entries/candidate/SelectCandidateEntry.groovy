@@ -16,9 +16,7 @@ class SelectCandidateEntry implements MenuCommand {
     }
 
     @Override
-    void execute() {
-        println "Sou um candidato"
-    }
+    void execute() {}
 
     @Override
     String getEntryName() {
