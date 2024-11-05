@@ -97,4 +97,12 @@ class DefaultCompanyService implements CompanyService {
 
         companyDAO.delete(id)
     }
+
+    @Override
+    Company authenticate(String email, String password) {
+        ParamValidation.requireNonNull(email, "email must not be null")
+        ParamValidation.requireNonNull(password, "password must not be null")
+
+        return companyDAO.authenticate(email, password)
+    }
 }

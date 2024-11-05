@@ -62,6 +62,19 @@ class CandidateDTO {
         return addressId
     }
 
+    static CandidateDTO of(Map<String, String> candidateInfo) {
+        return new Builder()
+                .firstName(candidateInfo.get("firstName"))
+                .lastName(candidateInfo.get("lastName"))
+                .loginDetailsDTO(new LoginDetailsDTO(candidateInfo.get("email"), candidateInfo.get("password")))
+                .cpf(candidateInfo.get("cpf"))
+                .birthDate(LocalDate.parse(candidateInfo.get("birthDate")))
+                .description(candidateInfo.get("description"))
+                .education(candidateInfo.get("education"))
+                .addressId(Integer.parseInt(candidateInfo.get("addressId")))
+                .build()
+    }
+
     static class Builder {
         String firstName
         String lastName
