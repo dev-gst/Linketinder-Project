@@ -4,6 +4,8 @@ import main.models.entities.Candidate
 import main.services.interfaces.*
 import main.ui.entries.candidate.*
 import main.ui.entries.common.BackEntry
+import main.ui.entries.common.ExitEntry
+import main.ui.entries.company.SelectCompanyEntry
 import main.ui.entries.jobopenings.ViewJobOpenings
 import main.ui.interfaces.MenuCommand
 import main.ui.interfaces.MenuState
@@ -48,5 +50,14 @@ class MenuFactory {
         candidateAuthMenuCommands.put(3, new BackEntry())
 
         return new BaseMenuState(candidateAuthMenuCommands, "Menu de Candidato")
+    }
+
+    MenuState createSelectionMenu() {
+        Map<Integer, MenuCommand> selectionMenu = new HashMap<>()
+        selectionMenu.put(1, new SelectCandidateEntry(this))
+        selectionMenu.put(2, new SelectCompanyEntry(this))
+        selectionMenu.put(3, new ExitEntry())
+
+        return new BaseMenuState(selectionMenu, "Bem-vindo ao sistema de recrutamento")
     }
 }
