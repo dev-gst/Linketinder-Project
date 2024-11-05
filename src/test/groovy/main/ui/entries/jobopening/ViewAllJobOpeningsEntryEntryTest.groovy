@@ -4,18 +4,18 @@ import main.models.entities.Address
 import main.models.entities.JobOpening
 import main.services.interfaces.AddressService
 import main.services.interfaces.JobOpeningService
-import main.ui.entries.jobopenings.ViewJobOpenings
+import main.ui.entries.jobopenings.ViewAllJobOpeningsEntry
 import mocks.AddressMock
 import mocks.JobOpeningMock
 import spock.lang.Specification
 
-class ViewJobOpeningsEntryTest extends Specification {
+class ViewAllJobOpeningsEntryEntryTest extends Specification {
 
     JobOpening mockedJobOpening
     Address mockedAddress
     JobOpeningService jobOpeningService
     AddressService addressService
-    ViewJobOpenings viewJobOpenings
+    ViewAllJobOpeningsEntry viewJobOpenings
 
     void setup() {
         mockedJobOpening = new JobOpeningMock().createJobOpeningMock(1)
@@ -23,7 +23,7 @@ class ViewJobOpeningsEntryTest extends Specification {
         jobOpeningService = Mock(JobOpeningService.class)
         addressService = Mock(AddressService.class)
 
-        viewJobOpenings = new ViewJobOpenings(jobOpeningService, addressService)
+        viewJobOpenings = new ViewAllJobOpeningsEntry(jobOpeningService, addressService)
     }
 
     def "execute prints no job openings message when no job openings are available"() {

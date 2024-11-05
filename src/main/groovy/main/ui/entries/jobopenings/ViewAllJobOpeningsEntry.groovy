@@ -8,12 +8,12 @@ import main.ui.interfaces.MenuCommand
 import main.ui.interfaces.MenuState
 import main.util.exception.ParamValidation
 
-class ViewJobOpenings implements MenuCommand {
+class ViewAllJobOpeningsEntry implements MenuCommand {
 
     JobOpeningService jobOpeningService
     AddressService addressService
 
-    ViewJobOpenings(JobOpeningService jobOpeningService, AddressService addressService) {
+    ViewAllJobOpeningsEntry(JobOpeningService jobOpeningService, AddressService addressService) {
         ParamValidation.requireNonNull(jobOpeningService, "JobOpeningService cannot be null")
         ParamValidation.requireNonNull(addressService, "AddressService cannot be null")
 
