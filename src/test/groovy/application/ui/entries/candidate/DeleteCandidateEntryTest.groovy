@@ -3,7 +3,7 @@ package application.ui.entries.candidate
 import application.models.entities.Candidate
 import application.services.interfaces.CandidateService
 import application.ui.helpers.UserInputCollector
-import mocks.CandidateMock
+import mocks.CandidateMockFactory
 import spock.lang.Specification
 
 class DeleteCandidateEntryTest extends Specification {
@@ -13,7 +13,7 @@ class DeleteCandidateEntryTest extends Specification {
     DeleteCandidateEntry deleteCandidateEntry
 
     void setup() {
-        CandidateMock candidateMock = new CandidateMock()
+        CandidateMockFactory candidateMock = new CandidateMockFactory()
 
         GroovyMock(UserInputCollector, global: true)
 

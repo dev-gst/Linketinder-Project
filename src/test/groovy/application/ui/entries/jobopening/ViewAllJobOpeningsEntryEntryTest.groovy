@@ -5,8 +5,8 @@ import application.models.entities.JobOpening
 import application.services.interfaces.AddressService
 import application.services.interfaces.JobOpeningService
 import application.ui.entries.jobopenings.ViewAllJobOpeningsEntry
-import mocks.AddressMock
-import mocks.JobOpeningMock
+import mocks.AddressMockFactory
+import mocks.JobOpeningMockFactory
 import spock.lang.Specification
 
 class ViewAllJobOpeningsEntryEntryTest extends Specification {
@@ -18,8 +18,8 @@ class ViewAllJobOpeningsEntryEntryTest extends Specification {
     ViewAllJobOpeningsEntry viewJobOpenings
 
     void setup() {
-        mockedJobOpening = new JobOpeningMock().createJobOpeningMock(1)
-        mockedAddress = new AddressMock().createAddressMock(1)
+        mockedJobOpening = new JobOpeningMockFactory().createJobOpeningMock(1)
+        mockedAddress = new AddressMockFactory().createAddressMock(1)
         jobOpeningService = Mock(JobOpeningService.class)
         addressService = Mock(AddressService.class)
 

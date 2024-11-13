@@ -5,7 +5,7 @@ import application.models.entities.Company
 import application.models.entities.JobOpening
 import application.repositories.interfaces.CompanyDAO
 import application.utils.exceptions.EntityNotFoundException
-import mocks.CompanyMock
+import mocks.CompanyMockFactory
 import spock.lang.Specification
 
 class DefaultCompanyServiceTest extends Specification {
@@ -18,7 +18,7 @@ class DefaultCompanyServiceTest extends Specification {
     DefaultCompanyService companyService
 
     void setup() {
-        CompanyMock companyMockBuilder = new CompanyMock()
+        CompanyMockFactory companyMockBuilder = new CompanyMockFactory()
 
         companyMock1 = companyMockBuilder.createCompanyMock(1)
         companyMock2 = companyMockBuilder.createCompanyMock(2)

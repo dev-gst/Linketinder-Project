@@ -4,7 +4,7 @@ import application.models.dtos.request.login.LoginDetailsDTO
 import application.models.entities.login.LoginDetails
 import spock.lang.Specification
 
-class LoginDetailsMock extends Specification {
+class LoginDetailsMockFactory extends Specification {
 
     LoginDetailsDTO createLoginDetailsDTOMock(int n) {
         LoginDetailsDTO loginDetailsDTO = Mock(LoginDetailsDTO)

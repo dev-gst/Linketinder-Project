@@ -4,7 +4,7 @@ import application.models.dtos.request.AddressDTO
 import application.models.entities.Address
 import spock.lang.Specification
 
-class AddressMock extends Specification {
+class AddressMockFactory extends Specification {
 
     AddressDTO createAddressDTOMock(int n) {
         AddressDTO addressDTO = Mock(AddressDTO)

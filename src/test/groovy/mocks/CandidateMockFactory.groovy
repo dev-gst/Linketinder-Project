@@ -7,14 +7,14 @@ import spock.lang.Specification
 import java.time.LocalDate
 import java.time.ZoneOffset
 
-class CandidateMock extends Specification {
+class CandidateMockFactory extends Specification {
 
     Candidate createCandidateMock(int n) {
         Candidate candidate = Mock(Candidate.class)
         candidate.id >> n
         candidate.firstName >> "Candidate $n"
         candidate.lastName >> "Last Name $n"
-        candidate.loginDetails >> new LoginDetailsMock().createLoginDetailsMock(n)
+        candidate.loginDetails >> new LoginDetailsMockFactory().createLoginDetailsMock(n)
         candidate.birthDate >> LocalDate.parse("1990-01-01")
                 .atStartOfDay().toInstant(ZoneOffset.UTC)
         candidate.description >> "Description $n"
@@ -29,7 +29,7 @@ class CandidateMock extends Specification {
         CandidateDTO candidateDTO = Mock(CandidateDTO.class)
         candidateDTO.firstName >> "Candidate $n"
         candidateDTO.lastName >> "Last Name $n"
-        candidateDTO.loginDetailsDTO >> new LoginDetailsMock().createLoginDetailsDTOMock(n)
+        candidateDTO.loginDetailsDTO >> new LoginDetailsMockFactory().createLoginDetailsDTOMock(n)
         candidateDTO.birthDate >> LocalDate.parse("1990-01-01")
         candidateDTO.description >> "Description $n"
         candidateDTO.cpf >> "123456789$n"

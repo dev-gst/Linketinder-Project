@@ -5,7 +5,7 @@ import application.models.entities.Address
 import application.models.entities.Candidate
 import application.repositories.interfaces.CandidateDAO
 import application.services.interfaces.CandidateService
-import mocks.CandidateMock
+import mocks.CandidateMockFactory
 import spock.lang.Specification
 
 class DefaultCandidateServiceTest extends Specification {
@@ -20,7 +20,7 @@ class DefaultCandidateServiceTest extends Specification {
 
 
     void setup() {
-        CandidateMock candidateMock = new CandidateMock()
+        CandidateMockFactory candidateMock = new CandidateMockFactory()
 
         candidateMock1 = candidateMock.createCandidateMock(1)
         candidateMock2 = candidateMock.createCandidateMock(2)

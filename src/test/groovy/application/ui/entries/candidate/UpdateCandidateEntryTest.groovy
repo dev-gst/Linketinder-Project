@@ -5,7 +5,7 @@ import application.services.interfaces.AddressService
 import application.services.interfaces.CandidateService
 import application.services.interfaces.SkillService
 import application.ui.helpers.UserInfoCollector
-import mocks.CandidateMock
+import mocks.CandidateMockFactory
 import spock.lang.Specification
 
 class UpdateCandidateEntryTest extends Specification {
@@ -21,7 +21,7 @@ class UpdateCandidateEntryTest extends Specification {
         skillService = Mock(SkillService.class)
         addressService = Mock(AddressService.class)
 
-        mockedCandidate = new CandidateMock().createCandidateMock(1)
+        mockedCandidate = new CandidateMockFactory().createCandidateMock(1)
         GroovyMock(UserInfoCollector, global: true)
 
         updateCandidateEntry = new UpdateCandidateEntry(mockedCandidate, candidateService, addressService, skillService)

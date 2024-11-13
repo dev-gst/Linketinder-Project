@@ -8,7 +8,7 @@ import application.models.entities.Company
 import application.models.entities.JobOpening
 import application.repositories.interfaces.AddressDAO
 import application.utils.exceptions.EntityNotFoundException
-import mocks.AddressMock
+import mocks.AddressMockFactory
 import spock.lang.Specification
 
 class DefaultAddressServiceTest extends Specification {
@@ -21,12 +21,12 @@ class DefaultAddressServiceTest extends Specification {
     DefaultAddressService addressService
 
     void setup() {
-        AddressMock addressMock = new AddressMock()
+        AddressMockFactory addressMock = new AddressMockFactory()
 
         address1 = addressMock.createAddressMock(1)
         address2 = addressMock.createAddressMock(2)
-        addressDTO1 = new AddressMock().createAddressDTOMock(1)
-        addressDTO2 = new AddressMock().createAddressDTOMock(2)
+        addressDTO1 = new AddressMockFactory().createAddressDTOMock(1)
+        addressDTO2 = new AddressMockFactory().createAddressDTOMock(2)
 
         addressDAO = Mock(AddressDAO)
         addressService = new DefaultAddressService(addressDAO)

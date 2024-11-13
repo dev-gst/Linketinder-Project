@@ -7,7 +7,7 @@ import application.models.entities.JobOpening
 import application.models.entities.Skill
 import application.repositories.interfaces.SkillDAO
 import application.utils.exceptions.ClassNotFoundException
-import mocks.SkillMock
+import mocks.SkillMockFactory
 import spock.lang.Specification
 
 class DefaultSkillServiceTest extends Specification {
@@ -20,7 +20,7 @@ class DefaultSkillServiceTest extends Specification {
     DefaultSkillService skillService
 
     def setup() {
-        SkillMock skillMock = new SkillMock()
+        SkillMockFactory skillMock = new SkillMockFactory()
         skill1 = skillMock.createSkillMock(1)
         skill2 = skillMock.createSkillMock(2)
         skillDTO1 = skillMock.createSkillDTOMock(1)

@@ -4,7 +4,7 @@ import application.models.dtos.request.JobOpeningDTO
 import application.models.entities.JobOpening
 import spock.lang.Specification
 
-class JobOpeningMock extends Specification {
+class JobOpeningMockFactory extends Specification {
 
     JobOpeningDTO createJobOpeningDTOMock(int n) {
         JobOpeningDTO jobOpeningDTO = Mock(JobOpeningDTO)

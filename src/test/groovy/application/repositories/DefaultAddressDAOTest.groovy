@@ -2,7 +2,7 @@ package application.repositories
 
 import application.models.dtos.request.AddressDTO
 import application.models.entities.Address
-import mocks.AddressMock
+import mocks.AddressMockFactory
 import spock.lang.Specification
 
 import java.sql.Connection
@@ -21,7 +21,7 @@ class DefaultAddressDAOTest extends Specification {
     DefaultAddressDAO defaultAddressDAO
 
     void setup() {
-        AddressMock addressMock = new AddressMock()
+        AddressMockFactory addressMock = new AddressMockFactory()
 
         address1 = addressMock.createAddressMock(1)
         address2 = addressMock.createAddressMock(2)

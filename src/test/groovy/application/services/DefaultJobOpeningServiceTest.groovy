@@ -4,7 +4,7 @@ import application.models.dtos.request.JobOpeningDTO
 import application.models.entities.Company
 import application.models.entities.JobOpening
 import application.repositories.interfaces.JobOpeningDAO
-import mocks.JobOpeningMock
+import mocks.JobOpeningMockFactory
 import spock.lang.Specification
 
 class DefaultJobOpeningServiceTest extends Specification {
@@ -16,7 +16,7 @@ class DefaultJobOpeningServiceTest extends Specification {
     DefaultJobOpeningService jobOpeningService
 
     void setup() {
-        JobOpeningMock mockJobOpening = new JobOpeningMock()
+        JobOpeningMockFactory mockJobOpening = new JobOpeningMockFactory()
 
         jobOpeningMock = mockJobOpening.createJobOpeningMock(1)
         jobOpeningDTOMock = mockJobOpening.createJobOpeningDTOMock(1)

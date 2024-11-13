@@ -5,9 +5,9 @@ import application.models.entities.Candidate
 import application.models.entities.Skill
 import application.services.interfaces.AddressService
 import application.services.interfaces.SkillService
-import mocks.AddressMock
-import mocks.CandidateMock
-import mocks.SkillMock
+import mocks.AddressMockFactory
+import mocks.CandidateMockFactory
+import mocks.SkillMockFactory
 import spock.lang.Specification
 
 import java.time.LocalDate
@@ -29,11 +29,11 @@ class ViewCandidateEntryTest extends Specification {
         testOut = new ByteArrayOutputStream()
         System.setOut(new PrintStream(testOut))
 
-        Skill skill1 = new SkillMock().createSkillMock(1)
-        Skill skill2 = new SkillMock().createSkillMock(2)
+        Skill skill1 = new SkillMockFactory().createSkillMock(1)
+        Skill skill2 = new SkillMockFactory().createSkillMock(2)
 
-        mockedCandidate = new CandidateMock().createCandidateMock(1)
-        mockedAddress = new AddressMock().createAddressMock(1)
+        mockedCandidate = new CandidateMockFactory().createCandidateMock(1)
+        mockedAddress = new AddressMockFactory().createAddressMock(1)
         mockedSkills = Set.of(skill1, skill2)
 
         mockedSkillService = Mock(SkillService.class)

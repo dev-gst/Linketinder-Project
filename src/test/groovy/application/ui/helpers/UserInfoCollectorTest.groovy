@@ -1,7 +1,7 @@
 package application.ui.helpers
 
 import application.models.entities.Candidate
-import mocks.CandidateMock
+import mocks.CandidateMockFactory
 import spock.lang.Specification
 
 class UserInfoCollectorTest extends Specification {
@@ -111,7 +111,7 @@ class UserInfoCollectorTest extends Specification {
 
     def "updateCandidateInfo returns updated candidate info"() {
         given:
-        Candidate candidate = new CandidateMock().createCandidateMock(1)
+        Candidate candidate = new CandidateMockFactory().createCandidateMock(1)
         Scanner scanner = new Scanner("s\nJane\ns\nDoe\ns\njane.doe@example.com\ns\nnewpassword\ns\nNew BIO\ns\n1990-01-01\ns\n98765432100\ns\nMaster\n")
 
         when:

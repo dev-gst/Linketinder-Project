@@ -4,7 +4,7 @@ import application.models.dtos.request.SkillDTO
 import application.models.entities.Skill
 import spock.lang.Specification
 
-class SkillMock extends Specification {
+class SkillMockFactory extends Specification {
 
     Skill createSkillMock(int n) {
         Skill skill = Mock(Skill)
