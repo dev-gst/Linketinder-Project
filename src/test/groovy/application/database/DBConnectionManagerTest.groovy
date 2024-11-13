@@ -6,6 +6,7 @@ import application.config.database.DBConnectionManager
 import application.config.database.interfaces.DBConnection
 import spock.lang.Specification
 
+import java.lang.reflect.Field
 import java.sql.Connection
 
 class DBConnectionManagerTest extends Specification {
@@ -16,7 +17,7 @@ class DBConnectionManagerTest extends Specification {
     void setup() {
         env = Mock(Env.class)
         dbConnection = Mock(DBConnection.class)
-        GroovyMock(DBConnectionFactory, global: true)
+        GroovyMock(DBConnectionFactory, global: true, reset: true)
         DBConnectionFactory.createPostgresConnection(env) >> dbConnection
     }
 
@@ -40,5 +41,12 @@ class DBConnectionManagerTest extends Specification {
         then:
         conn == mockedConnection
         1 * dbConnection.getConnection() >> mockedConnection
+    }
+
+    void cleanup() {
+        Field instance = DBConnectionManager.class.getDeclaredField("instance")
+        instance.setAccessible(true)
+        instance.set(null, null)
+        instance.setAccessible(false)
     }
 }
