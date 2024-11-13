@@ -1,7 +1,7 @@
 package mocks
 
-import main.models.dtos.request.CandidateDTO
-import main.models.entities.Candidate
+import application.models.dtos.request.CandidateDTO
+import application.models.entities.Candidate
 import spock.lang.Specification
 
 import java.time.LocalDate

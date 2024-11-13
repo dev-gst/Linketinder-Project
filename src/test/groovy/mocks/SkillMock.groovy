@@ -1,7 +1,7 @@
 package mocks
 
-import main.models.dtos.request.SkillDTO
-import main.models.entities.Skill
+import application.models.dtos.request.SkillDTO
+import application.models.entities.Skill
 import spock.lang.Specification
 
 class SkillMock extends Specification {

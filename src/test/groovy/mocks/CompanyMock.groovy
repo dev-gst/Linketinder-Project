@@ -1,7 +1,7 @@
 package mocks
 
-import main.models.dtos.request.CompanyDTO
-import main.models.entities.Company
+import application.models.dtos.request.CompanyDTO
+import application.models.entities.Company
 import spock.lang.Specification
 
 class CompanyMock extends Specification {

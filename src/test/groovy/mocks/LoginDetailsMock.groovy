@@ -1,7 +1,7 @@
 package mocks
 
-import main.models.dtos.request.login.LoginDetailsDTO
-import main.models.entities.login.LoginDetails
+import application.models.dtos.request.login.LoginDetailsDTO
+import application.models.entities.login.LoginDetails
 import spock.lang.Specification
 
 class LoginDetailsMock extends Specification {

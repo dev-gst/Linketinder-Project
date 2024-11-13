@@ -35,7 +35,7 @@ dependencies {
 tasks.register('run', JavaExec) {
     group = 'Application'
     description = 'Run the application'
-    mainClass = 'main.Main'
+    mainClass = 'application.Main'
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
 }
@@ -43,7 +43,7 @@ tasks.register('run', JavaExec) {
 tasks.register('migrate', JavaExec) {
     group = 'Flyway'
     description = 'Migrate the database'
-    mainClass = 'main.database.FlywayMigration'
+    mainClass = 'application.database.FlywayMigration'
     classpath = sourceSets.main.runtimeClasspath
 }
 

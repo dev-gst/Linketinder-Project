@@ -1,7 +1,7 @@
 package mocks
 
-import main.models.dtos.request.JobOpeningDTO
-import main.models.entities.JobOpening
+import application.models.dtos.request.JobOpeningDTO
+import application.models.entities.JobOpening
 import spock.lang.Specification
 
 class JobOpeningMock extends Specification {
