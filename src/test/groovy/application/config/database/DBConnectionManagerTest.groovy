@@ -1,8 +1,6 @@
-package application.database
+package application.config.database
 
 import application.config.Env
-import application.config.database.DBConnectionFactory
-import application.config.database.DBConnectionManager
 import application.config.database.interfaces.DBConnection
 import spock.lang.Specification
 

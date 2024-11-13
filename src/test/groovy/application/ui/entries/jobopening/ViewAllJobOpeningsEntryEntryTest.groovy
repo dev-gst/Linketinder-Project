@@ -1,12 +1,12 @@
 package application.ui.entries.jobopening
 
+import application.mocks.AddressMockFactory
+import application.mocks.JobOpeningMockFactory
 import application.models.entities.Address
 import application.models.entities.JobOpening
 import application.services.interfaces.AddressService
 import application.services.interfaces.JobOpeningService
 import application.ui.entries.jobopenings.ViewAllJobOpeningsEntry
-import mocks.AddressMockFactory
-import mocks.JobOpeningMockFactory
 import spock.lang.Specification
 
 class ViewAllJobOpeningsEntryEntryTest extends Specification {

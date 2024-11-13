@@ -1,11 +1,11 @@
 package application.services
 
+import application.mocks.CompanyMockFactory
 import application.models.dtos.request.CompanyDTO
 import application.models.entities.Company
 import application.models.entities.JobOpening
 import application.repositories.interfaces.CompanyDAO
 import application.utils.exceptions.EntityNotFoundException
-import mocks.CompanyMockFactory
 import spock.lang.Specification
 
 class DefaultCompanyServiceTest extends Specification {

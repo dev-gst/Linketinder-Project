@@ -1,10 +1,10 @@
 package application.services
 
+import application.mocks.JobOpeningMockFactory
 import application.models.dtos.request.JobOpeningDTO
 import application.models.entities.Company
 import application.models.entities.JobOpening
 import application.repositories.interfaces.JobOpeningDAO
-import mocks.JobOpeningMockFactory
 import spock.lang.Specification
 
 class DefaultJobOpeningServiceTest extends Specification {

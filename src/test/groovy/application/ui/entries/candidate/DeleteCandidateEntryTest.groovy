@@ -1,9 +1,9 @@
 package application.ui.entries.candidate
 
+import application.mocks.CandidateMockFactory
 import application.models.entities.Candidate
 import application.services.interfaces.CandidateService
 import application.ui.helpers.UserInputCollector
-import mocks.CandidateMockFactory
 import spock.lang.Specification
 
 class DeleteCandidateEntryTest extends Specification {

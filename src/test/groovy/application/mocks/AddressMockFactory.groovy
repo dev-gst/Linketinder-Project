@@ -1,4 +1,4 @@
-package mocks
+package application.mocks
 
 import application.models.dtos.request.AddressDTO
 import application.models.entities.Address

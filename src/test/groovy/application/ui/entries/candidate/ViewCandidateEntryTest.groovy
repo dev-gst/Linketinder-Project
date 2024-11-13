@@ -1,13 +1,13 @@
 package application.ui.entries.candidate
 
+import application.mocks.AddressMockFactory
+import application.mocks.CandidateMockFactory
+import application.mocks.SkillMockFactory
 import application.models.entities.Address
 import application.models.entities.Candidate
 import application.models.entities.Skill
 import application.services.interfaces.AddressService
 import application.services.interfaces.SkillService
-import mocks.AddressMockFactory
-import mocks.CandidateMockFactory
-import mocks.SkillMockFactory
 import spock.lang.Specification
 
 import java.time.LocalDate

@@ -1,4 +1,4 @@
-package mocks
+package application.mocks
 
 import application.models.dtos.request.JobOpeningDTO
 import application.models.entities.JobOpening

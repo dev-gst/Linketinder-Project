@@ -1,7 +1,6 @@
-package application.database
+package application.config.database
 
 import application.config.Env
-import application.config.database.DBConnectionFactory
 import spock.lang.Specification
 
 class DBConnectionFactoryTest extends Specification {

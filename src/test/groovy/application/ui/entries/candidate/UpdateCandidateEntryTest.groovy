@@ -1,11 +1,11 @@
 package application.ui.entries.candidate
 
+import application.mocks.CandidateMockFactory
 import application.models.entities.Candidate
 import application.services.interfaces.AddressService
 import application.services.interfaces.CandidateService
 import application.services.interfaces.SkillService
 import application.ui.helpers.UserInfoCollector
-import mocks.CandidateMockFactory
 import spock.lang.Specification
 
 class UpdateCandidateEntryTest extends Specification {

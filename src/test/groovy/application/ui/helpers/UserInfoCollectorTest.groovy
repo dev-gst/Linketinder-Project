@@ -1,7 +1,7 @@
 package application.ui.helpers
 
+import application.mocks.CandidateMockFactory
 import application.models.entities.Candidate
-import mocks.CandidateMockFactory
 import spock.lang.Specification
 
 class UserInfoCollectorTest extends Specification {

@@ -1,4 +1,4 @@
-package mocks
+package application.mocks
 
 import application.models.dtos.request.login.LoginDetailsDTO
 import application.models.entities.login.LoginDetails

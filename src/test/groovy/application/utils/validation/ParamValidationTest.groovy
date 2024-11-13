@@ -1,6 +1,5 @@
-package application.util.exception
+package application.utils.validation
 
-import application.utils.validation.ParamValidation
 import spock.lang.Specification
 
 class ParamValidationTest extends Specification {

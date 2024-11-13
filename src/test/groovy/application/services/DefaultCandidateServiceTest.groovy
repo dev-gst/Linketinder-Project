@@ -1,11 +1,11 @@
 package application.services
 
+import application.mocks.CandidateMockFactory
 import application.models.dtos.request.CandidateDTO
 import application.models.entities.Address
 import application.models.entities.Candidate
 import application.repositories.interfaces.CandidateDAO
 import application.services.interfaces.CandidateService
-import mocks.CandidateMockFactory
 import spock.lang.Specification
 
 class DefaultCandidateServiceTest extends Specification {

@@ -1,6 +1,6 @@
-package application.database
+package application.config.database
 
-import application.config.database.DBDriver
+
 import spock.lang.Specification
 
 import java.sql.SQLException

@@ -1,8 +1,8 @@
 package application.repositories
 
+import application.mocks.AddressMockFactory
 import application.models.dtos.request.AddressDTO
 import application.models.entities.Address
-import mocks.AddressMockFactory
 import spock.lang.Specification
 
 import java.sql.Connection

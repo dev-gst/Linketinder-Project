@@ -1,7 +1,5 @@
-package application.util.config
+package application.config
 
-import application.config.ConfigLoader
-import application.config.Env
 import spock.lang.Specification
 
 import java.time.ZoneId

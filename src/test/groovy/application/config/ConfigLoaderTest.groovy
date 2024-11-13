@@ -1,6 +1,5 @@
-package application.util.config
+package application.config
 
-import application.config.ConfigLoader
 import application.utils.parsers.yaml.SnakeYamlParser
 import application.utils.parsers.yaml.YamlParser
 import spock.lang.Specification

@@ -1,5 +1,6 @@
 package application.services
 
+import application.mocks.AddressMockFactory
 import application.models.dtos.anonresponse.AnonAddressDTO
 import application.models.dtos.request.AddressDTO
 import application.models.entities.Address
@@ -8,7 +9,6 @@ import application.models.entities.Company
 import application.models.entities.JobOpening
 import application.repositories.interfaces.AddressDAO
 import application.utils.exceptions.EntityNotFoundException
-import mocks.AddressMockFactory
 import spock.lang.Specification
 
 class DefaultAddressServiceTest extends Specification {

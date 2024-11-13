@@ -1,6 +1,5 @@
-package application.util.parser.yaml
+package application.utils.parsers.yaml
 
-import application.utils.parsers.yaml.SnakeYamlParser
 import org.yaml.snakeyaml.Yaml
 import spock.lang.Specification
 

@@ -1,5 +1,6 @@
 package application.services
 
+import application.mocks.SkillMockFactory
 import application.models.dtos.anonresponse.AnonSkillDTO
 import application.models.dtos.request.SkillDTO
 import application.models.entities.Candidate
@@ -7,7 +8,6 @@ import application.models.entities.JobOpening
 import application.models.entities.Skill
 import application.repositories.interfaces.SkillDAO
 import application.utils.exceptions.ClassNotFoundException
-import mocks.SkillMockFactory
 import spock.lang.Specification
 
 class DefaultSkillServiceTest extends Specification {
