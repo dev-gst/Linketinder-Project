@@ -16,7 +16,7 @@ import org.yaml.snakeyaml.Yaml
 
 import java.sql.Connection
 
-class Main {
+class MainConsoleApp {
 
     static void main(String[] args) {
         YamlParser yamlParser = new SnakeYamlParser(new Yaml())
