@@ -46,6 +46,15 @@ tasks.register('run', JavaExec) {
     standardInput = System.in
 }
 
+tasks.register('cleanBuild') {
+    group = 'Build'
+    description = 'Clean and build the application'
+
+    dependsOn('clean')
+
+    finalizedBy 'build'
+}
+
 tasks.register('migrate', JavaExec) {
     group = 'Flyway'
     description = 'Migrate the database'
