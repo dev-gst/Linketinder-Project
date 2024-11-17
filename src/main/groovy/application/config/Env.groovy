@@ -4,7 +4,7 @@ package application.config
 import java.time.ZoneId
 
 class Env {
-    private static final String applicationYml = "src/application/resources/application.yaml"
+    private static final String applicationYml = "src/main/resources/application.yaml"
 
     private final String DB_URL
     private final String DB_USER
