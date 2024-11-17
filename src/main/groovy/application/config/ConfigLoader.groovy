@@ -1,6 +1,8 @@
 package application.config
 
+import application.utils.io.FileSearcher
 import application.utils.parsers.yaml.YamlParser
+import application.utils.validation.ParamValidation
 
 class ConfigLoader {
 
@@ -8,9 +10,7 @@ class ConfigLoader {
     private Map<String, Map<String, String>> configs
 
     ConfigLoader(YamlParser yamlParser) {
-        if (yamlParser == null) {
-            throw new IllegalArgumentException("YamlParser instance cannot be null")
-        }
+        ParamValidation.requireNonNull(yamlParser, "YamlParser cannot be null")
 
         this.yamlParser = yamlParser
     }
@@ -29,6 +29,11 @@ class ConfigLoader {
     }
 
     void loadConfigs(String yamlPath) {
-        configs = yamlParser.parse(yamlPath)
+        try {
+            configs = yamlParser.parse(yamlPath)
+        } catch (FileNotFoundException ignored) {
+            String updatedFilePath = FileSearcher.search(yamlPath)
+            configs = yamlParser.parse(updatedFilePath)
+        }
     }
 }
