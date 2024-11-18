@@ -3,6 +3,8 @@ package application.models.dtos.request
 import application.models.dtos.request.login.LoginDetailsDTO
 import application.utils.exceptions.FieldNotSetException
 import application.utils.validation.ParamValidation
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
 
 import java.time.Instant
 import java.time.LocalDate
@@ -17,7 +19,27 @@ class CandidateDTO {
     final Instant birthDate
     final String description
     final String education
-    final int addressId
+    final Integer addressId
+
+    @JsonCreator
+    private CandidateDTO(
+            @JsonProperty("firstName") String firstName,
+            @JsonProperty("lastName") String lastName,
+            @JsonProperty("loginDetails") LoginDetailsDTO loginDetailsDTO,
+            @JsonProperty("cpf") String cpf,
+            @JsonProperty("birthDate") Instant birthDate,
+            @JsonProperty("description") String description,
+            @JsonProperty("education") String education,
+            @JsonProperty("addressId") int addressId) {
+        this.firstName = firstName
+        this.lastName = lastName
+        this.loginDetailsDTO = loginDetailsDTO
+        this.cpf = cpf
+        this.birthDate = birthDate
+        this.description = description
+        this.education = education
+        this.addressId = addressId
+    }
 
     private CandidateDTO(Builder builder) {
         this.firstName = builder.firstName
@@ -58,7 +80,7 @@ class CandidateDTO {
         return education
     }
 
-    int getAddressId() {
+    Integer getAddressId() {
         return addressId
     }
 
@@ -83,7 +105,7 @@ class CandidateDTO {
         Instant birthDate
         String description
         String education
-        int addressId
+        Integer addressId
 
         private boolean firstNameSet = false
         private boolean lastNameSet = false
@@ -155,7 +177,7 @@ class CandidateDTO {
             return this
         }
 
-        Builder addressId(int addressId) {
+        Builder addressId(Integer addressId) {
             ParamValidation.requirePositive(addressId, "Address ID must be positive")
 
             this.addressId = addressId
