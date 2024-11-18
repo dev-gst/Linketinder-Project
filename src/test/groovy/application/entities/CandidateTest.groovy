@@ -58,7 +58,7 @@ class CandidateTest extends Specification {
         candidate.loginDetails.email == "email"
         candidate.loginDetails.password == "password"
         candidate.birthDate == LocalDate.of(1990, 1, 1)
-                .atStartOfDay(ZoneId.systemDefault()).toInstant()
+                .atStartOfDay(ZoneId.of("UTC")).toInstant()
         candidate.description == "Description"
         candidate.cpf == "12345678901"
         candidate.education == "Education"

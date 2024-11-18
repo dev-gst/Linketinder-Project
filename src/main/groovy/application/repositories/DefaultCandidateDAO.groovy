@@ -6,11 +6,9 @@ import application.models.entities.login.LoginDetails
 import application.repositories.interfaces.CandidateDAO
 import application.utils.validation.ParamValidation
 
-import java.sql.Connection
-import java.sql.PreparedStatement
-import java.sql.ResultSet
-import java.sql.SQLException
+import java.sql.*
 import java.time.LocalDate
+import java.time.ZoneId
 
 class DefaultCandidateDAO implements CandidateDAO {
 
@@ -154,7 +152,7 @@ class DefaultCandidateDAO implements CandidateDAO {
         stmt.setString(3, candidateDTO.loginDetailsDTO.email)
         stmt.setString(4, candidateDTO.loginDetailsDTO.password)
         stmt.setString(5, candidateDTO.description)
-        stmt.setObject(6, candidateDTO.birthDate)
+        stmt.setObject(6, candidateDTO.birthDate.atZone(ZoneId.of("UTC")).toLocalDate(), Types.DATE)
         stmt.setString(7, candidateDTO.cpf)
         stmt.setString(8, candidateDTO.education)
         stmt.setInt(9, candidateDTO.addressId)

@@ -120,7 +120,7 @@ class Candidate {
         }
 
         Builder birthDate(LocalDate birthDate) {
-            this.birthDate = birthDate.atStartOfDay(ZoneId.systemDefault()).toInstant()
+            this.birthDate = birthDate.atStartOfDay(ZoneId.of("UTC")).toInstant()
             this.birthDateSet = true
 
             return this
