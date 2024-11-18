@@ -1,5 +1,6 @@
 package application.utils.parsers.json
 
+import application.models.dtos.request.CandidateDTO
 import com.fasterxml.jackson.core.JsonParseException
 import com.fasterxml.jackson.databind.ObjectMapper
 import spock.lang.Specification
@@ -107,5 +108,32 @@ class JacksonJsonParserTest extends Specification {
 
         then:
         thrown(JsonParseException)
+    }
+
+    def "fromJson serializes CandidateDTO"() {
+        given:
+
+        String candidateJson = """{
+            "firstName": "marcos",
+            "lastName": "douglas",
+            "loginDetailsDTO": {
+                "email": "blabla@email.com",
+                "password": "blabla"
+            },
+            "cpf": "24324234234",
+            "birthDate": "1960-01-01T03:00:00Z",
+            "description": "blablabla",
+            "education": "Engineer",
+            "addressId": 4
+        }"""
+
+        ObjectMapper objectMapper = new ObjectMapper()
+        JacksonJsonParser parser = new JacksonJsonParser(objectMapper)
+
+        when:
+        CandidateDTO candidateDTO = parser.fromJson(candidateJson, CandidateDTO)
+
+        then:
+        candidateDTO.firstName == "marcos"
     }
 }
