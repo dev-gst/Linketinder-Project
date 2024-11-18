@@ -1,4 +1,5 @@
 db:
+  name: "yourDatabase"
   url: "jdbc:postgresql://localhost:5432/yourDatabase"
   user: "yourUsername"
   password: "yourPassword"
