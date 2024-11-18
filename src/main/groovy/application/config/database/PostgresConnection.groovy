@@ -19,15 +19,16 @@ class PostgresConnection implements DBConnection {
 
     @Override
     Connection getConnection() {
-        if (this.conn == null || this.conn.isClosed()) {
-            DBDriver.checkIfDriverIsLoaded(env.getDbDriver())
-            connect()
-        }
+        connect()
 
-        return conn
+        return this.conn
     }
 
     private void connect() {
+        if (this.conn != null && !this.conn.isClosed()) {
+            return
+        }
+
         try {
             this.conn = buildConnection()
         } catch (SQLException e) {
@@ -36,11 +37,9 @@ class PostgresConnection implements DBConnection {
     }
 
     private Connection buildConnection() {
-        return DriverManager.getConnection(
-                env.getDbUrl(),
-                env.getDbUser(),
-                env.getDbPassword()
-        )
+        DBDriver.checkIfDriverIsLoaded(env.getDbDriver())
+
+        return DriverManager.getConnection(env.getDbUrl(), env.getDbUser(), env.getDbPassword())
     }
 
     @Override
