@@ -2,6 +2,8 @@ package application.models.dtos.request
 
 import application.utils.exceptions.FieldNotSetException
 import application.utils.validation.ParamValidation
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
 
 class JobOpeningDTO {
 
@@ -12,8 +14,24 @@ class JobOpeningDTO {
     final int companyId
     final Optional<Integer> addressId
 
+    @JsonCreator
+    private JobOpeningDTO(
+            @JsonProperty("name") String name,
+            @JsonProperty("description") String description,
+            @JsonProperty("isOpen") boolean isOpen,
+            @JsonProperty("isRemote") boolean isRemote,
+            @JsonProperty("companyId") int companyId,
+            @JsonProperty("addressId") Optional<Integer> addressId
+    ) {
+        this.name = name
+        this.description = description
+        this.isOpen = isOpen
+        this.isRemote = isRemote
+        this.companyId = companyId
+        this.addressId = addressId
+    }
+
     private JobOpeningDTO(Builder builder) {
-        id = builder.id
         name = builder.name
         description = builder.description
         isOpen = builder.isOpen
