@@ -3,6 +3,8 @@ package application.models.dtos.request
 import application.models.dtos.request.login.LoginDetailsDTO
 import application.utils.exceptions.FieldNotSetException
 import application.utils.validation.ParamValidation
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
 
 class CompanyDTO {
 
@@ -10,7 +12,22 @@ class CompanyDTO {
     final LoginDetailsDTO loginDetailsDTO
     final String description
     final String cnpj
-    final int addressId
+    final Integer addressId
+
+    @JsonCreator
+    private CompanyDTO(
+            @JsonProperty("name") String name,
+            @JsonProperty("loginDetails") LoginDetailsDTO loginDetailsDTO,
+            @JsonProperty("description") String description,
+            @JsonProperty("cnpj") String cnpj,
+            @JsonProperty("addressId") Integer addressId
+    ) {
+        this.name = name
+        this.loginDetailsDTO = loginDetailsDTO
+        this.description = description
+        this.cnpj = cnpj
+        this.addressId = addressId
+    }
 
     private CompanyDTO(Builder builder) {
         name = builder.name
@@ -36,7 +53,7 @@ class CompanyDTO {
         return cnpj
     }
 
-    int getAddressId() {
+    Integer getAddressId() {
         return addressId
     }
 
@@ -46,7 +63,7 @@ class CompanyDTO {
         LoginDetailsDTO loginDetailsDTO
         String description
         String cnpj
-        int addressId
+        Integer addressId
 
         boolean nameSet = false
         boolean loginDetailsDTOSet = false
@@ -90,7 +107,7 @@ class CompanyDTO {
             return this
         }
 
-        Builder setAddressId(int addressId) {
+        Builder setAddressId(Integer addressId) {
             ParamValidation.requirePositive(addressId, "Address ID cannot be negative")
 
             this.addressId = addressId
