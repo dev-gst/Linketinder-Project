@@ -1,6 +1,7 @@
 plugins {
     id 'groovy'
     id 'java'
+    id 'war'
 }
 
 group = 'org.example'
@@ -18,6 +19,8 @@ ext {
     postgresql = '42.7.4'
     snakeYaml = '2.3'
     spockVersion = '2.4-M4-groovy-4.0'
+    jakartaServlet = '6.1.0'
+    jackson = '2.18.1'
 }
 
 dependencies {
@@ -25,6 +28,11 @@ dependencies {
     implementation "org.flywaydb:flyway-core:$flywayCore"
     implementation "org.postgresql:postgresql:$postgresql"
     implementation "org.yaml:snakeyaml:$snakeYaml"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$jackson"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:$jackson"
+
+    compileOnly "jakarta.servlet:jakarta.servlet-api:$jakartaServlet"
 
     runtimeOnly "org.flywaydb:flyway-database-postgresql:$flywayDatabasePostgresql"
 
@@ -35,16 +43,29 @@ dependencies {
 tasks.register('run', JavaExec) {
     group = 'Application'
     description = 'Run the application'
-    mainClass = 'main.Main'
+    mainClass = 'application.Main'
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
+}
+
+tasks.register('cleanBuild') {
+    group = 'Build'
+    description = 'Clean and build the application'
+
+    dependsOn('clean')
+
+    finalizedBy 'build'
 }
 
 tasks.register('migrate', JavaExec) {
     group = 'Flyway'
     description = 'Migrate the database'
-    mainClass = 'main.database.FlywayMigration'
+    mainClass = 'application.database.FlywayMigration'
     classpath = sourceSets.main.runtimeClasspath
+}
+
+tasks.named('war') {
+    archiveFileName = 'ROOT.war'
 }
 
 test {

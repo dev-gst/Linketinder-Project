@@ -26,7 +26,7 @@ CREATE TABLE candidates (
 	birth_date DATE NOT NULL,
 	cpf VARCHAR(100) NOT NULL,
 	education VARCHAR(255) NOT NULL,
-    address_id INT REFERENCES addresses (id) NOT NULL,
+    address_id INT REFERENCES addresses (id),
     deleted_at TIMESTAMP DEFAULT NULL
 );
 
@@ -44,7 +44,7 @@ CREATE TABLE companies (
 	password VARCHAR(255) NOT NULL,
 	description TEXT NOT NULL,
 	cnpj VARCHAR(255) NOT NULL,
-    address_id INT REFERENCES addresses (id) NOT NULL,
+    address_id INT REFERENCES addresses (id),
     deleted_at TIMESTAMP DEFAULT NULL
 );
 

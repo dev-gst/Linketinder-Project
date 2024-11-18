@@ -2,14 +2,10 @@ CREATE OR REPLACE FUNCTION delete_address_if_unused()
     RETURNS TRIGGER AS
 $$
 BEGIN
-    IF NOT EXISTS (SELECT 1
-                   FROM companies
-                   WHERE address_id = OLD.address_id) AND NOT EXISTS (SELECT 1
-                                                                      FROM candidates
-                                                                      WHERE address_id = OLD.address_id) AND
-       NOT EXISTS (SELECT 1
-                   FROM job_openings
-                   WHERE address_id = OLD.address_id) THEN
+    IF NOT EXISTS (SELECT 1 FROM companies WHERE address_id = OLD.address_id)
+        AND NOT EXISTS (SELECT 1 FROM candidates WHERE address_id = OLD.address_id)
+        AND NOT EXISTS (SELECT 1 FROM job_openings WHERE address_id = OLD.address_id)
+    THEN
         DELETE FROM addresses WHERE id = OLD.address_id;
     END IF;
     RETURN NULL;
