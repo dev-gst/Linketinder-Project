@@ -34,11 +34,10 @@ class DefaultCompanyDAO implements CompanyDAO {
 
     @Override
     Set<Company> getByField(String fieldName, String fieldValue) {
-        String query = "SELECT * FROM companies WHERE ? = ?"
+        String query = "SELECT * FROM companies WHERE $fieldName = ?"
 
         PreparedStatement stmt = conn.prepareStatement(query, ResultSet.CONCUR_READ_ONLY)
-        stmt.setString(1, fieldName)
-        stmt.setString(2, fieldValue)
+        stmt.setString(1, fieldValue)
 
         ResultSet rs = stmt.executeQuery()
 

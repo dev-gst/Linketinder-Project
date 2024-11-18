@@ -72,11 +72,10 @@ class DefaultAddressDAO implements AddressDAO {
 
     @Override
     Set<Address> getByField(String fieldName, String fieldValue) {
-        String query = "SELECT * FROM addresses WHERE ? = ?"
+        String query = "SELECT * FROM addresses WHERE $fieldName = ?"
 
         PreparedStatement stmt = conn.prepareStatement(query, ResultSet.CONCUR_READ_ONLY)
         stmt.setString(1, fieldName)
-        stmt.setString(2, fieldValue)
 
         ResultSet rs = stmt.executeQuery()
 

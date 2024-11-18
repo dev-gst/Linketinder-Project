@@ -37,10 +37,9 @@ class DefaultSkillDAO implements SkillDAO {
 
     @Override
     Set<Skill> getByField(String fieldName, String fieldValue) {
-        String query = "SELECT * FROM skills WHERE ? = ?"
+        String query = "SELECT * FROM skills WHERE $fieldName = ?"
         PreparedStatement stmt = conn.prepareStatement(query, ResultSet.CONCUR_READ_ONLY)
-        stmt.setString(1, fieldName)
-        stmt.setString(2, fieldValue)
+        stmt.setString(1, fieldValue)
 
         ResultSet rs = stmt.executeQuery()
 
@@ -87,7 +86,7 @@ class DefaultSkillDAO implements SkillDAO {
     }
 
     private static Set<Skill> constructSkills(ResultSet rs) {
-        Set skills = new HashSet<Skill>()
+        Set skills = new LinkedHashSet<Skill>()
         while (rs.next()) {
             Skill skill = new Skill.Builder()
                     .id(rs.getInt("id"))

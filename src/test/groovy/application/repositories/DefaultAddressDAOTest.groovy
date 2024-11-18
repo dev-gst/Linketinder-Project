@@ -170,9 +170,8 @@ class DefaultAddressDAOTest extends Specification {
 
     def "get by field returns correct address"() {
         given:
-        String query = "SELECT * FROM addresses WHERE ? = ?"
+        String query = "SELECT * FROM addresses WHERE country = ?"
         conn.prepareStatement(query, ResultSet.CONCUR_READ_ONLY) >> stmt
-        stmt.setString(1, "country") >> _
         stmt.setString(2, "Brazil") >> _
         stmt.executeQuery() >> rs
         rs.next() >> true >> false

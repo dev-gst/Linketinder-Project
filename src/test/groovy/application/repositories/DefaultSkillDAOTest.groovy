@@ -58,12 +58,11 @@ class DefaultSkillDAOTest extends Specification {
 
     def "get by field returns correct skills"() {
         given:
-        String query = "SELECT * FROM skills WHERE ? = ?"
+        String query = "SELECT * FROM skills WHERE " + "name" + " = ?"
         PreparedStatement stmt = Mock(PreparedStatement)
         ResultSet rs = Mock(ResultSet)
         conn.prepareStatement(query, ResultSet.CONCUR_READ_ONLY) >> stmt
-        stmt.setString(1, "name") >> _
-        stmt.setString(2, "Java") >> _
+        stmt.setString(1, "Java") >> _
         stmt.executeQuery() >> rs
         rs.next() >> true >> false
         rs.getInt("id") >> 1

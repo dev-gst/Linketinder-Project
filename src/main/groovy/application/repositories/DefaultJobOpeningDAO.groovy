@@ -30,11 +30,10 @@ class DefaultJobOpeningDAO implements JobOpeningDAO {
 
     @Override
     Set<JobOpening> getByField(String fieldName, String fieldValue) {
-        String query = "SELECT * FROM job_openings WHERE ? = ?"
+        String query = "SELECT * FROM job_openings WHERE $fieldName = ?";
 
         PreparedStatement stmt = conn.prepareStatement(query, ResultSet.CONCUR_READ_ONLY)
-        stmt.setString(1, fieldName)
-        stmt.setString(2, fieldValue)
+        stmt.setString(1, fieldValue)
 
         ResultSet rs = stmt.executeQuery()
 
@@ -64,8 +63,8 @@ class DefaultJobOpeningDAO implements JobOpeningDAO {
         return constructJobOpenings(rs)
     }
 
-    private static constructJobOpenings(ResultSet rs) {
-        List<JobOpening> jobOpenings = new ArrayList<>()
+    private static Set constructJobOpenings(ResultSet rs) {
+        Set<JobOpening> jobOpenings = new LinkedHashSet<>()
         while (rs.next()) {
             JobOpening jobOpening = new JobOpening.Builder()
                     .setId(rs.getInt("id"))
@@ -137,9 +136,11 @@ class DefaultJobOpeningDAO implements JobOpeningDAO {
         stmt.setBoolean(4, jobOpeningDTO.isOpen)
         stmt.setInt(5, jobOpeningDTO.companyId)
 
-        jobOpeningDTO.addressId.isPresent() ?
-                stmt.setInt(6, jobOpeningDTO.addressId.get()) :
-                stmt.setNull(6, Types.INTEGER)
+        if (jobOpeningDTO.addressId.isPresent()) {
+            stmt.setInt(6, jobOpeningDTO.addressId.get())
+        } else {
+            stmt.setNull(6, Types.INTEGER)
+        }
 
         return stmt
     }
