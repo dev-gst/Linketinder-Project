@@ -2,14 +2,22 @@ package application.models.dtos.request
 
 import application.utils.exceptions.FieldNotSetException
 import application.utils.validation.ParamValidation
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
 
 class SkillDTO {
+
     final String name
 
-    SkillDTO(String name) {
+    @JsonCreator
+    private SkillDTO(@JsonProperty("name") String name) {
         ParamValidation.requireNonBlank(name, "Name cannot be blank")
 
         this.name = name
+    }
+
+    private SkillDTO(Builder builder) {
+        this.name = builder.name
     }
 
     String getName() {
@@ -37,7 +45,7 @@ class SkillDTO {
         SkillDTO build() {
             validate()
 
-            return new SkillDTO(name)
+            return new SkillDTO(this)
         }
 
         private void validate() {
