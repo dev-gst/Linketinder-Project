@@ -20,7 +20,7 @@ ext {
     snakeYaml = '2.3'
     spockVersion = '2.4-M4-groovy-4.0'
     jakartaServlet = '6.1.0'
-    jacksonDatabind = '2.18.1'
+    jackson = '2.18.1'
 }
 
 dependencies {
@@ -28,7 +28,8 @@ dependencies {
     implementation "org.flywaydb:flyway-core:$flywayCore"
     implementation "org.postgresql:postgresql:$postgresql"
     implementation "org.yaml:snakeyaml:$snakeYaml"
-    implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonDatabind"
+    implementation "com.fasterxml.jackson.core:jackson-databind:$jackson"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson"
 
     compileOnly "jakarta.servlet:jakarta.servlet-api:$jakartaServlet"
 

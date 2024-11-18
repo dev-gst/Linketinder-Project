@@ -53,6 +53,22 @@ class JacksonJsonParserTest extends Specification {
         result == [key: "value"]
     }
 
+    def "toJson parses sets of objects"() {
+        given:
+        ObjectMapper objectMapper = new ObjectMapper()
+        JacksonJsonParser parser = new JacksonJsonParser(objectMapper)
+        Object object = [key: "value"]
+        Object object2 = [key: "value2"]
+
+        Set<Object> objects = [object, object2]
+
+        when:
+        String json = parser.toJson(objects)
+
+        then:
+        json == '[{"key":"value"},{"key":"value2"}]'
+    }
+
     def "fromJson throws exception when JSON string is null"() {
         given:
         ObjectMapper objectMapper = new ObjectMapper()

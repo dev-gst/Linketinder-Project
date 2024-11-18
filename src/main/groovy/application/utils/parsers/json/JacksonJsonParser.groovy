@@ -2,6 +2,7 @@ package application.utils.parsers.json
 
 import application.utils.validation.ParamValidation
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 
 class JacksonJsonParser implements JsonParser {
 
@@ -11,6 +12,7 @@ class JacksonJsonParser implements JsonParser {
         ParamValidation.requireNonNull(objectMapper, "ObjectMapper cannot not be null")
 
         this.objectMapper = objectMapper
+        this.objectMapper.registerModule(new JavaTimeModule())
     }
 
     @Override
