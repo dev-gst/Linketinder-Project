@@ -7,13 +7,30 @@ import application.utils.parsers.yaml.YamlParser
 import org.flywaydb.core.Flyway
 import org.yaml.snakeyaml.Yaml
 
+import java.sql.Connection
+import java.sql.PreparedStatement
+
 class FlywayMigration {
 
-    static void main(String[] args) {
+    static private Env env
+    static private Connection conn
 
+    static {
         YamlParser yamlParser = new SnakeYamlParser(new Yaml())
         ConfigLoader configLoader = new ConfigLoader(yamlParser)
-        Env env = new Env(configLoader)
+
+        env = new Env(configLoader)
+        conn = DBConnectionFactory.createPostgresCustomConnection(
+                "jdbc:postgresql://localhost:5432/postgres",
+                env.getDbUser(),
+                env.getDbPassword(),
+                env.getDbDriver()
+        ).getConnection()
+    }
+
+    static void main(String[] args) {
+        dropDB(env)
+        createDB(env)
 
         Flyway flyway = Flyway.configure()
                 .dataSource(
@@ -25,5 +42,19 @@ class FlywayMigration {
                 .schemas(env.getDbSchemas())
                 .load()
         flyway.migrate()
+    }
+
+    static void dropDB(Env env) {
+        String query = "DROP DATABASE IF EXISTS " + env.getDbName()
+        PreparedStatement stmt = conn.prepareStatement(query)
+
+        stmt.execute()
+    }
+
+    static void createDB(Env env) {
+        String query = "CREATE DATABASE " + env.getDbName()
+        PreparedStatement stmt = conn.prepareStatement(query)
+
+        stmt.execute()
     }
 }
