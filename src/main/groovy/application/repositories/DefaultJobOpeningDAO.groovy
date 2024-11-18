@@ -30,7 +30,7 @@ class DefaultJobOpeningDAO implements JobOpeningDAO {
 
     @Override
     Set<JobOpening> getByField(String fieldName, String fieldValue) {
-        String query = "SELECT * FROM job_openings WHERE $fieldName = ?";
+        String query = "SELECT * FROM job_openings WHERE $fieldName = ?"
 
         PreparedStatement stmt = conn.prepareStatement(query, ResultSet.CONCUR_READ_ONLY)
         stmt.setString(1, fieldValue)
