@@ -2,6 +2,7 @@ package application.utils.parsers.json
 
 import application.utils.validation.ParamValidation
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 
 class JacksonJsonParser implements JsonParser {
@@ -13,6 +14,7 @@ class JacksonJsonParser implements JsonParser {
 
         this.objectMapper = objectMapper
         this.objectMapper.registerModule(new JavaTimeModule())
+        this.objectMapper.registerModule(new Jdk8Module())
     }
 
     @Override
