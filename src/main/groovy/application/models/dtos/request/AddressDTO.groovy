@@ -2,6 +2,8 @@ package application.models.dtos.request
 
 import application.utils.exceptions.FieldNotSetException
 import application.utils.validation.ParamValidation
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
 
 class AddressDTO {
 
@@ -12,6 +14,25 @@ class AddressDTO {
     final String street
     final String number
     final String zipCode
+
+    @JsonCreator
+    private AddressDTO(
+            @JsonProperty("country") String country,
+            @JsonProperty("region") String region,
+            @JsonProperty("city") String city,
+            @JsonProperty("neighborhood") String neighborhood,
+            @JsonProperty("street") String street,
+            @JsonProperty("number") String number,
+            @JsonProperty("zipCode") String zipCode
+    ) {
+        this.country = country
+        this.region = region
+        this.city = city
+        this.neighborhood = neighborhood
+        this.street = street
+        this.number = number
+        this.zipCode = zipCode
+    }
 
     private AddressDTO(Builder builder) {
         this.country = builder.country
