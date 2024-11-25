@@ -10,11 +10,11 @@ import java.sql.*
 import java.time.LocalDate
 import java.time.ZoneId
 
-class DefaultCandidateDAO implements CandidateDAO {
+class PostgresCandidateDAO implements CandidateDAO {
 
     private Connection conn
 
-    DefaultCandidateDAO(Connection conn) {
+    PostgresCandidateDAO(Connection conn) {
         ParamValidation.requireNonNull(conn, "Connection is required")
 
         this.conn = conn

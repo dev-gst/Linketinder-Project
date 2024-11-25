@@ -10,11 +10,11 @@ import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.SQLException
 
-class DefaultCompanyDAO implements CompanyDAO {
+class PostgresCompanyDAO implements CompanyDAO {
 
     private Connection conn
 
-    DefaultCompanyDAO(Connection conn) {
+    PostgresCompanyDAO(Connection conn) {
         this.conn = conn
     }
 
