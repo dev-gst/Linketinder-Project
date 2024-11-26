@@ -1,27 +1,26 @@
 package application.services
 
-import application.repositories.DAOFactory
-import application.services.interfaces.*
+import application.repositories.PostgresDAOFactory
 
 class ServiceFactory {
 
     static CandidateService createCandidateService() {
-        return new DefaultCandidateService(DAOFactory.createCandidateDAO())
+        return new CandidateService(PostgresDAOFactory.createCandidateDAO())
     }
 
     static AddressService createAddressService() {
-        return new DefaultAddressService(DAOFactory.createAddressDAO())
+        return new AddressService(PostgresDAOFactory.createAddressDAO())
     }
 
     static CompanyService createCompanyService() {
-        return new DefaultCompanyService(DAOFactory.createCompanyDAO())
+        return new CompanyService(PostgresDAOFactory.createCompanyDAO())
     }
 
     static JobOpeningService createJobOpeningService() {
-        return new DefaultJobOpeningService(DAOFactory.createJobOpeningDAO())
+        return new JobOpeningService(PostgresDAOFactory.createJobOpeningDAO())
     }
 
     static SkillService createSkillService() {
-        return new DefaultSkillService(DAOFactory.createSkillDAO())
+        return new SkillService(PostgresDAOFactory.createSkillDAO())
     }
 }

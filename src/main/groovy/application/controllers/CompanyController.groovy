@@ -1,8 +1,8 @@
 package application.controllers
 
 import application.models.dtos.request.CompanyDTO
+import application.services.CompanyService
 import application.services.ServiceFactory
-import application.services.interfaces.CompanyService
 import application.utils.parsers.json.JsonParser
 import application.utils.parsers.json.JsonParserFactory
 import jakarta.servlet.ServletConfig

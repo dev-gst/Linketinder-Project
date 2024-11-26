@@ -8,14 +8,14 @@ import application.repositories.interfaces.CompanyDAO
 import application.utils.exceptions.EntityNotFoundException
 import spock.lang.Specification
 
-class DefaultCompanyServiceTest extends Specification {
+class CompanyServiceTest extends Specification {
 
     Company companyMock1
     Company companyMock2
     CompanyDTO companyDTOMock1
     CompanyDTO companyDTOMock2
     CompanyDAO companyDAOMock
-    DefaultCompanyService companyService
+    CompanyService companyService
 
     void setup() {
         CompanyMockFactory companyMockBuilder = new CompanyMockFactory()
@@ -28,7 +28,7 @@ class DefaultCompanyServiceTest extends Specification {
 
         companyDAOMock = Mock(CompanyDAO)
 
-        companyService = new DefaultCompanyService(companyDAOMock)
+        companyService = new CompanyService(companyDAOMock)
     }
 
     def "get by id returns correct company"() {

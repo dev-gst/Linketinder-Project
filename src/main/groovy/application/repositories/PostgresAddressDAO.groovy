@@ -10,11 +10,11 @@ import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.SQLException
 
-class DefaultAddressDAO implements AddressDAO {
+class PostgresAddressDAO implements AddressDAO {
 
     private Connection conn
 
-    DefaultAddressDAO(Connection conn) {
+    PostgresAddressDAO(Connection conn) {
         ParamValidation.requireNonNull(conn, "Connection cannot be null")
 
         this.conn = conn

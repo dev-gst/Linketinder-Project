@@ -9,7 +9,7 @@ import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 
-class DefaultAddressDAOTest extends Specification {
+class PostgresAddressDAOTest extends Specification {
 
     Address address1
     Address address2
@@ -18,7 +18,7 @@ class DefaultAddressDAOTest extends Specification {
     Connection conn
     PreparedStatement stmt
     ResultSet rs
-    DefaultAddressDAO defaultAddressDAO
+    PostgresAddressDAO defaultAddressDAO
 
     void setup() {
         AddressMockFactory addressMock = new AddressMockFactory()
@@ -31,7 +31,7 @@ class DefaultAddressDAOTest extends Specification {
         conn = Mock(Connection)
         stmt = Mock(PreparedStatement)
         rs = Mock(ResultSet)
-        defaultAddressDAO = new DefaultAddressDAO(conn)
+        defaultAddressDAO = new PostgresAddressDAO(conn)
     }
 
     def "get by id returns correct address"() {

@@ -10,7 +10,7 @@ import org.yaml.snakeyaml.Yaml
 
 import java.sql.Connection
 
-class DAOFactory {
+class PostgresDAOFactory {
 
     private static Connection connection
 
@@ -27,11 +27,11 @@ class DAOFactory {
 
         connection = DBConnectionManager.getInstance(env).getConnection()
 
-        addressDAO = new DefaultAddressDAO(connection)
-        candidateDAO = new DefaultCandidateDAO(connection)
-        companyDAO = new DefaultCompanyDAO(connection)
-        jobOpeningDAO = new DefaultJobOpeningDAO(connection)
-        skillDAO = new DefaultSkillDAO(connection)
+        addressDAO = new PostgresAddressDAO(connection)
+        candidateDAO = new PostgresCandidateDAO(connection)
+        companyDAO = new PostgresCompanyDAO(connection)
+        jobOpeningDAO = new PostgresJobOpeningDAO(connection)
+        skillDAO = new PostgresSkillDAO(connection)
     }
 
     static CandidateDAO createCandidateDAO() {

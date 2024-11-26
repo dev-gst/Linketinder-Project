@@ -4,18 +4,19 @@ import application.models.dtos.request.CompanyDTO
 import application.models.entities.Company
 import application.models.entities.JobOpening
 import application.repositories.interfaces.CompanyDAO
-import application.services.interfaces.CompanyService
+import application.services.interfaces.AuthService
+import application.services.interfaces.Service
 import application.utils.exceptions.EntityNotFoundException
 import application.utils.exceptions.NullCollectionException
 import application.utils.validation.ParamValidation
 
-class DefaultCompanyService implements CompanyService {
+class CompanyService implements Service<Company, CompanyDTO>, AuthService<Company> {
 
     private static final String EMAIL_FIELD = "email"
 
     CompanyDAO companyDAO
 
-    DefaultCompanyService(CompanyDAO companyDAO) {
+    CompanyService(CompanyDAO companyDAO) {
         ParamValidation.requireNonNull(companyDAO, "companyDAO cannot be null")
 
         this.companyDAO = companyDAO

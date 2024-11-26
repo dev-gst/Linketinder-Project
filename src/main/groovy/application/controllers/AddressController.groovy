@@ -1,8 +1,8 @@
 package application.controllers
 
 import application.models.dtos.request.AddressDTO
+import application.services.AddressService
 import application.services.ServiceFactory
-import application.services.interfaces.AddressService
 import application.utils.parsers.json.JsonParser
 import application.utils.parsers.json.JsonParserFactory
 import jakarta.servlet.ServletConfig

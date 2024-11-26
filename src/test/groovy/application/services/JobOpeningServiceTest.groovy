@@ -7,13 +7,13 @@ import application.models.entities.JobOpening
 import application.repositories.interfaces.JobOpeningDAO
 import spock.lang.Specification
 
-class DefaultJobOpeningServiceTest extends Specification {
+class JobOpeningServiceTest extends Specification {
 
     JobOpeningDTO jobOpeningDTOMock
     JobOpening jobOpeningMock
 
     JobOpeningDAO jobOpeningDAO
-    DefaultJobOpeningService jobOpeningService
+    JobOpeningService jobOpeningService
 
     void setup() {
         JobOpeningMockFactory mockJobOpening = new JobOpeningMockFactory()
@@ -22,7 +22,7 @@ class DefaultJobOpeningServiceTest extends Specification {
         jobOpeningDTOMock = mockJobOpening.createJobOpeningDTOMock(1)
 
         jobOpeningDAO = Mock(JobOpeningDAO)
-        jobOpeningService = new DefaultJobOpeningService(jobOpeningDAO)
+        jobOpeningService = new JobOpeningService(jobOpeningDAO)
     }
 
     def "get by id returns job opening when id is valid"() {
