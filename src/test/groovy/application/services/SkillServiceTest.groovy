@@ -10,14 +10,14 @@ import application.repositories.interfaces.SkillDAO
 import application.utils.exceptions.ClassNotFoundException
 import spock.lang.Specification
 
-class DefaultSkillServiceTest extends Specification {
+class SkillServiceTest extends Specification {
 
     Skill skill1
     Skill skill2
     SkillDTO skillDTO1
     SkillDTO skillDTO2
     SkillDAO skillDAO
-    DefaultSkillService skillService
+    SkillService skillService
 
     def setup() {
         SkillMockFactory skillMock = new SkillMockFactory()
@@ -27,12 +27,12 @@ class DefaultSkillServiceTest extends Specification {
         skillDTO2 = skillMock.createSkillDTOMock(2)
 
         skillDAO = Mock(SkillDAO)
-        skillService = new DefaultSkillService(skillDAO)
+        skillService = new SkillService(skillDAO)
     }
 
     def "skill service constructor should throw exception when skillDAO is null"() {
         when:
-        new DefaultSkillService(null)
+        new SkillService(null)
 
         then:
         thrown(IllegalArgumentException)
