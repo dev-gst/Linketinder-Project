@@ -2,8 +2,8 @@ package application.controllers
 
 
 import application.models.dtos.request.JobOpeningDTO
+import application.services.JobOpeningService
 import application.services.ServiceFactory
-import application.services.interfaces.JobOpeningService
 import application.utils.parsers.json.JsonParser
 import application.utils.parsers.json.JsonParserFactory
 import jakarta.servlet.ServletConfig
