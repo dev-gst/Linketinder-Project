@@ -7,17 +7,17 @@ import application.models.entities.JobOpening
 import application.models.entities.Skill
 import application.repositories.interfaces.SkillDAO
 import application.services.interfaces.AnonService
-import application.services.interfaces.SkillService
+import application.services.interfaces.Service
 import application.utils.exceptions.ClassNotFoundException
 import application.utils.exceptions.EntityNotFoundException
 import application.utils.exceptions.NullCollectionException
 import application.utils.validation.ParamValidation
 
-class DefaultSkillService implements SkillService, AnonService<AnonSkillDTO> {
+class SkillService implements Service<Skill, SkillDTO>, AnonService<AnonSkillDTO> {
 
     SkillDAO skillDAO
 
-    DefaultSkillService(SkillDAO skillDAO) {
+    SkillService(SkillDAO skillDAO) {
         ParamValidation.requireNonNull(skillDAO, "SkillDAO cannot be null")
 
         this.skillDAO = skillDAO
@@ -124,7 +124,6 @@ class DefaultSkillService implements SkillService, AnonService<AnonSkillDTO> {
         skillDAO.delete(id)
     }
 
-    @Override
     int saveCandidateSkill(int candidateId, int skillId) {
         ParamValidation.requirePositive(candidateId, "Candidate ID must be greater than 0")
         ParamValidation.requirePositive(skillId, "Skill ID must be greater than 0")
@@ -132,7 +131,6 @@ class DefaultSkillService implements SkillService, AnonService<AnonSkillDTO> {
         return skillDAO.saveCandidateSkill(candidateId, skillId)
     }
 
-    @Override
     int saveJobOpeningSkill(int jobOpeningId, int skillId) {
         ParamValidation.requirePositive(jobOpeningId, "Job Opening ID must be greater than 0")
         ParamValidation.requirePositive(skillId, "Skill ID must be greater than 0")
@@ -140,7 +138,6 @@ class DefaultSkillService implements SkillService, AnonService<AnonSkillDTO> {
         return skillDAO.saveJobOpeningSkill(jobOpeningId, skillId)
     }
 
-    @Override
     void deleteCandidateSkill(int candidateId, int skillId) {
         ParamValidation.requirePositive(candidateId, "Candidate ID must be greater than 0")
         ParamValidation.requirePositive(skillId, "Skill ID must be greater than 0")
@@ -148,14 +145,12 @@ class DefaultSkillService implements SkillService, AnonService<AnonSkillDTO> {
         skillDAO.deleteCandidateSkill(candidateId, skillId)
     }
 
-    @Override
     void deleteAllCandidateSkills(int candidateId) {
         ParamValidation.requirePositive(candidateId, "Candidate ID must be greater than 0")
 
         skillDAO.deleteAllCandidateSkills(candidateId)
     }
 
-    @Override
     void deleteJobOpeningSkill(int jobOpeningId, int skillId) {
         ParamValidation.requirePositive(jobOpeningId, "Job Opening ID must be greater than 0")
         ParamValidation.requirePositive(skillId, "Skill ID must be greater than 0")
@@ -163,7 +158,6 @@ class DefaultSkillService implements SkillService, AnonService<AnonSkillDTO> {
         skillDAO.deleteJobOpeningSkill(jobOpeningId, skillId)
     }
 
-    @Override
     void deleteAllJobOpeningSkills(int jobOpeningId) {
         ParamValidation.requirePositive(jobOpeningId, "Job Opening ID must be greater than 0")
 

@@ -10,11 +10,11 @@ import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.SQLException
 
-class DefaultSkillDAO implements SkillDAO {
+class PostgresSkillDAO implements SkillDAO {
 
     Connection conn
 
-    DefaultSkillDAO(Connection conn) {
+    PostgresSkillDAO(Connection conn) {
         ParamValidation.requireNonNull(conn, "Connection cannot be null")
 
         this.conn = conn

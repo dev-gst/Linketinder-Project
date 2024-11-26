@@ -2,5 +2,5 @@ package application.repositories
 
 import spock.lang.Specification
 
-class DefaultCompanyDAOTest extends Specification {
+class PostgresJobOpeningDAOTest extends Specification {
 }

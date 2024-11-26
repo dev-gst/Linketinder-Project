@@ -4,14 +4,14 @@ import application.models.dtos.request.JobOpeningDTO
 import application.models.entities.Company
 import application.models.entities.JobOpening
 import application.repositories.interfaces.JobOpeningDAO
-import application.services.interfaces.JobOpeningService
+import application.services.interfaces.Service
 import application.utils.validation.ParamValidation
 
-class DefaultJobOpeningService implements JobOpeningService {
+class JobOpeningService implements Service<JobOpening, JobOpeningDTO> {
 
     JobOpeningDAO jobOpeningDAO
 
-    DefaultJobOpeningService(JobOpeningDAO jobOpeningDAO) {
+    JobOpeningService(JobOpeningDAO jobOpeningDAO) {
         ParamValidation.requireNonNull(jobOpeningDAO, "jobOpeningDAO must not be null")
 
         this.jobOpeningDAO = jobOpeningDAO

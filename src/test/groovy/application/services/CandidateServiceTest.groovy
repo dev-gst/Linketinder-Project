@@ -5,10 +5,9 @@ import application.models.dtos.request.CandidateDTO
 import application.models.entities.Address
 import application.models.entities.Candidate
 import application.repositories.interfaces.CandidateDAO
-import application.services.interfaces.CandidateService
 import spock.lang.Specification
 
-class DefaultCandidateServiceTest extends Specification {
+class CandidateServiceTest extends Specification {
 
     Candidate candidateMock1
     Candidate candidateMock2
@@ -17,7 +16,6 @@ class DefaultCandidateServiceTest extends Specification {
 
     CandidateDAO candidateDAO
     CandidateService candidateService
-
 
     void setup() {
         CandidateMockFactory candidateMock = new CandidateMockFactory()
@@ -28,7 +26,7 @@ class DefaultCandidateServiceTest extends Specification {
         candidateDTOMock2 = candidateMock.createCandidateDTOMock(2)
 
         candidateDAO = Mock(CandidateDAO)
-        candidateService = new DefaultCandidateService(candidateDAO)
+        candidateService = new CandidateService(candidateDAO)
     }
 
     def "get by id should return candidate"() {

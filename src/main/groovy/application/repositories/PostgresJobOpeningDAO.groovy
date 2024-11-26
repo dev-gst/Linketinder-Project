@@ -6,11 +6,11 @@ import application.repositories.interfaces.JobOpeningDAO
 
 import java.sql.*
 
-class DefaultJobOpeningDAO implements JobOpeningDAO {
+class PostgresJobOpeningDAO implements JobOpeningDAO {
 
     Connection conn
 
-    DefaultJobOpeningDAO(Connection conn) {
+    PostgresJobOpeningDAO(Connection conn) {
         this.conn = conn
     }
 

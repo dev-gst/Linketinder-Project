@@ -13,4 +13,8 @@ interface Service<ENTITY, DTO> {
     ENTITY updateById(int id, DTO entity)
 
     void deleteById(int id)
+
+    Set<ENTITY> getByField(String fieldName, String fieldValue)
+
+    Set<ENTITY> getByEntityId(int entityId, Class<?> entityClazz)
 }

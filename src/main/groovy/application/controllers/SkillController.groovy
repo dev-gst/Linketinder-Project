@@ -2,7 +2,7 @@ package application.controllers
 
 import application.models.dtos.request.SkillDTO
 import application.services.ServiceFactory
-import application.services.interfaces.SkillService
+import application.services.SkillService
 import application.utils.parsers.json.JsonParser
 import application.utils.parsers.json.JsonParserFactory
 import jakarta.servlet.ServletConfig

@@ -8,14 +8,14 @@ import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 
-class DefaultSkillDAOTest extends Specification {
+class PostgresSkillDAOTest extends Specification {
 
     Connection conn
-    DefaultSkillDAO defaultSkillDAO
+    PostgresSkillDAO defaultSkillDAO
 
     void setup() {
         conn = Mock(Connection)
-        defaultSkillDAO = new DefaultSkillDAO(conn)
+        defaultSkillDAO = new PostgresSkillDAO(conn)
     }
 
 

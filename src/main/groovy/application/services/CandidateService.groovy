@@ -4,14 +4,15 @@ import application.models.dtos.request.CandidateDTO
 import application.models.entities.Address
 import application.models.entities.Candidate
 import application.repositories.interfaces.CandidateDAO
-import application.services.interfaces.CandidateService
+import application.services.interfaces.AuthService
+import application.services.interfaces.Service
 import application.utils.validation.ParamValidation
 
-class DefaultCandidateService implements CandidateService {
+class CandidateService implements Service<Candidate, CandidateDTO>, AuthService<Candidate> {
 
     CandidateDAO candidateDAO
 
-    DefaultCandidateService(CandidateDAO candidateDAO) {
+    CandidateService(CandidateDAO candidateDAO) {
         this.candidateDAO = candidateDAO
     }
 
