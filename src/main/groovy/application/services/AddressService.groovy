@@ -7,17 +7,17 @@ import application.models.entities.Candidate
 import application.models.entities.Company
 import application.models.entities.JobOpening
 import application.repositories.interfaces.AddressDAO
-import application.services.interfaces.AddressService
 import application.services.interfaces.AnonService
+import application.services.interfaces.Service
 import application.utils.exceptions.EntityNotFoundException
 import application.utils.validation.ParamValidation
 
-class DefaultAddressService implements AddressService,
+class AddressService implements Service<Address, AddressDTO>,
         AnonService<AnonAddressDTO> {
 
     AddressDAO addressDAO
 
-    DefaultAddressService(AddressDAO addressDAO) {
+    AddressService(AddressDAO addressDAO) {
         ParamValidation.requireNonNull(addressDAO, "AddressDAO cannot be null")
 
         this.addressDAO = addressDAO
